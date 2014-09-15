@@ -1,0 +1,9 @@
+C:\Users\Kitsune\Desktop\ProjectNinja\ProjectNinja\bin\ProjectNinja.dll
+C:\Users\Kitsune\Desktop\ProjectNinja\ProjectNinja\bin\ProjectNinja.pdb
+C:\Users\Kitsune\Desktop\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.dll
+C:\Users\Kitsune\Desktop\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.pdb
+\\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja\ProjectNinja\bin\ProjectNinja.dll
+\\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja\ProjectNinja\bin\ProjectNinja.pdb
+\\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.csprojResolveAssemblyReference.cache
+\\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.dll
+\\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.pdb
