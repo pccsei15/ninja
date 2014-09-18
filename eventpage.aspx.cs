@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+// My random comment
+
 namespace ProjectNinja
 {
    public partial class eventpage : System.Web.UI.Page
