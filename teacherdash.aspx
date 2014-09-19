@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherdash.aspx.cs" Inherits="ProjectNinja.teacherdash" %>
+﻿<%@ Page Title="Teacher Dashboard" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherdash.aspx.cs" Inherits="ProjectNinja.teacherdash" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <head>
     <meta charset="utf-8" />
@@ -38,21 +38,12 @@
          <div class="col-sm-12 col-md-12 main">
             <h1 class="page-header col-md-6 col-xs-6" style="margin-bottom:0px;">My Events</h1>
             <div class="col-md-6 col-xs-6">
-               <a href="newevent.html" class="btn btn-primary pull-right">New Event</a>
+               <a href="newevent.aspx" class="btn btn-primary pull-right">New Event</a>
             </div>
          </div>
       </div>
    </div>
 
-   <asp:Label ID="lblTest" runat="server" Text=""></asp:Label>
-
-   <table style="float:right;">
-      <tr>
-         <td><asp:Button ID="btnSrcEvents" runat="server" Text="Search:" /></td>
-         <td><asp:TextBox ID="txtSrcEvent" runat="server"></asp:TextBox></td>
-      </tr>
-   </table>
-   <br />
    <div class="row">
       <div class="col-sm-12 col-md-12 main">
          <div class="table-responsive">
@@ -60,69 +51,54 @@
                DataSourceID="sqlEvents" ShowHeaderWhenEmpty="True" DataKeyNames="eventID" onrowcommand="grdEventsTable_RowCommand" AllowPaging="True" AllowSorting="True">
                <Columns>
                    <asp:TemplateField HeaderText="Event Name" SortExpression="eventName">
-                       <EditItemTemplate>
-                           <asp:TextBox ID="txtEditName" runat="server" Text='<%# Bind("eventName") %>'></asp:TextBox>
-                       </EditItemTemplate>
                        <ItemTemplate>
-                           <asp:Label ID="lblEditName" runat="server" Text='<%# Bind("eventName") %>'></asp:Label>
+                           <asp:LinkButton ID="lblEditName" runat="server" Text='<%# Bind("eventName") %>' CommandArgument='<%# Bind("eventID") %>' OnClick="lnkEvent_Click"></asp:LinkButton>
                        </ItemTemplate>
-                       <HeaderStyle Width="30%" BackColor="#428BCA" />
+                       <HeaderStyle Width="30%" BackColor="#428BCA" CssClass="sorting" />
                    </asp:TemplateField>
-                   <asp:TemplateField HeaderText="Event Location" SortExpression="eventLocation">
-                       <EditItemTemplate>
-                           <asp:TextBox ID="txtEditLoc" runat="server" Text='<%# Bind("eventLocation") %>'></asp:TextBox>
-                       </EditItemTemplate>
-                       <ItemTemplate>
-                           <asp:Label ID="lblEditLoc" runat="server" Text='<%# Bind("eventLocation") %>'></asp:Label>
-                       </ItemTemplate>
-                       <HeaderStyle Width="20%" BackColor="#428BCA" />
-                   </asp:TemplateField>
-                   <asp:BoundField DataField="beginDate" HeaderText="Begin Date" SortExpression="beginDate" />
-                   <asp:BoundField DataField="endDate" HeaderText="End Date" SortExpression="endDate" />
-                   <asp:BoundField DataField="attendees" HeaderText="Attendees" SortExpression="attendees" />
+                   <asp:BoundField DataField="eventLocation" HeaderText="Event Location" SortExpression="eventLocation">
+                      <HeaderStyle BackColor="#428BCA" CssClass="sorting" />
+                   </asp:BoundField>
+                   <asp:BoundField DataField="beginDate" HeaderText="Begin Date" SortExpression="beginDate" >
+                      <HeaderStyle BackColor="#428BCA" CssClass="sorting" />
+                   </asp:BoundField>
+                   <asp:BoundField DataField="endDate" HeaderText="End Date" SortExpression="endDate" >
+                      <HeaderStyle BackColor="#428BCA" CssClass="sorting" />
+                   </asp:BoundField>
+                   <asp:BoundField DataField="attendees" HeaderText="Attendees" SortExpression="attendees" >
+                      <HeaderStyle BackColor="#428BCA" CssClass="sorting" />
+                   </asp:BoundField>
                    <asp:TemplateField HeaderText="Action">
 				       <itemtemplate>
-                          <div class="btn-group btn-group-sm">
-					         <asp:button id="btnEdit" runat="server" commandname="EditEvent" text="Edit" CssClass="btn btn-default" />
-					         <asp:button id="btnDelete" runat="server" commandname="DeleteEvent" text="Delete" CssClass="btn btn-default btn-danger" />
-                          </div>
+					         <asp:LinkButton id="btnDelete" runat="server" commandname="DeleteEvent" text="Delete" CssClass="btn btn-default btn-danger" CommandArgument='<%# Eval("eventID") %>'>
+                                 <i aria-hidden="true" class="glyphicon glyphicon-trash"></i> Delete
+                             </asp:LinkButton>
 				       </itemtemplate>
-				       <edititemtemplate>
-                         <div class="btn-group btn-group-sm">
-					        <asp:button id="btnUpdate" runat="server" commandname="AcceptEdit" text="Update" CssClass="btn btn-default" />
-					        <asp:button id="btnCancel" runat="server" commandname="CancelEdit" text="Cancel" CssClass="btn btn-default btn-danger" />
-                         </div>
-				       </edititemtemplate>
 			           <HeaderStyle BackColor="#428BCA" />
 			       </asp:TemplateField>
                   
                </Columns>
-               <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" />
+               <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="sorting" />
+                <SortedAscendingHeaderStyle CssClass="sorting_asc" />
+                <SortedDescendingHeaderStyle CssClass="sorting_desc" />
             </asp:GridView>
          </div>
       </div>
    </div>
    <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
-SELECT ev.eventId, eventName, eventLocation, MIN(ev_ti.eventDate) AS beginDate, MAX(ev_ti.eventDate) AS endDate,
+SELECT ev.eventID, eventName, eventLocation, Convert(varchar(11), CAST(MIN(ev_ti.eventDate) AS datetime)) AS beginDate, Convert(varchar(11), CAST(MAX(ev_ti.eventDate) AS datetime)) AS endDate,
        ( SELECT COUNT(DISTINCT scheduledUserID)
            FROM SEI_Ninja.dbo.SCHEDULED_USERS su
           WHERE su.eventTimeID = ev_ti.eventTimeID ) AS attendees
   FROM SEI_Ninja.dbo.[EVENT] ev
        LEFT OUTER JOIN SEI_Ninja.dbo.EVENT_TIMES ev_ti ON (ev.eventID = ev_ti.eventID)
- GROUP BY ev.eventID, eventName, eventLocation, eventTimeID
- ORDER BY eventName;" CancelSelectOnNullParameter="False"  UpdateCommand="
-UPDATE SEI_Ninja.dbo.[EVENT]
-   SET eventName = @eventName
- WHERE eventID = 2" DeleteCommand="
+ GROUP BY eventName, eventLocation, eventTimeID, ev.eventID
+ ORDER BY eventName;" CancelSelectOnNullParameter="False" DeleteCommand="
 DELETE FROM event
-     WHERE event_id = @event_id">
+     WHERE eventID = @eventID">
       <DeleteParameters>
-         <asp:ControlParameter ControlID="hdnRowID" Name="event_id" PropertyName="Value" />
+          <asp:ControlParameter ControlID="hdnRowID" DefaultValue="0" Name="eventID" PropertyName="Value" Type="Int32" />
       </DeleteParameters>
-      <UpdateParameters>
-         <asp:Parameter Name="eventName" />
-         <asp:Parameter Name="eventID" />
-      </UpdateParameters>
    </asp:SqlDataSource>
 
     <!-- jQuery -->
