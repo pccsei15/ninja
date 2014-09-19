@@ -16,20 +16,31 @@ namespace ProjectNinja
 
         protected void grdEventsTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            hdnRowID.Value = e.CommandArgument.ToString();
 
-            if (e.CommandName == "EditEvent")
+            if (e.CommandName == "EditEvent" || e.CommandName == "CancelEdit")
             {
-                grdEventsTable.EditIndex = Convert.ToInt32(e.CommandArgument);
-                grdEventsTable.DataBind();
+                GridViewRow gvr = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+                int RowIndex = gvr.RowIndex;
+
+                if (e.CommandName == "EditEvent")
+                    grdEventsTable.EditIndex = RowIndex;
+                else
+                    grdEventsTable.EditIndex = -1;
             }
-            else if (e.CommandName == "DeleteEvent")
+            else if (e.CommandName == "AcceptEdit" || e.CommandName == "DeleteEvent")
             {
-                sqlEvents.Delete();
-                grdEventsTable.DataBind();
+                hdnRowID.Value = e.CommandArgument.ToString();
+
+                if (e.CommandName == "AcceptEdit")
+                    sqlEvents.Update();
+                else
+                    sqlEvents.Delete();
+
+                hdnRowID.Value = null;
             }
 
-            hdnRowID.Value = null;
+            grdEventsTable.DataBind();
+
         }
     }
 }
