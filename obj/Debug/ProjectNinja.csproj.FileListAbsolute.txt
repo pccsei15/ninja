@@ -11,3 +11,8 @@ C:\Users\112043\Desktop\ProjectNinja\ProjectNinja\bin\ProjectNinja.dll
 C:\Users\112043\Desktop\ProjectNinja\ProjectNinja\bin\ProjectNinja.pdb
 C:\Users\112043\Desktop\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.dll
 C:\Users\112043\Desktop\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.pdb
+C:\Users\Josh\ninja\bin\ProjectNinja.dll
+C:\Users\Josh\ninja\bin\ProjectNinja.pdb
+C:\Users\Josh\ninja\obj\Debug\ProjectNinja.csprojResolveAssemblyReference.cache
+C:\Users\Josh\ninja\obj\Debug\ProjectNinja.dll
+C:\Users\Josh\ninja\obj\Debug\ProjectNinja.pdb
