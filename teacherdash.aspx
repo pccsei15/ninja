@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherdash.aspx.cs" Inherits="ProjectNinja.teacherdash" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <head>
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,7 +24,7 @@
   </head>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:HiddenField ID="hdnRowID" runat="server" />
+   <asp:HiddenField ID="hdnRowID" runat="server" />
    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
          <div class="navbar-header">
@@ -56,51 +56,72 @@
    <div class="row">
       <div class="col-sm-12 col-md-12 main">
          <div class="table-responsive">
-            <asp:GridView ID="grdEventsTable" runat="server" CssClass="table table-striped table-hover table-responsive" AutoGenerateColumns="False" 
-               DataSourceID="ProjectNinjaDB" ShowHeaderWhenEmpty="True" DataKeyNames="eventID" onrowcommand="grdEventsTable_RowCommand" AutoGenerateEditButton="True" 
-               Width="90%" AllowPaging="True" AllowSorting="True">
+            <asp:GridView ID="grdEventsTable" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
+               DataSourceID="sqlEvents" ShowHeaderWhenEmpty="True" DataKeyNames="eventID" onrowcommand="grdEventsTable_RowCommand" AllowPaging="True" AllowSorting="True">
                <Columns>
-                   <asp:BoundField DataField="eventID" HeaderText="Event ID" InsertVisible="False" ReadOnly="True" SortExpression="eventID" />
-                   <asp:BoundField DataField="eventName" HeaderText="Event Name" SortExpression="eventName" />
-                  <asp:BoundField HeaderText="Event Location" SortExpression="eventLocation" DataField="eventLocation">
-                  </asp:BoundField>
-                   <asp:BoundField DataField="eventOwner" HeaderText="Event Owner" SortExpression="eventOwner" />
- 
-                   <asp:ButtonField HeaderText="&amp;#x2a;" Text="Button">
-                   <ControlStyle CssClass="btn btn-default btn-danger" />
-                   </asp:ButtonField>
- 
+                   <asp:TemplateField HeaderText="Event Name" SortExpression="eventName">
+                       <EditItemTemplate>
+                           <asp:TextBox ID="txtEditName" runat="server" Text='<%# Bind("eventName") %>'></asp:TextBox>
+                       </EditItemTemplate>
+                       <ItemTemplate>
+                           <asp:Label ID="lblEditName" runat="server" Text='<%# Bind("eventName") %>'></asp:Label>
+                       </ItemTemplate>
+                       <HeaderStyle Width="30%" BackColor="#428BCA" />
+                   </asp:TemplateField>
+                   <asp:TemplateField HeaderText="Event Location" SortExpression="eventLocation">
+                       <EditItemTemplate>
+                           <asp:TextBox ID="txtEditLoc" runat="server" Text='<%# Bind("eventLocation") %>'></asp:TextBox>
+                       </EditItemTemplate>
+                       <ItemTemplate>
+                           <asp:Label ID="lblEditLoc" runat="server" Text='<%# Bind("eventLocation") %>'></asp:Label>
+                       </ItemTemplate>
+                       <HeaderStyle Width="20%" BackColor="#428BCA" />
+                   </asp:TemplateField>
+                   <asp:BoundField DataField="beginDate" HeaderText="Begin Date" SortExpression="beginDate" />
+                   <asp:BoundField DataField="endDate" HeaderText="End Date" SortExpression="endDate" />
+                   <asp:BoundField DataField="attendees" HeaderText="Attendees" SortExpression="attendees" />
+                   <asp:TemplateField HeaderText="Action">
+				       <itemtemplate>
+                          <div class="btn-group btn-group-sm">
+					         <asp:button id="btnEdit" runat="server" commandname="EditEvent" text="Edit" CssClass="btn btn-default" />
+					         <asp:button id="btnDelete" runat="server" commandname="DeleteEvent" text="Delete" CssClass="btn btn-default btn-danger" />
+                          </div>
+				       </itemtemplate>
+				       <edititemtemplate>
+                         <div class="btn-group btn-group-sm">
+					        <asp:button id="btnUpdate" runat="server" commandname="AcceptEdit" text="Update" CssClass="btn btn-default" />
+					        <asp:button id="btnCancel" runat="server" commandname="CancelEdit" text="Cancel" CssClass="btn btn-default btn-danger" />
+                         </div>
+				       </edititemtemplate>
+			           <HeaderStyle BackColor="#428BCA" />
+			       </asp:TemplateField>
+                  
                </Columns>
-               <HeaderStyle HorizontalAlign="Center" />
+               <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" />
             </asp:GridView>
-             <asp:SqlDataSource ID="ProjectNinjaDB" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventLocation], [eventOwner], [eventName], [eventID] FROM [EVENT]"></asp:SqlDataSource>
          </div>
       </div>
    </div>
-   <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="data source=XE;user id=Glenn;password=Hatt;" ProviderName="System.Data.OracleClient" SelectCommand="
-SELECT event_id, name, begin_date, end_date, attendees
-  FROM event
- WHERE :p_EventName IS NULL OR UPPER(name) LIKE UPPER(:p_EventName)||'%'" CancelSelectOnNullParameter="False"  UpdateCommand="
-UPDATE event
-   SET name       = :name,
-       begin_date = :begin_date,
-       end_date   = :end_date,
-       attendees  = :attendees
- WHERE event_id   = :event_id" DeleteCommand="
+   <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
+SELECT ev.eventId, eventName, eventLocation, MIN(ev_ti.eventDate) AS beginDate, MAX(ev_ti.eventDate) AS endDate,
+       ( SELECT COUNT(DISTINCT scheduledUserID)
+           FROM SEI_Ninja.dbo.SCHEDULED_USERS su
+          WHERE su.eventTimeID = ev_ti.eventTimeID ) AS attendees
+  FROM SEI_Ninja.dbo.[EVENT] ev
+       LEFT OUTER JOIN SEI_Ninja.dbo.EVENT_TIMES ev_ti ON (ev.eventID = ev_ti.eventID)
+ GROUP BY ev.eventID, eventName, eventLocation, eventTimeID
+ ORDER BY eventName;" CancelSelectOnNullParameter="False"  UpdateCommand="
+UPDATE SEI_Ninja.dbo.[EVENT]
+   SET eventName = @eventName
+ WHERE eventID = 2" DeleteCommand="
 DELETE FROM event
-     WHERE event_id = :event_id">
+     WHERE event_id = @event_id">
       <DeleteParameters>
          <asp:ControlParameter ControlID="hdnRowID" Name="event_id" PropertyName="Value" />
       </DeleteParameters>
-      <SelectParameters>
-         <asp:ControlParameter ControlID="txtSrcEvent" Name="p_EventName" PropertyName="Text" />
-      </SelectParameters>
       <UpdateParameters>
-         <asp:Parameter Name="name" />
-         <asp:Parameter Name="begin_date" />
-         <asp:Parameter Name="end_date" />
-         <asp:Parameter Name="attendees" />
-         <asp:Parameter Name="event_id" />
+         <asp:Parameter Name="eventName" />
+         <asp:Parameter Name="eventID" />
       </UpdateParameters>
    </asp:SqlDataSource>
 
