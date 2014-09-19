@@ -1,34 +1,32 @@
-$(document).ready(function() {
+// DataTables Functions
+
+$(document).ready(function () {
     $('#events-table').dataTable({
-      "paging": false,
-      "columns": [
-          { "orderable": false },
-          null,
-          null,
-          null,
-          null,
-          { "orderable": false }
+        "paging": false,
+        "columns": [
+            { "orderable": false },
+            null,
+            null,
+            null,
+            null,
+            { "orderable": false }
         ],
-      "order": [2, 'asc'],
-      "info": false
+        "order": [2, 'asc'],
+        "info": false
     });
 
-} );
-
-$(function() {
-  $('#datepicker').datepicker();
 });
 
-function TodaysDate() {
- var currentTime = new Date()
- var month = currentTime.getMonth() + 1
- var day = currentTime.getDate()
- var year = currentTime.getFullYear()
+// DatePicker Functions
 
- return month + "/" + day + "/" + year;
-}
+$(function () {
+    $('#datepicker').datepicker();
+});
 
-$("#btn-today").click(function() {
-  var today = new Date();
-  $('#datepicker').datepicker('setDate', TodaysDate()); 
+// Start the time and date picker
+$(function () {
+    $('#eventDate').datepicker({
+        todayHighlight: true,
+        todayBtn: "linked"
+    });
 });
