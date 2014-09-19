@@ -39,183 +39,26 @@
           <li class="active">First Interviews</li>
         </ol>
       </div>
-
+      
       <div class="row">
         <div class="col-sm-6 col-md-6 main">
-          <h1>First Interviews</h1>
+          <h1>First Interview</h1>
         </div>
         
       </div>
 
       <div class="row">
         <div class="col-md-3"  > 
-          <div class=" datepicker datepicker-inline" id="eventDate"></div>
+          <div class=" datepicker datepicker-inline" id="eventDate">
+              <asp:GridView ID="eventTimesGV" runat="server" AllowSorting="True" CssClass="table table-bordered table-responsive" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" DataSourceID="SqlDataSource1" Width="855px">
+                  <Columns>
+                      <asp:CommandField ShowSelectButton="True" />
+                  </Columns>
+              </asp:GridView>
+              <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
+            </div>
         </div> <!-- end datapicker -->
         <div class="col-md-9">
-          <table class="table table-bordered table-responsive" style="background:#fff;" id="agenda-table">
-            <thead>
-              <tr>
-                <th style="width:15%"></th>
-                <th style="width:17%">Monday</th>
-                <th style="width:17%">Tuesday</th>
-                <th style="width:17%">Wednesday</th>
-                <th style="width:17%">Thursday</th>
-                <th style="width:17%">Friday</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td rowspan="2">8am</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">9am</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">10am</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">11am</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">12pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">1pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">2pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">3pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">4pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">5pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
 
@@ -239,7 +82,10 @@
         $(function () {
             $('#eventDate').datepicker({
                 todayHighlight: true,
-                todayBtn: "linked"
+                todayBtn: "linked",
+                daysOfWeekDisabled: "0,6,2",
+                startDate: "9-15-2014", //variable to change start/end date with c# .
+                endDate: "9-21-2014"
             });
         });
      </script>
