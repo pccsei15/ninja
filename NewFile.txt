@@ -1,3 +1,0 @@
-This is a test...
-
-This line was added through UNIX (Mac) command line
