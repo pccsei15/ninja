@@ -8,7 +8,6 @@ using System.Data.SqlClient;
 
 namespace ProjectNinja
 {
-<<<<<<< HEAD
     public partial class eventpage : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -63,30 +62,3 @@ namespace ProjectNinja
 
     }
 }
-
-=======
-   public partial class eventpage : System.Web.UI.Page
-   {
-      protected void Page_Load(object sender, EventArgs e)
-      {
-          using (SqlConnection thisConnection = new SqlConnection("Server=172.16.212.212;Database=SEI_Ninja;User ID=999999;Password=99999999;Trusted_Connection=True;"))
-          {
-              thisConnection.Open();
-
-              using (SqlCommand thisCommand = thisConnection.CreateCommand())
-              {
-                  thisCommand.CommandText = "SELECT * FROM [SEI_Ninja].[dbo].[SCHEDULED_USERS] NschedUsers JOIN [SEI_TimeMachine2].[dbo].[USER] TMusers ON TMusers.user_id = NschedUsers.userID JOIN [SEI_Ninja].[dbo].[EVENT_TIMES] Ntime ON NschedUsers.eventTimeID = Ntime.eventTimeID JOIN [SEI_Ninja].[dbo].[EVENT] Nevent ON Nevent.eventID = Ntime.eventID WHERE NschedUsers.userID = 113920;";
-
-                  using (SqlDataReader thisReader = thisCommand.ExecuteReader())
-                  {
-                      while (thisReader.Read())
-                      {
-                         // MessageBox.Show(thisReader["user_first_name"].ToString());
-                      }
-                  }
-              }
-          }
-      }
-   }
-}
->>>>>>> af11526218380b984ea115af8b761da7ebcc61d4

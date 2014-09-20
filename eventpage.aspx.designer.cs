@@ -11,7 +11,6 @@ namespace ProjectNinja {
     
     
     public partial class eventpage {
-<<<<<<< HEAD
         
         /// <summary>
         /// DropDownList1 control.
@@ -39,7 +38,5 @@ namespace ProjectNinja {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
-=======
->>>>>>> af11526218380b984ea115af8b761da7ebcc61d4
     }
 }
