@@ -149,7 +149,7 @@
         SelectCommand=" SELECT ec.courseID, e.eventLocation, e.eventName
                         FROM SEI_Ninja.dbo.EVENT e
 	                    JOIN SEI_Ninja.dbo.EVENT_COURSES ec ON (e.eventID = ec.eventID)
-                        WHERE ec.eventID = 3;"
+                        WHERE ec.eventID = @eventID;"
         CancelSelectOnNullParameter="False" 
         UpdateCommand="
             UPDATE SEI_Ninja.dbo.[EVENT]
@@ -167,7 +167,7 @@
         ProviderName="System.Data.SqlClient"
         SelectCommand="SELECT et.eventDate
                         FROM SEI_Ninja.dbo.EVENT_TIMES et
-                         WHERE et.eventID = 3;"
+                         WHERE et.eventID = @enventID;"
         CancelSelectOnNullParameter="False" 
         UpdateCommand="
             UPDATE SEI_Ninja.dbo.[EVENT]
