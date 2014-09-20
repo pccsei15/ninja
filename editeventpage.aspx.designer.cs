@@ -10,25 +10,16 @@
 namespace ProjectNinja {
     
     
-    public partial class teacherdash {
+    public partial class neweventpage {
         
         /// <summary>
-        /// hdnRowID control.
+        /// eventFormView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnRowID;
-        
-        /// <summary>
-        /// grdEventsTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdEventsTable;
+        protected global::System.Web.UI.WebControls.FormView eventFormView;
         
         /// <summary>
         /// sqlEvents control.
@@ -38,5 +29,14 @@ namespace ProjectNinja {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource sqlEvents;
+        
+        /// <summary>
+        /// Timeslots control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource Timeslots;
     }
 }
