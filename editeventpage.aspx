@@ -59,7 +59,7 @@
         <ItemTemplate>
 
             <asp:Label ID="Label1" runat="server" Text="Label">Event Name
-            <asp:TextBox ID="TextBox1" runat="server" text='<%# Eval("eventName") %>'></asp:TextBox>
+            <asp:TextBox ID="txtEventName" runat="server" text='<%# Eval("eventName") %>'></asp:TextBox>
             </asp:Label>
 
                <!--<label for="eventName"></label>
@@ -141,15 +141,16 @@
          </table>
       </div><!-- end agendaTableHolder -->
     
-     <asp:SqlDataSource 
+     <asp:SqlDataSource    
         ID="sqlEvents"
         runat="server" 
         ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" 
         ProviderName="System.Data.SqlClient"
-        SelectCommand=" SELECT ec.courseID, e.eventLocation, e.eventName
-                        FROM SEI_Ninja.dbo.EVENT e
-	                    JOIN SEI_Ninja.dbo.EVENT_COURSES ec ON (e.eventID = ec.eventID)
-                        WHERE ec.eventID = @eventID;"
+        SelectCommand=" 
+            SELECT ec.courseID, e.eventLocation, e.eventName
+            FROM [SEI_Ninja].[dbo].EVENT e
+            JOIN [SEI_Ninja].[dbo].EVENT_COURSES ec ON (e.eventID = ec.eventID)
+            WHERE ec.eventID = @eventID"
         CancelSelectOnNullParameter="False" 
         UpdateCommand="
             UPDATE SEI_Ninja.dbo.[EVENT]
@@ -165,9 +166,10 @@
         runat="server" 
         ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" 
         ProviderName="System.Data.SqlClient"
-        SelectCommand="SELECT et.eventDate
-                        FROM SEI_Ninja.dbo.EVENT_TIMES et
-                         WHERE et.eventID = @enventID;"
+        SelectCommand=" 
+            SELECT et.eventDate
+            FROM [SEI_Ninja].[dbo].EVENT_TIMES et
+            WHERE et.eventID = @eventID"
         CancelSelectOnNullParameter="False" 
         UpdateCommand="
             UPDATE SEI_Ninja.dbo.[EVENT]
@@ -175,7 +177,7 @@
             WHERE eventID   = @eventID"
        DeleteCommand="
             DELETE FROM event
-            WHERE eventID = @eventID">
+            WHERE eventID = @eventID" UpdateCommandType="StoredProcedure">
          </asp:SqlDataSource>
       
       <!-- end main content -->  
