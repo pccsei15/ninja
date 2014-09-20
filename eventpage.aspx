@@ -23,20 +23,25 @@
         </div>
         
       </div>
-
+        
       <div class="row">
         <div class="col-md-3"  > 
           <div class=" datepicker datepicker-inline" id="eventDate">
               
-            </div>
+          </div>
         </div> <!-- end datapicker -->
+
+        <div class="col-md-3"> 
+            <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="eventName" DataValueField="eventName"></asp:DropDownList>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventName] FROM [EVENT]"></asp:SqlDataSource>
+        </div>
+
         <div class="col-md-9">
-            <asp:GridView ID="eventTimesGV" runat="server" AllowSorting="True" CssClass="table table-bordered table-responsive" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" DataSourceID="SqlDataSource1" Width="855px">
-                <Columns>
-                    <asp:CommandField ShowSelectButton="True" />
-                </Columns>
-            </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
+            
+            <asp:Table ID="Table1" runat="server" CssClass="table table-bordered table-responsive">
+            
+            </asp:Table>
+            
         </div>
       </div>
 
