@@ -52,7 +52,7 @@
                <Columns>
                    <asp:TemplateField HeaderText="Event Name" SortExpression="eventName">
                        <ItemTemplate>
-                           <asp:LinkButton ID="lblEditName" runat="server" Text='<%# Bind("eventName") %>' CommandArgument='<%# Bind("eventID") %>' OnClick="lnkEvent_Click"></asp:LinkButton>
+                           <asp:LinkButton ID="lblEditName" runat="server" Text='<%# Bind("eventName") %>' CommandArgument='<%# Bind("eventID") %>' OnClick="editeventpage.aspx"></asp:LinkButton>
                        </ItemTemplate>
                        <HeaderStyle Width="30%" BackColor="#428BCA" CssClass="sorting" />
                    </asp:TemplateField>
@@ -93,12 +93,19 @@ SELECT ev.eventID, eventName, eventLocation, Convert(varchar(11), CAST(MIN(ev_ti
   FROM SEI_Ninja.dbo.[EVENT] ev
        LEFT OUTER JOIN SEI_Ninja.dbo.EVENT_TIMES ev_ti ON (ev.eventID = ev_ti.eventID)
  GROUP BY eventName, eventLocation, eventTimeID, ev.eventID
- ORDER BY eventName;" CancelSelectOnNullParameter="False" DeleteCommand="
+ ORDER BY eventName;" CancelSelectOnNullParameter="False"  UpdateCommand="
+UPDATE SEI_Ninja.dbo.[EVENT]
+   SET eventName = @eventName
+ WHERE eventID   = @eventID" DeleteCommand="
 DELETE FROM event
      WHERE eventID = @eventID">
       <DeleteParameters>
           <asp:ControlParameter ControlID="hdnRowID" DefaultValue="0" Name="eventID" PropertyName="Value" Type="Int32" />
       </DeleteParameters>
+      <UpdateParameters>
+          <asp:ControlParameter ControlID="hdnName" Name="eventName" PropertyName="Value" />
+          <asp:ControlParameter ControlID="hdnID" Name="eventID" PropertyName="Value" />
+      </UpdateParameters>
    </asp:SqlDataSource>
 
     <!-- jQuery -->

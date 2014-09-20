@@ -10,6 +10,6 @@
 namespace ProjectNinja {
     
     
-    public partial class eventpage {
+    public partial class teacherCalendar {
     }
 }
