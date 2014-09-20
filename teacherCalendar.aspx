@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="eventpage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherCalendar.aspx.cs" Inherits="ProjectNinja.teacherCalendar" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -46,31 +46,12 @@
         </div>
         
       </div>
-        
+
       <div class="row">
         <div class="col-md-3"  > 
-<<<<<<< HEAD
-          <div class=" datepicker datepicker-inline" id="eventDate">
-              
-          </div>
-=======
           <div class=" datepicker datepicker-inline" id="eventDate"></div>
->>>>>>> af11526218380b984ea115af8b761da7ebcc61d4
         </div> <!-- end datapicker -->
-
-        <div class="col-md-3"> 
-            <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="eventName" DataValueField="eventName"></asp:DropDownList>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventName] FROM [EVENT]"></asp:SqlDataSource>
-        </div>
-
         <div class="col-md-9">
-<<<<<<< HEAD
-            
-            <asp:Table ID="Table1" runat="server" CssClass="table table-bordered table-responsive">
-            
-            </asp:Table>
-            
-=======
           <table class="table table-bordered table-responsive" style="background:#fff;" id="agenda-table">
             <thead>
               <tr>
@@ -235,7 +216,6 @@
               </tr>
             </tbody>
           </table>
->>>>>>> af11526218380b984ea115af8b761da7ebcc61d4
         </div>
       </div>
 
@@ -254,5 +234,13 @@
    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.1/js/jquery.dataTables.min.js"></script>
    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
     <script src="js/app.js"></script>
-
+    <script>
+        // Start the time and date picker
+        $(function () {
+            $('#eventDate').datepicker({
+                todayHighlight: true,
+                todayBtn: "linked"
+            });
+        });
+     </script>
 </asp:Content>

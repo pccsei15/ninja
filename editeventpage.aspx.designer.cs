@@ -10,36 +10,33 @@
 namespace ProjectNinja {
     
     
-    public partial class eventpage {
-<<<<<<< HEAD
+    public partial class neweventpage {
         
         /// <summary>
-        /// DropDownList1 control.
+        /// eventFormView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.FormView eventFormView;
         
         /// <summary>
-        /// SqlDataSource1 control.
+        /// sqlEvents control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
+        protected global::System.Web.UI.WebControls.SqlDataSource sqlEvents;
         
         /// <summary>
-        /// Table1 control.
+        /// Timeslots control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
-=======
->>>>>>> af11526218380b984ea115af8b761da7ebcc61d4
+        protected global::System.Web.UI.WebControls.SqlDataSource Timeslots;
     }
 }
