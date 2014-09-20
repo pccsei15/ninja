@@ -11,25 +11,5 @@ C:\Users\112043\Desktop\ProjectNinja\ProjectNinja\bin\ProjectNinja.dll
 C:\Users\112043\Desktop\ProjectNinja\ProjectNinja\bin\ProjectNinja.pdb
 C:\Users\112043\Desktop\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.dll
 C:\Users\112043\Desktop\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.pdb
-<<<<<<< HEAD
-C:\Users\Josh\ninja\bin\ProjectNinja.dll
-C:\Users\Josh\ninja\bin\ProjectNinja.pdb
-C:\Users\Josh\ninja\obj\Debug\ProjectNinja.csprojResolveAssemblyReference.cache
-C:\Users\Josh\ninja\obj\Debug\ProjectNinja.dll
-C:\Users\Josh\ninja\obj\Debug\ProjectNinja.pdb
-C:\Users\119080\Desktop\GitHub\ninja\bin\ProjectNinja.dll
-C:\Users\119080\Desktop\GitHub\ninja\bin\ProjectNinja.pdb
-C:\Users\119080\Desktop\GitHub\ninja\obj\Debug\ProjectNinja.csprojResolveAssemblyReference.cache
-C:\Users\119080\Desktop\GitHub\ninja\obj\Debug\ProjectNinja.dll
-C:\Users\119080\Desktop\GitHub\ninja\obj\Debug\ProjectNinja.pdb
-=======
-H:\Temp\ProjectNinja\ProjectNinja\bin\ProjectNinja.dll
-H:\Temp\ProjectNinja\ProjectNinja\bin\ProjectNinja.pdb
-H:\Temp\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.dll
-H:\Temp\ProjectNinja\ProjectNinja\obj\Debug\ProjectNinja.pdb
-\\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja (9-17)\ProjectNinja\bin\ProjectNinja.dll
-\\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja (9-17)\ProjectNinja\bin\ProjectNinja.pdb
 \\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja (9-17)\ProjectNinja\obj\Debug\ProjectNinja.csprojResolveAssemblyReference.cache
 \\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja (9-17)\ProjectNinja\obj\Debug\ProjectNinja.dll
-\\csmain\Classes\SE_Project\Development\15-Ninja\ProjectNinja (9-17)\ProjectNinja\obj\Debug\ProjectNinja.pdb
->>>>>>> af11526218380b984ea115af8b761da7ebcc61d4
