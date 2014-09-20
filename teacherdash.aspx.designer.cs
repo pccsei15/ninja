@@ -22,33 +22,6 @@ namespace ProjectNinja {
         protected global::System.Web.UI.WebControls.HiddenField hdnRowID;
         
         /// <summary>
-        /// lblTest control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTest;
-        
-        /// <summary>
-        /// btnSrcEvents control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSrcEvents;
-        
-        /// <summary>
-        /// txtSrcEvent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSrcEvent;
-        
-        /// <summary>
         /// grdEventsTable control.
         /// </summary>
         /// <remarks>
