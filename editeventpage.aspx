@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="editeventpage.aspx.cs" Inherits="ProjectNinja.neweventpage" %>
+﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="editeventpage.aspx.cs" Inherits="ProjectNinja.neweventpage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -140,8 +140,9 @@
             </tbody>
          </table>
       </div><!-- end agendaTableHolder -->
-    
-     <asp:SqlDataSource    
+     
+     <asp:SqlDataSource
+      
         ID="sqlEvents"
         runat="server" 
         ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" 
@@ -170,6 +171,7 @@
             SELECT et.eventDate
             FROM [SEI_Ninja].[dbo].EVENT_TIMES et
             WHERE et.eventID = @eventID"
+
         CancelSelectOnNullParameter="False" 
         UpdateCommand="
             UPDATE SEI_Ninja.dbo.[EVENT]
@@ -177,7 +179,7 @@
             WHERE eventID   = @eventID"
        DeleteCommand="
             DELETE FROM event
-            WHERE eventID = @eventID" UpdateCommandType="StoredProcedure">
+            WHERE eventID = @eventID">
          </asp:SqlDataSource>
       
       <!-- end main content -->  
