@@ -19,6 +19,11 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,6 +74,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\dataTables.bootstrap.css" />
     <Content Include="css\jquery.timepicker.css" />
+    <Content Include="editeventpage.aspx" />
     <Content Include="eventpage.aspx" />
     <Content Include="eventpage.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -95,6 +101,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="editeventpage.aspx.cs">
+      <DependentUpon>editeventpage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editeventpage.aspx.designer.cs">
+      <DependentUpon>editeventpage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="eventpage.aspx.cs">
       <DependentUpon>eventpage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -156,7 +169,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>5504</DevelopmentServerPort>
+          <DevelopmentServerPort>51469</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
