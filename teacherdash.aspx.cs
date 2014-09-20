@@ -20,7 +20,7 @@ namespace ProjectNinja
             if (e.CommandName == "DeleteEvent")
             {
                 hdnRowID.Value = e.CommandArgument.ToString();
-                sqlEvents.Delete();
+                sqlEvents.Delete();                
                 grdTeacherEventsTable.DataBind();
                 hdnRowID.Value = null;
             }
