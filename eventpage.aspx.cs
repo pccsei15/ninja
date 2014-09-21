@@ -31,19 +31,19 @@ namespace ProjectNinja
             //        }
             //    }
             //}
-            int rows = 3;
-            int cols = 2;
-            for (int j = 0; j < rows; j++)
-            {
-                TableRow r = new TableRow();
-                for (int i = 0; i < cols; i++)
-                {
-                    TableCell c = new TableCell();
-                    c.Controls.Add(new LiteralControl("row " + j.ToString() + ", cell " + i.ToString()));
-                    r.Cells.Add(c);
-                }
-                Table1.Rows.Add(r);
-            }
+            //int rows = 3;
+            //int cols = 2;
+            //for (int j = 0; j < rows; j++)
+            //{
+            //    TableRow r = new TableRow();
+            //    for (int i = 0; i < cols; i++)
+            //    {
+            //        TableCell c = new TableCell();
+            //        c.Controls.Add(new LiteralControl("row " + j.ToString() + ", cell " + i.ToString()));
+            //        r.Cells.Add(c);
+            //    }
+            //    Table1.Rows.Add(r);
+            //}
         }
         protected override void OnLoad(EventArgs e)
         {
