@@ -43,20 +43,8 @@ $(document).ready(function () {
     $("#grdEventsAvailable").tablesorter({ sortList: [[1, 0]] });
 });
 
-$(function() {
-  $('#datepicker').datepicker();
-});
 
-function TodaysDate() {
- var currentTime = new Date()
- var month = currentTime.getMonth() + 1
- var day = currentTime.getDate()
- var year = currentTime.getFullYear()
-
- return month + "/" + day + "/" + year;
-}
-
-$("#btn-today").click(function() {
-  var today = new Date();
-  $('#datepicker').datepicker('setDate', TodaysDate()); 
+$('#eventDate').datepicker({
+    todayBtn: "linked",
+    daysOfWeekDisabled: "0,6"
 });
