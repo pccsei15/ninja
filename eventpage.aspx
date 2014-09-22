@@ -53,7 +53,6 @@
                </Columns>
                     <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="black" />
                 </asp:GridView>
-                <%--<asp:SqlDataSource ID="SqlDataSource3" runat="server"></asp:SqlDataSource>--%>
                 <asp:SqlDataSource ID="sqlEventpage" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
                     SELECT ev.eventID, eventName, eventLocation, MIN(ev_ti.eventDate) AS beginDate, MAX(ev_ti.eventDate) AS endDate,
                            ( SELECT COUNT(DISTINCT scheduledUserID)
