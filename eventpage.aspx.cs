@@ -57,6 +57,16 @@ namespace ProjectNinja
             //needs code here
         }
 
+        protected void GridView1_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void GridView1_SelectedIndexChanged2(object sender, EventArgs e)
+        {
+
+        }
+
 
 
 
