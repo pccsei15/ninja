@@ -8,18 +8,18 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <!-- ASP Content Placeholder for Page Title -->
+        <!-- Page Title -->
         <asp:ContentPlaceHolder ID="pageTitle" runat="server">
 
         </asp:ContentPlaceHolder>
 
         <!-- Bootstrap CSS -->
-        <link type="text/css" rel="stylesheet" href="css/bootstrap.css" />
-        <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-        <link type="text/css" rel="stylesheet" href="css/bootstrap-datepicker.css" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/jquery-ui.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
 
         <!-- Datatables CSS -->
-        <link type="text/css" rel="stylesheet" href="http://cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-datatables.min.css" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -30,7 +30,7 @@
         <!-- App CSS -->
         <link type="text/css" rel="stylesheet" href="css/app.css" />
 
-        <!-- ASP Content Placeholder for extra page CSS -->
+        <!-- Page-specific CSS -->
         <asp:ContentPlaceHolder ID="extraCss" runat="server">
 
         </asp:ContentPlaceHolder>
@@ -48,7 +48,7 @@
 			            <a class="navbar-brand" href="teacherdash.html">Project Ninja</a>
 			        </div>
 		        </div>
-                <!-- ASP Content Placeholder for the page breadcrumb -->
+                <!-- Page breadcrumb -->
                 <div class="row">
                     <ol class="breadcrumb" style="margin-bottom: 0;">
                         <li><a href="#">Dashboard</a></li>
@@ -56,28 +56,28 @@
                         </asp:ContentPlaceHolder>
                     </ol>
                 </div>
-                <!-- ASP Content Placeholder for the page content -->
+                <!-- Page content -->
                 <asp:ContentPlaceHolder ID="mainContent" runat="server">
                     
                 </asp:ContentPlaceHolder>
-
             </div>
+            
         </form>
 
         <!-- jQuery -->
-        <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-        <script type="text/javascript" charset="utf8" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/bootstrap.min.js"></script>
 
         <!-- DataTables -->
-        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.1/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/dataTables.bootstrap.js"></script>
         
         <!-- App-specific JavaScript -->
         <script type="text/javascript" charset="utf8" src="js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" charset="utf8" src="js/app.js"></script>
 
-        <!-- ASP Content Placeholder for extra page JavaScript -->
+        <!-- Page-specific JavaScript -->
         <asp:ContentPlaceHolder ID="ExtraJs" runat="server">
             
         </asp:ContentPlaceHolder>
