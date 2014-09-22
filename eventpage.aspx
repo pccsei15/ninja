@@ -25,24 +25,24 @@
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventDate] FROM [EVENT_TIMES]"></asp:SqlDataSource>
         </div>--%>
         <div class="col-md-3">
-            <asp:DropDownList ID="EventNameSelect" runat="server" DataSourceID="sqlSelectEvent" DataTextField="eventName" DataValueField="eventName">
+            <asp:DropDownList ID="EventNameSelect" runat="server" DataSourceID="sqlSelectEvent" DataTextField="eventName" DataValueField="eventID" OnSelectedIndexChanged="EventNameSelect_SelectedIndexChanged" AutoPostBack="True">
 
             </asp:DropDownList>
-            <asp:SqlDataSource ID="sqlSelectEvent" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventName] FROM [EVENT]"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="sqlSelectEvent" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventName], eventID FROM [EVENT]"></asp:SqlDataSource>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="table-responsive">
-                <asp:GridView ID="GridView1" runat="server" DataSourceID="sqlEventpage" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged2" CssClass="table table-striped table-hover table-responsive" GridLines="None">
+                <asp:GridView ID="GridView1" runat="server" DataSourceID="sqlEventpage" AutoGenerateColumns="False" CssClass="table table-striped table-hover table-responsive" GridLines="None" OnSelectedIndexChanged="GridView1_SelectedIndexChanged1">
                     <Columns>
-                   <asp:BoundField DataField="eventName" HeaderText="eventName" SortExpression="eventName">
+                   <asp:BoundField DataField="eventName" HeaderText="Event" SortExpression="eventName">
                    </asp:BoundField>
-                   <asp:BoundField DataField="eventLocation" HeaderText="eventLocation" SortExpression="eventLocation" >
+                   <asp:BoundField DataField="eventLocation" HeaderText="Location" SortExpression="eventLocation" >
                    </asp:BoundField>
-                   <asp:BoundField DataField="beginDate" HeaderText="beginDate" SortExpression="beginDate" ReadOnly="True" >
+                   <asp:BoundField DataField="beginDate" HeaderText="Begin" SortExpression="beginDate" ReadOnly="True" >
                    </asp:BoundField>
-                   <asp:BoundField DataField="endDate" HeaderText="endDate" SortExpression="endDate" ReadOnly="True" >
+                   <asp:BoundField DataField="endDate" HeaderText="End" SortExpression="endDate" ReadOnly="True" >
                    </asp:BoundField>
-                   <asp:BoundField DataField="attendees" HeaderText="attendees" ReadOnly="True" SortExpression="attendees" />
+                   
                    <asp:TemplateField HeaderText="Action">
 				       <itemtemplate>
 					         <asp:button id="btnSignUp" runat="server" commandname="SignUpEvent" text="Sign Up" CssClass="btn btn-default btn-primary" CommandArgument='<%# Eval("eventID") %>' />
@@ -61,13 +61,15 @@
                               WHERE su.eventTimeID = ev_ti.eventTimeID ) AS attendees
                       FROM SEI_Ninja.dbo.[EVENT] ev
                            LEFT OUTER JOIN SEI_Ninja.dbo.EVENT_TIMES ev_ti ON (ev.eventID = ev_ti.eventID)
+                     WHERE ev.eventID   = @eventID
                      GROUP BY ev.eventID, eventName, eventLocation, eventTimeID
                      ORDER BY eventName;" CancelSelectOnNullParameter="False"  UpdateCommand="
                     UPDATE SEI_Ninja.dbo.[EVENT]
                        SET eventName = @eventName
-                     WHERE eventID   = @eventID" DeleteCommand="
-                    DELETE FROM event
-                         WHERE eventID = @eventID">
+                     WHERE eventID   = @eventID"> 
+                  <SelectParameters>
+                      <asp:ControlParameter ControlID="EventNameSelect" DefaultValue="0" Name="eventID" PropertyName="SelectedValue" Type="Int32" />
+                  </SelectParameters>
                   <DeleteParameters>
                       <asp:ControlParameter ControlID="hdnRowID" DefaultValue="0" Name="eventID" PropertyName="Value" Type="Int32" />
                   </DeleteParameters>
