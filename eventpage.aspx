@@ -16,60 +16,68 @@
         <div class="col-sm-6 col-md-6 main">
           <h1>First Interviews</h1>
         </div>
-        
       </div>
-        
+      
       <div class="row">
-        <div class="col-md-3"  > 
-          <div class="datepicker datepicker-inline" id="eventDate"></div>
-        </div> <!-- end datapicker -->
-
-        <%--<div class="col-md-3"> 
-            <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="eventName" DataValueField="eventName"></asp:DropDownList>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventName] FROM [EVENT]"></asp:SqlDataSource>
-        </div>--%>
+       
         <%--<div class="col-md-3"> 
             <asp:DropDownList ID="DropDownList2" runat="server" DataSourceID="SqlDataSource2" DataTextField="eventTime" DataValueField="eventTime"></asp:DropDownList>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventTime] FROM [EVENT]"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventDate] FROM [EVENT_TIMES]"></asp:SqlDataSource>
         </div>--%>
-        
-        <div class="col-md-9">
-            <div class="row">
-      <div class="col-sm-12 col-md-12 main">
-         <div class="table-responsive">
-            <asp:GridView ID="gridview1" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
-               DataSourceID="sqlEvents" DataKeyNames="eventID"  >
-               <Columns>
-                   <asp:TemplateField HeaderText="Event Name" SortExpression="eventName">
-                       <ItemTemplate>
-                           <%--<asp:LinkButton ID="lblEditName" runat="server" Text='<%# Bind("eventName") %>' CommandArgument='<%# Bind("eventID") %>' OnClick="lnkEvent_Click"></asp:LinkButton>--%>
-                       </ItemTemplate>
-                   </asp:TemplateField>
-                   <asp:BoundField DataField="eventLocation" HeaderText="Event Location" SortExpression="eventLocation">
+        <div class="col-md-3">
+            <asp:DropDownList ID="EventNameSelect" runat="server" DataSourceID="sqlSelectEvent" DataTextField="eventName" DataValueField="eventName">
+
+            </asp:DropDownList>
+            <asp:SqlDataSource ID="sqlSelectEvent" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventName] FROM [EVENT]"></asp:SqlDataSource>
+        </div>
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <asp:GridView ID="GridView1" runat="server" DataSourceID="sqlEventpage" AutoGenerateColumns="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged2" CssClass="table table-striped table-hover table-responsive" GridLines="None">
+                    <Columns>
+                   <asp:BoundField DataField="eventName" HeaderText="eventName" SortExpression="eventName">
                    </asp:BoundField>
-                   <asp:BoundField DataField="beginDate" HeaderText="Begin Date" SortExpression="beginDate" DataFormatString="{0:f}" >
+                   <asp:BoundField DataField="eventLocation" HeaderText="eventLocation" SortExpression="eventLocation" >
                    </asp:BoundField>
-                   <asp:BoundField DataField="endDate" HeaderText="End Date" SortExpression="endDate" DataFormatString="{0:f}" >
+                   <asp:BoundField DataField="beginDate" HeaderText="beginDate" SortExpression="beginDate" ReadOnly="True" >
                    </asp:BoundField>
-                   <asp:BoundField DataField="attendees" HeaderText="Attendees" SortExpression="attendees" >
+                   <asp:BoundField DataField="endDate" HeaderText="endDate" SortExpression="endDate" ReadOnly="True" >
                    </asp:BoundField>
+                   <asp:BoundField DataField="attendees" HeaderText="attendees" ReadOnly="True" SortExpression="attendees" />
                    <asp:TemplateField HeaderText="Action">
 				       <itemtemplate>
-					         <asp:LinkButton id="btnDelete" runat="server" commandname="DeleteEvent" text="Delete" CssClass="btn btn-default btn-danger" CommandArgument='<%# Eval("eventID") %>'>
-                                 <i aria-hidden="true" class="glyphicon glyphicon-trash"></i> Delete
-                             </asp:LinkButton>
+					         <asp:button id="btnSignUp" runat="server" commandname="SignUpEvent" text="Sign Up" CssClass="btn btn-default btn-primary" CommandArgument='<%# Eval("eventID") %>' />
 				       </itemtemplate>
-                       
+			           
 			       </asp:TemplateField>
                   
                </Columns>
-               <RowStyle CssClass="rowStyle" />
-               <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
-               <FooterStyle CssClass="footerStyle" />
-            </asp:GridView>
-         </div>
-      </div>
+                    <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="black" />
+                </asp:GridView>
+                <%--<asp:SqlDataSource ID="SqlDataSource3" runat="server"></asp:SqlDataSource>--%>
+                <asp:SqlDataSource ID="sqlEventpage" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
+                    SELECT ev.eventID, eventName, eventLocation, MIN(ev_ti.eventDate) AS beginDate, MAX(ev_ti.eventDate) AS endDate,
+                           ( SELECT COUNT(DISTINCT scheduledUserID)
+                               FROM SEI_Ninja.dbo.SCHEDULED_USERS su
+                              WHERE su.eventTimeID = ev_ti.eventTimeID ) AS attendees
+                      FROM SEI_Ninja.dbo.[EVENT] ev
+                           LEFT OUTER JOIN SEI_Ninja.dbo.EVENT_TIMES ev_ti ON (ev.eventID = ev_ti.eventID)
+                     GROUP BY ev.eventID, eventName, eventLocation, eventTimeID
+                     ORDER BY eventName;" CancelSelectOnNullParameter="False"  UpdateCommand="
+                    UPDATE SEI_Ninja.dbo.[EVENT]
+                       SET eventName = @eventName
+                     WHERE eventID   = @eventID" DeleteCommand="
+                    DELETE FROM event
+                         WHERE eventID = @eventID">
+                  <DeleteParameters>
+                      <asp:ControlParameter ControlID="hdnRowID" DefaultValue="0" Name="eventID" PropertyName="Value" Type="Int32" />
+                  </DeleteParameters>
+                  <UpdateParameters>
+                      <asp:ControlParameter ControlID="hdnName" Name="eventName" PropertyName="Value" />
+                      <asp:ControlParameter ControlID="hdnID" Name="eventID" PropertyName="Value" />
+                  </UpdateParameters>
+               </asp:SqlDataSource>
         </div>
       </div>
+     </div>
     </div>
 </asp:content>
