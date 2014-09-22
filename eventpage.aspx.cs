@@ -14,14 +14,14 @@ namespace ProjectNinja
         {
             if (this.IsPostBack)
             {
-                EventNameSelect.SelectedValue = Session["Ninja.eventId"];
+                //EventNameSelect.SelectedValue = Session["Ninja.eventId"];
             }
         }
 
-        protected void EventNameSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Session["Ninja.eventID"] = EventNameSelect.SelectedValue;
-        }
+        //protected void EventNameSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    Session["Ninja.eventID"] = EventNameSelect.SelectedValue;
+        //}
 
 
         
