@@ -14,7 +14,7 @@ namespace ProjectNinja
         {
             if (this.IsPostBack)
             {
-                EventNameSelect.SelectedValue = Session["Ninja.eventId"];
+                //EventNameSelect.SelectedValue = Session["Ninja.eventId"];
             }
         }
 
