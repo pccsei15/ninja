@@ -83,6 +83,7 @@
     <Content Include="js\bootstrap-datepicker.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\calendar.js" />
     <Content Include="js\dataTables.bootstrap.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\jquery.dataTables.min.js" />
@@ -90,6 +91,7 @@
     <Content Include="js\jquery.timepicker.js" />
     <Content Include="newevent.html" />
     <Content Include="neweventpage.aspx" />
+    <Content Include="teacherCalendar.aspx" />
     <Content Include="teacherdash.aspx" />
     <Content Include="teacherdash.html" />
     <Content Include="Web.config" />
@@ -130,6 +132,13 @@
       <DependentUpon>neweventpage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="teacherCalendar.aspx.cs">
+      <DependentUpon>teacherCalendar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="teacherCalendar.aspx.designer.cs">
+      <DependentUpon>teacherCalendar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="teacherdash.aspx.cs">
       <DependentUpon>teacherdash.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
