@@ -1,0 +1,5 @@
+C:\Users\112043\Desktop\ninja\obj\Debug\ProjectNinja.csprojResolveAssemblyReference.cache
+C:\Users\112043\Desktop\ninja\bin\ProjectNinja.dll
+C:\Users\112043\Desktop\ninja\bin\ProjectNinja.pdb
+C:\Users\112043\Desktop\ninja\obj\Debug\ProjectNinja.dll
+C:\Users\112043\Desktop\ninja\obj\Debug\ProjectNinja.pdb
