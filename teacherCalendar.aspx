@@ -1,246 +1,86 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherCalendar.aspx.cs" Inherits="ProjectNinja.teacherCalendar" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mr. Geary's Dashboard</title>
-
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.css" />
-
-    <!-- App CSS -->
-    <link href="css/app.css" rel="stylesheet" />
-
-    <!-- Datatables CSS -->
-   <link rel="stylesheet" href="http://cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css" />
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
+    <title>Teacher Calendar</title>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="teacherdash.html">Project Ninja</a>
-        </div>
-      </div>
-    </div>
+<asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
 
-    <div class="container-fluid">
-      <div class="row">
-        <ol class="breadcrumb" style="margin-bottom: 0;">
-          <li><a href="teacherdash.html">Dashboard</a></li>
-          <li class="active">First Interviews</li>
-        </ol>
+      <div class="col-sm-12 col-md-12 main">
+         <div class="col-md-6">
+            <h2 class="form-signin-heading">Filter Events</h2>
+         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-6 col-md-6 main">
-          <h1>First Interviews</h1>
-        </div>
-        
+      <div class="col-md-3">
+         <form role="form" action="WebForm1.aspx" method="post">        
+            <div class="form-group">
+               <label for="eventName">Event Name</label>
+               <input type="text" class="form-control" id="eventName" name="eventName" />
+            </div><!-- end form-group -->
+            
+            <div class="form-group">
+               <label for="eventDate">Date</label>
+               <div class="input-group">
+                  <div class="input-group-addon">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                  </div><!-- end input-group-addon -->
+                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" />
+               </div><!-- end input-group -->
+            </div><!-- end form-group -->
+            
+            <div class="form-group">
+               <label for="eventTime">Time Step (Minutes)</label>
+               <div class="input-group">
+                  <div class="input-group-addon">
+                     <span class="glyphicon glyphicon-dashboard"></span>
+                  </div><!-- end input-group-addon -->
+                  <!-- <input type="text" class="form-control" id="eventTime" name="eventTime" /> -->
+                  <select class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();">
+                     <option>15</option>
+                     <option>30</option>
+                     <option selected="selected">60</option>
+                  </select>
+               </div><!-- end input-group -->
+            </div><!-- end form-group -->
+            
+            <div class="form-group" id="eventAttendees">
+               <label><span class="glyphicon glyphicon-user"></span> Attendees</label>
+               <span class="addAttendees" onclick="addRow(this);">
+                  <span class="glyphicon glyphicon-plus-sign addIcon"></span> (Add Class)
+               </span><!-- end addAttendees -->
+               <div class="input-group">
+                  <select class="form-control" onchange="disableSelectedAttendees();" name="eventAttendees[]">
+                     <option value="" selected></option>
+                     <option value="Class1">Class1</option>
+                     <option value="Class2">Class2</option>
+                     <option value="Class3">Class3</option>
+                     <option value="Class4">Class4</option>
+                     <option value="Class5">Class5</option>
+                  </select>
+                  <div class="input-group-addon" onclick="removeRow(this);">
+                     <span class="glyphicon glyphicon-minus-sign removeIcon"></span>
+                  </div><!-- end input-group-addon -->
+               </div><!-- end input-group -->
+            </div><!-- end form-group -->
+            
+            <div class="form-group" id="eventLocation">
+               <label>Location</label>
+               <div class="input-group">
+                  <div class="input-group-addon">
+                     <span class="glyphicon glyphicon-globe"></span>
+                  </div><!-- end input-group-addon -->
+                  <select class="form-control" name="eventLocation">
+                     <option value="" selected></option>
+                     <option value="AC">AC</option>
+                     <option value="MK">MK</option>
+                  </select>
+               </div><!-- end input-group -->
+            </div><!-- end form-group -->
+         </form>
       </div>
+      <div class="col-md-9" id="agendaTableHolder">
+      </div><!-- end agendaTableHolder -->  
+</asp:Content>
 
-      <div class="row">
-        <div class="col-md-3"  > 
-          <div class=" datepicker datepicker-inline" id="eventDate"></div>
-        </div> <!-- end datapicker -->
-        <div class="col-md-9">
-          <table class="table table-bordered table-responsive" style="background:#fff;" id="agenda-table">
-            <thead>
-              <tr>
-                <th style="width:15%"></th>
-                <th style="width:17%">Monday</th>
-                <th style="width:17%">Tuesday</th>
-                <th style="width:17%">Wednesday</th>
-                <th style="width:17%">Thursday</th>
-                <th style="width:17%">Friday</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td rowspan="2">8am</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">9am</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">10am</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">11am</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">12pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">1pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">2pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">3pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">4pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td rowspan="2">5pm</td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-              <tr>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-                <td class="agenda-slot"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="row">
-        
-      </div>
-    </div>
-
-    <!-- jQuery -->
-   <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-   <script type="text/javascript" charset="utf8" src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-   <script type="text/javascript" charset="etf8" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
-
-   <!-- DataTables -->
-   <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.1/js/jquery.dataTables.min.js"></script>
-   <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-    <script src="js/app.js"></script>
-    <script>
-        // Start the time and date picker
-        $(function () {
-            $('#eventDate').datepicker({
-                todayHighlight: true,
-                todayBtn: "linked"
-            });
-        });
-     </script>
+<asp:Content ID="ExtraJS" ContentPlaceHolderID="extraJs" runat="server">
+    <script type="text/javascript" charset="utf8" src="js/calendar.js"></script>
 </asp:Content>

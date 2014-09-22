@@ -4,6 +4,20 @@ body {
   background-color: #eee;
 }
 
+.removeIcon {
+         color:#ff0000;
+      }
+      
+      .addIcon {
+         color:#00ff00;
+      }
+      
+      .selectedDateTime {
+         color:#ffffff;
+         background-color:#428bca;
+         border-color:#357ebd;
+      }
+
 table td {
   vertical-align: middle!important;
 }
