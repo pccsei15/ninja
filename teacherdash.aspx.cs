@@ -12,16 +12,18 @@ namespace ProjectNinja
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            hdnRowID.Value = "mgeary";//Session["Ninja.UserID"].ToString();
         }
 
-        protected void grdTeacherEventsTable_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void grdEventsTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "DeleteEvent")
             {
                 hdnRowID.Value = e.CommandArgument.ToString();
+
                 sqlEvents.Delete();                
-                //grdTeacherEventsTable.DataBind();
+                //grdEventsTable.DataBind();
+
                 hdnRowID.Value = null;
             }
 
@@ -33,25 +35,26 @@ namespace ProjectNinja
             Response.Redirect("eventpage.aspx");
         }
 
-        protected void grdTeacherEventsTable_PreRender(object sender, EventArgs e)
+        protected void grdEventsTable_PreRender(object sender, EventArgs e)
         {
             // You only need the following 2 lines of code if you are not 
             // using an ObjectDataSource of SqlDataSource
             //grdEventsTable.DataSource = Sample.GetData();
             //grdEventsTable.DataBind();
 
-           /* if (grdTeacherEventsTable.Rows.Count > 0)
+            if (grdEventsTable.Rows.Count > 0)
             {
                 //This replaces <td> with <th> and adds the scope attribute
-                grdTeacherEventsTable.UseAccessibleHeader = true;
+                grdEventsTable.UseAccessibleHeader = true;
 
                 //This will add the <thead> and <tbody> elements
-                grdTeacherEventsTable.HeaderRow.TableSection = TableRowSection.TableHeader;
+                grdEventsTable.HeaderRow.TableSection = TableRowSection.TableHeader;
 
                 //This adds the <tfoot> element. 
                 //Remove if you don't have a footer row
-                grdTeacherEventsTable.FooterRow.TableSection = TableRowSection.TableFooter;
-            }*/
+
+                grdEventsTable.FooterRow.TableSection = TableRowSection.TableFooter;
+            }
 
         }
     }

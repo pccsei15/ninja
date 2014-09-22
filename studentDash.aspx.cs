@@ -11,13 +11,13 @@ namespace ProjectNinja
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            hdnStudentID.Value = "120420";
+            hdnStudentID.Value = "120420";// Session["Ninja.UserID"].ToString();
         }
 
         protected void grdStudentEventsTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-           Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
-           Response.Redirect("eventpage.aspx");
+            Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
+            Response.Redirect("eventpage.aspx");
         }
 
         protected void grdStudentEventsTable_PreRender1(object sender, EventArgs e)

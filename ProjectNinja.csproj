@@ -85,13 +85,18 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\calendar.js" />
     <Content Include="js\dataTables.bootstrap.js" />
+    <Content Include="js\GridviewFix.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\jquery.dataTables.min.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\jquery.timepicker.js" />
     <Content Include="newevent.html" />
     <Content Include="neweventpage.aspx" />
+<<<<<<< HEAD
     <Content Include="teacherCalendar.aspx" />
+=======
+    <Content Include="studentDash.aspx" />
+>>>>>>> fdabd494c81e41d3e184b309b68adafb0bf4b5a8
     <Content Include="teacherdash.aspx" />
     <Content Include="teacherdash.html" />
     <Content Include="Web.config" />
@@ -132,12 +137,21 @@
       <DependentUpon>neweventpage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
     <Compile Include="teacherCalendar.aspx.cs">
       <DependentUpon>teacherCalendar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="teacherCalendar.aspx.designer.cs">
       <DependentUpon>teacherCalendar.aspx</DependentUpon>
+=======
+    <Compile Include="studentDash.aspx.cs">
+      <DependentUpon>studentDash.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="studentDash.aspx.designer.cs">
+      <DependentUpon>studentDash.aspx</DependentUpon>
+>>>>>>> fdabd494c81e41d3e184b309b68adafb0bf4b5a8
     </Compile>
     <Compile Include="teacherdash.aspx.cs">
       <DependentUpon>teacherdash.aspx</DependentUpon>

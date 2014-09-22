@@ -1,9 +1,10 @@
 ﻿<%@ Page Title="Teacher Dashboard" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherdash.aspx.cs" Inherits="ProjectNinja.teacherdash" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="pageTitle" runat="server">
+<asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Teacher Dashboard</title>
     <!-- Glenn and Dory's Page -->
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="mainContent" runat="server">
+
+<asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
    <asp:HiddenField ID="hdnRowID" runat="server" />
 
    <div class="row">
