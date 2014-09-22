@@ -1,15 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="neweventpage.aspx.cs" Inherits="ProjectNinja.neweventpage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sign in to Timeslots</title>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Event</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- App CSS -->
-    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet">
     
    
    <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
@@ -22,6 +22,12 @@
       .addIcon {
          color:#00ff00;
       }
+      
+      .selectedDateTime {
+         color:#ffffff;
+         background-color:#428bca;
+         border-color:#357ebd;
+      }
     </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -32,7 +38,7 @@
     <![endif]-->
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div class="container">
+   <div class="container-fluid">
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
          <div class="container-fluid">
             <div class="navbar-header">
@@ -41,39 +47,44 @@
          </div>
       </div>
 
-      <div class="row">
+      <div class="col-sm-12 col-md-12 main">
          <div class="col-md-6">
             <h2 class="form-signin-heading">Add Event</h2>
          </div>
          <div class="col-md-6">
-            <a href="teacherdash.html" class="btn btn-primary pull-right">Create Event</a>
+            <a href="javascript:getAllSelectedDateTimes();" class="btn btn-primary pull-right">Create Event</a>
          </div>
       </div>
 
       <div class="col-md-3">
-         <form role="form" action="#">        
+         <form role="form" action="WebForm1.aspx" method="post">        
             <div class="form-group">
                <label for="eventName">Event Name</label>
                <input type="text" class="form-control" id="eventName" name="eventName" />
             </div><!-- end form-group -->
             
             <div class="form-group">
-               <label for="eventDate">Dates</label>
+               <label for="eventDate">Date</label>
                <div class="input-group">
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                   </div><!-- end input-group-addon -->
-                  <input type="text" class="form-control" id="eventDate" name="eventDate" />
+                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" />
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
             <div class="form-group">
-               <label for="eventTime">Times</label>
+               <label for="eventTime">Time Step (Minutes)</label>
                <div class="input-group">
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-dashboard"></span>
                   </div><!-- end input-group-addon -->
-                  <input type="text" class="form-control" id="eventTime" name="eventTime" />
+                  <!-- <input type="text" class="form-control" id="eventTime" name="eventTime" /> -->
+                  <select class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();">
+                     <option>15</option>
+                     <option>30</option>
+                     <option selected="selected">60</option>
+                  </select>
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
@@ -113,28 +124,6 @@
          </form>
       </div>
       <div class="col-md-9" id="agendaTableHolder">
-         <table class="table table-bordered table-responsive" style="background:#fff;" id="agendaTable">
-            <thead>
-               <tr>
-                  <th style="width:15%"></th>
-                  <th style="width:17%">Monday</th>
-                  <th style="width:17%">Tuesday</th>
-                  <th style="width:17%">Wednesday</th>
-                  <th style="width:17%">Thursday</th>
-                  <th style="width:17%">Friday</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>8am</td>
-                  <td class="agenda-slot"></td>
-                  <td class="agenda-slot"></td>
-                  <td class="agenda-slot"></td>
-                  <td class="agenda-slot"></td>
-                  <td class="agenda-slot"></td>
-               </tr>
-            </tbody>
-         </table>
       </div><!-- end agendaTableHolder -->
       
       <!-- end main content -->      
@@ -147,9 +136,20 @@
     <script type="text/javascript" src="js/jquery.timepicker.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
    <script>
-       // Start the time and date picker
-       $(function () {
-           $('#eventTime').timepicker();
+       // Holds all selected date and times
+       var dateTimes = [];
+
+       // Things to do when the page loads
+       $(document).ready(function () {
+           // Initialize schedule table
+           var currentDate = new Date();
+           var day = currentDate.getDate();
+           var month = currentDate.getMonth() + 1;
+           var year = currentDate.getFullYear();
+           document.getElementById('eventDate').value = month + '/' + day + '/' + year;
+           generateAgendaTable();
+
+           // Start the date picker
            $('#eventDate').datepicker({
                'format': 'm/d/yyyy',
                'autoclose': true
@@ -205,7 +205,119 @@
        }
 
        function generateAgendaTable() {
+           // Date must of the form m/d/yyyy
 
+           // Number of days to display at a time
+           var numberOfDaysToDisplay = 5;
+           // Number of minutes each row should be separated by
+           var step = parseInt(document.getElementById('eventTime').value);
+           // Holds the agenda table
+           var agendaTable;
+           // Holds the names of days of the week
+           var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+           // Holds the date the user has chosen as an array
+           var inputDate = document.getElementById('eventDate').value.split("/");
+           //Holds all the dates that will be displayed
+           var datesToDisplay = [];
+
+           // Gets the dates for each of the days to display
+           for (var index = 0; index < numberOfDaysToDisplay; index++) {
+               datesToDisplay[datesToDisplay.length] = new Date(inputDate[2], parseInt(inputDate[0]) - 1, parseInt(inputDate[1]) + index);
+           }
+
+           agendaTable = '<div class="btn-group btn-group-justified"><div class="btn-group"><input type="button" class="btn btn-primary" onclick="changeSchedualDateRange(-1)" value="Prev Day" /></div><div class="btn-group"><input type="button" class="btn btn-primary" onclick="changeSchedualDateRange(1)" value="Next Day" /></div></div>';
+           agendaTable += '<table class="table table-bordered table-responsive" style="background:#fff;" id="agendaTable"><thead><tr><th style="width:15%"></th>';
+
+           for (var offset = 0; offset < numberOfDaysToDisplay; offset++) {
+               agendaTable += '<th style="width:17%">' + (datesToDisplay[offset].getMonth() + 1) + '/' + datesToDisplay[offset].getDate() + ' ' + days[datesToDisplay[offset].getDay()] + '</th>';
+           }
+           agendaTable += '</tr></thead><tbody>';
+
+           // Print the times
+           // Time to start at
+           datesToDisplay[0].setHours(8, 0, 0, 0);
+           // Time to end at
+           var endDateTime = new Date(datesToDisplay[0].getTime());
+           endDateTime.setHours(17, 0, 0, 0);
+           var time;
+           while (datesToDisplay[0] <= endDateTime) {
+               if (datesToDisplay[0].getHours() <= 12) {
+                   time = datesToDisplay[0].getHours() + ':' + ('0' + datesToDisplay[0].getMinutes()).slice(-2) + 'AM';
+               }
+               else {
+                   time = (datesToDisplay[0].getHours() % 12) + ':' + ('0' + datesToDisplay[0].getMinutes()).slice(-2) + 'PM';
+               }
+               agendaTable += '<tr><td>' + time + '</td>';
+
+               // Add the days
+               for (var numColumns = 0; numColumns < numberOfDaysToDisplay; numColumns++) {
+                   agendaTable += '<td class="agenda-slot" onclick="toggleSelectedDateTime(this);" data-dateTime="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '"></td>';
+               }
+               agendaTable += '</tr>';
+               datesToDisplay[0].setMinutes(datesToDisplay[0].getMinutes() + step);
+           }
+           agendaTable += '</tbody></table>';
+
+           // Add the agendaTable to the body
+           document.getElementById('agendaTableHolder').innerHTML = agendaTable;
+
+           // Select any dates that has been selected already
+           for (index = 0; index < dateTimes.length; index++) {
+               $("td[data-datetime='" + dateTimes[index] + "']").addClass("selectedDateTime");
+           }
+           return;
+       }
+
+       // Toggles whether an object is selected or not
+       function toggleSelectedDateTime(object) {
+           // The class of all objects that are selected
+           var selectedClassName = "selectedDateTime";
+           // Attribute name of the data to be added or removed from the array
+           var dataAttributeName = "data-dateTime";
+
+           if ($(object).hasClass(selectedClassName)) {
+               // Has the class so remove the class and the associated value from the array
+               $(object).removeClass(selectedClassName);
+               dateTimes = $.grep(dateTimes, function (value) {
+                   return value != $(object).attr(dataAttributeName);
+               });
+           }
+           else {
+               // Does not have the class so add it and the associated value
+               $(object).addClass(selectedClassName);
+               if (dateTimes.indexOf($(object).attr(dataAttributeName)) == -1) {
+                   dateTimes.push($(object).attr(dataAttributeName));
+               }
+           }
+           return;
+       }
+
+       function getAllSelectedDateTimes() {
+           var formInputsForDateTimes = "";
+
+           for (var index = 0; index < dateTimes.length; index++) {
+               formInputsForDateTimes += "<input type=\"hidden\" name=\"dateTimes[]\" value=\"" + dateTimes[index] + "\" />";
+           }
+
+           //alert(formInputsForDateTimes);
+           $("form").append(formInputsForDateTimes);
+           $("form").submit();
+           return;
+       }
+
+       // Adds any number of days to the current day and recreates the schedule
+       function changeSchedualDateRange(daysToAdd) {
+           // Find the new input date
+           var dateToDisplay = document.getElementById('eventDate').value.split("/");
+           dateToDisplay = new Date(dateToDisplay[2], parseInt(dateToDisplay[0]) - 1, parseInt(dateToDisplay[1]) + daysToAdd);
+
+           // Change the input date and recreate the schedule
+           var day = dateToDisplay.getDate();
+           var month = dateToDisplay.getMonth() + 1;
+           var year = dateToDisplay.getFullYear();
+           document.getElementById('eventDate').value = month + '/' + day + '/' + year;
+           generateAgendaTable();
+           return;
        }
     </script>
 </asp:Content>
