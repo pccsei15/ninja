@@ -21,7 +21,7 @@ namespace ProjectNinja
             {
                 hdnRowID.Value = e.CommandArgument.ToString();
                 sqlEvents.Delete();                
-                grdTeacherEventsTable.DataBind();
+                //grdTeacherEventsTable.DataBind();
                 hdnRowID.Value = null;
             }
 
@@ -40,7 +40,7 @@ namespace ProjectNinja
             //grdEventsTable.DataSource = Sample.GetData();
             //grdEventsTable.DataBind();
 
-            if (grdTeacherEventsTable.Rows.Count > 0)
+           /* if (grdTeacherEventsTable.Rows.Count > 0)
             {
                 //This replaces <td> with <th> and adds the scope attribute
                 grdTeacherEventsTable.UseAccessibleHeader = true;
@@ -51,7 +51,7 @@ namespace ProjectNinja
                 //This adds the <tfoot> element. 
                 //Remove if you don't have a footer row
                 grdTeacherEventsTable.FooterRow.TableSection = TableRowSection.TableFooter;
-            }
+            }*/
 
         }
     }
