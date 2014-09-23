@@ -18,10 +18,10 @@ namespace ProjectNinja
             }
         }
 
-        protected void EventNameSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Session["Ninja.eventID"] = EventNameSelect.SelectedValue;
-        }
+        //protected void EventNameSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    Session["Ninja.eventID"] = EventNameSelect.SelectedValue;
+        //}
 
 
         

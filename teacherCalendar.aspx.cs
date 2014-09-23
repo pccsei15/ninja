@@ -29,7 +29,11 @@ namespace ProjectNinja
 
         public void PopulateScheduledAppointments()
         {
+<<<<<<< HEAD
             
+=======
+            // agenda
+>>>>>>> b5de49b9bc1aee08e2d05aec105d82ffe14a6be2
         }
 
         public void GetScheduledAppointments()
