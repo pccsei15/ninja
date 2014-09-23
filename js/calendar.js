@@ -2,13 +2,14 @@
 var dateTimes = [];
 
 // Things to do when the page loads
-$(function () {
+$(document).ready(function () {
     // Initialize schedule table
     var currentDate = new Date();
     var day = currentDate.getDate();
     var month = currentDate.getMonth() + 1;
     var year = currentDate.getFullYear();
-    document.getElementById('eventDate').text = month + '/' + day + '/' + year;
+    var eDate = document.getElementById('eventDate').value;
+    document.getElementById('eventDate').value = month + '/' + day + '/' + year;
     generateAgendaTable();
 
     // Start the date picker
@@ -16,6 +17,18 @@ $(function () {
         'format': 'm/d/yyyy',
         'autoclose': true
     });
+
+    $('#eventDatePicker').datepicker({
+        'format': 'm/d/yyyy'
+    });
+});
+
+$("#eventDatePicker").datepicker({
+    onSelect: function (dateText, inst) {
+        var dateAsString = dateText; //the first parameter of this function
+        var dateAsObject = $(this).datepicker('getDate'); //the getDate method
+        document.getElementById('eventDate').value = dateAsString;
+    }
 });
 
 // Add a new row to the bottom of a form group
@@ -88,7 +101,7 @@ function generateAgendaTable() {
     }
 
     agendaTable = '<div class="btn-group btn-group-justified"><div class="btn-group"><input type="button" class="btn btn-primary" onclick="changeSchedualDateRange(-1)" value="Prev Day" /></div><div class="btn-group"><input type="button" class="btn btn-primary" onclick="changeSchedualDateRange(1)" value="Next Day" /></div></div>';
-    agendaTable += '<table class="table table-bordered table-responsive" style="background:#fff;" id="agendaTable" runat="server"><thead><tr><th style="width:15%"></th>';
+    agendaTable += '<table class="table table-bordered table-responsive" style="background:#fff;" id="agendaTable"><thead><tr><th style="width:15%"></th>';
 
     for (var offset = 0; offset < numberOfDaysToDisplay; offset++) {
         agendaTable += '<th style="width:17%">' + (datesToDisplay[offset].getMonth() + 1) + '/' + datesToDisplay[offset].getDate() + ' ' + days[datesToDisplay[offset].getDay()] + '</th>';

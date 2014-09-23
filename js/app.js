@@ -45,12 +45,6 @@ $(document).ready(function () {
     $("#grdEventsAvailable").tablesorter({ sortList: [[1, 0]] });
 });
 
-
-$('#eventDate').datepicker({
-    todayBtn: "linked",
-    daysOfWeekDisabled: "0,6"
-});
-
 //GridviewFix Plugin Code
 
 function fixGridView(tableEl) {
