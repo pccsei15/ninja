@@ -8,6 +8,7 @@ $(document).ready(function () {
     var day = currentDate.getDate();
     var month = currentDate.getMonth() + 1;
     var year = currentDate.getFullYear();
+    var eDate = document.getElementById('eventDate').value;
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
     generateAgendaTable();
 
@@ -16,6 +17,18 @@ $(document).ready(function () {
         'format': 'm/d/yyyy',
         'autoclose': true
     });
+
+    $('#eventDatePicker').datepicker({
+        'format': 'm/d/yyyy'
+    });
+});
+
+$("#eventDatePicker").datepicker({
+    onSelect: function (dateText, inst) {
+        var dateAsString = dateText; //the first parameter of this function
+        var dateAsObject = $(this).datepicker('getDate'); //the getDate method
+        document.getElementById('eventDate').value = dateAsString;
+    }
 });
 
 // Add a new row to the bottom of a form group

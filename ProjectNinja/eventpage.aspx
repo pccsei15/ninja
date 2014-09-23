@@ -1,17 +1,29 @@
 ﻿<%@ Page Title="Sign up" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="eventpage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="pageTitle" runat="server">
-    <title>Sign up</title>
+    <title>Event Sign Up</title>
 </asp:content>
 
 <asp:Content ID="BreadCrumb" ContentPlaceHolderID="breadCrumb" runat="server">
-    <li class="active">Sign Up</li>
+    <li class="active">Event Sign Up</li>
 </asp:content>
 
 <asp:Content ID="Content" ContentPlaceHolderID="mainContent" runat="server">
 
     <div class="row">
-        <div class="col-md-6"><h1>Title</h1></div>
+        <div class="col-md-6">
+            <h1>Title</h1>
+            <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="eventName" DataValueField="eventID">
+            </asp:DropDownList>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventID], [eventName] FROM [EVENT]">
+                <%--<SelectParameters>
+                   <asp:ControlParameter ControlID="hdnRowID" Name="p_User" PropertyName="Value" />
+               </SelectParameters>--%>
+            </asp:SqlDataSource>
+
+            
+            
+        </div>
     </div>
       
     <div class="row">
@@ -23,7 +35,7 @@
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                   </div><!-- end input-group-addon -->
-                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" />
+                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" data-provide="datepicker-inline"/>
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
