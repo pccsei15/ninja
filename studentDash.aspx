@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Student Dashboard" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="studentDash.aspx.cs" Inherits="ProjectNinja.studentDash" %>
+﻿<%@ Page Title="Student Dashboard" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="StudentDash.aspx.cs" Inherits="ProjectNinja.studentDash" %>
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Student Dash</title>
     <!-- Glenn and Dory's Page -->
