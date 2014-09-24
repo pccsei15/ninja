@@ -136,11 +136,17 @@ function generateAgendaTable(newEvent) {
     endDateTime.setHours(endHour, 0, 0, 0);
     var time;
     while (datesToDisplay[0] <= endDateTime) {
-        if (datesToDisplay[0].getHours() <= 12) {
+        if (datesToDisplay[0].getHours() < 12) {
             time = datesToDisplay[0].getHours() + ':' + ('0' + datesToDisplay[0].getMinutes()).slice(-2) + 'AM';
         }
         else {
-            time = (datesToDisplay[0].getHours() % 12) + ':' + ('0' + datesToDisplay[0].getMinutes()).slice(-2) + 'PM';
+            if (datesToDisplay[0].getHours() == 12) {
+                time = 12;
+            }
+            else {
+                time = (datesToDisplay[0].getHours() % 12);
+            }
+            time += ':' + ('0' + datesToDisplay[0].getMinutes()).slice(-2) + 'PM';
         }
         agendaTable += '<tr><td>' + time + '</td>';
 
