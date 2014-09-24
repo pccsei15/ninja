@@ -1,10 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="NewEventPage.aspx.cs" Inherits="ProjectNinja.neweventpage" %>
+
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Add Event</title>
 </asp:Content>
+
 <asp:Content ID="BreadCrumb" ContentPlaceHolderID="breadCrumb" runat="server">
     <li class="active">Add Event</li>
 </asp:content>
+
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
     <div class="row">
       <div class="col-sm-12 col-md-12 main">
@@ -87,7 +90,5 @@
       <div class="col-md-9" id="agendaTableHolder">
       </div><!-- end agendaTableHolder -->
       <!-- end main content -->      
-    </div>
-
-   
+    </div>   
 </asp:Content>

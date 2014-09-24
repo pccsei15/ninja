@@ -150,7 +150,7 @@ function generateAgendaTable(newEvent) {
 
         // Add the days
         for (var numColumns = 0; numColumns < numberOfDaysToDisplay; numColumns++) {
-            agendaTable += '<td class="agenda-slot" selectable="false" ' + newEvent + ' data-dateTime="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '" id="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '"></td>';
+            agendaTable += '<td class="agenda-slot" selectable="false" ' + includeOnClick + ' data-dateTime="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '" id="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '"></td>';
         }
         agendaTable += '</tr>';
         datesToDisplay[0].setMinutes(datesToDisplay[0].getMinutes() + step);
