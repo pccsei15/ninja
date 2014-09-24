@@ -39,7 +39,7 @@ namespace ProjectNinja
 
         public void GetScheduledAppointments()
         {
-            var con = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True");
+            var con = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0");
 
 
 
