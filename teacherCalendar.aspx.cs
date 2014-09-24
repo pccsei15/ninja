@@ -25,7 +25,7 @@ namespace ProjectNinja
             public int      eventID       { get; set; }
             public string   eventName     { get; set; }
             public string   eventLocation { get; set; }
-            public DateTime   eventDate     { get; set; }
+            public DateTime eventDate     { get; set; }
             public float    eventDuration { get; set; }
             public string   eventUserName { get; set; }
         }

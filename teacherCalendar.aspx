@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherCalendar.aspx.cs" Inherits="ProjectNinja.teacherCalendar" %>
+
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
+    <!-- Leah & Erin's page -->
     <title>Teacher Calendar</title>
 </asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
