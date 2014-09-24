@@ -1,5 +1,10 @@
 ﻿// Holds all selected date and times
 var dateTimes = [];
+// The first hour to show on the calendar
+var beginHour = 8;
+// The last hour to show on the calendar
+var endHour = 17;
+
 
 // Things to do when the page loads
 $(document).ready(function () {
@@ -103,10 +108,11 @@ function generateAgendaTable(newEvent) {
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     // Holds the date the user has chosen as an array
     var inputDate = document.getElementById('eventDate').value.split("/");
-    //Holds all the dates that will be displayed
+    // Holds all the dates that will be displayed
     var datesToDisplay = [];
     //
     var includeOnClick = "";
+
 
     // Gets the dates for each of the days to display
     for (var index = 0; index < numberOfDaysToDisplay; index++) {
@@ -126,10 +132,10 @@ function generateAgendaTable(newEvent) {
 
     // Print the times
     // Time to start at
-    datesToDisplay[0].setHours(8, 0, 0, 0);
+    datesToDisplay[0].setHours(beginHour, 0, 0, 0);
     // Time to end at
     var endDateTime = new Date(datesToDisplay[0].getTime());
-    endDateTime.setHours(17, 0, 0, 0);
+    endDateTime.setHours(endHour, 0, 0, 0);
     var time;
     while (datesToDisplay[0] <= endDateTime) {
         if (datesToDisplay[0].getHours() <= 12) {
@@ -168,8 +174,6 @@ function generateAgendaTable(newEvent) {
 function populateAgendaTable() {
     var appointmentArray = JSON.parse(document.getElementById("mainContent_hdnScheduledAppointments").value);
 
-    //alert(appointmentArray[0].eventDate);
-
     for (i = 0; i < appointmentArray.length; i++) {
         //<span>Leah Jennings</span><br><span>First Interviews</span><br><span>Commons 2nd Floor</span>
 
@@ -182,10 +186,37 @@ function populateAgendaTable() {
         else
             dateID += 'PM';
 
+        var rowsToFill = appointmentArray[i].eventDuration / 15;
+
+
         if (document.getElementById(dateID)) {
-            document.getElementById(dateID).innerHTML = "<span>" + appointmentArray[i].eventUserName + "</span><br /><span>" + appointmentArray[i].eventName + "</span><br /><span>" + appointmentArray[i].eventLocation + "</span>";
-            toggleSelectedDateTime(document.getElementById(dateID));
-            alert(dateID);
+            document.getElementById(dateID).innerHTML = "<p style='font-size: 18px;style=line-height: 100%;'>" + appointmentArray[i].eventUserName + "</p><p style='line-height: 10%;'>" + appointmentArray[i].eventName + "</p><p style='line-height: 30%;'>" + appointmentArray[i].eventLocation + "</p>";
+            document.getElementById(dateID).className += " selectedDateTime";
+
+            var minutes = parseInt(zeroPad(date.getMinutes(), 2));
+            var hour = ((date.getHours() == 12) ? date.getHours() : (date.getHours() % 12));
+
+            for (var i = 1; i <= rowsToFill - 1; i++) {
+                
+                if (minutes !== 45)
+                    minutes += 15;
+                else {
+                    minutes = 0;
+                    hour += 1;
+                }
+
+
+                dateID = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + " " + hour + ":" + zeroPad(minutes, 2);
+                if (date.getHours() < 12)
+                    dateID += 'AM';
+                else
+                    dateID += 'PM';
+                alert(dateID);
+
+                document.getElementById(dateID).className += " selectedDateTime";
+            }
+
+
         }
 
     }
@@ -253,7 +284,7 @@ function changeSchedualDateRange(daysToAdd) {
     var year = dateToDisplay.getFullYear();
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
     if (document.title === "Teacher Calendar")
-        generateAgendaTable(false);
+        generateAgendaTable("false");
     else
         generateAgendaTable();
     return;
