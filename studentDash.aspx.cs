@@ -14,12 +14,22 @@ namespace ProjectNinja
             hdnStudentID.Value = "120420";// Session["Ninja.UserID"].ToString();
         }
 
+        /// <summary>
+        /// Redirects to the eventpage, and stores the eventID in a session variable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void grdStudentEventsTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
             Response.Redirect("eventpage.aspx");
         }
 
+        /// <summary>
+        /// Nessessary for getting grdView header in the EventsTable to display its style
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void grdStudentEventsTable_PreRender1(object sender, EventArgs e)
         {
             // You only need the following 2 lines of code if you are not 
@@ -42,6 +52,11 @@ namespace ProjectNinja
 
         }
 
+        /// <summary>
+        /// Nessessary for getting grdView header in the EventsAvailable table to display its style
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void grdEventsAvailable_PreRender1(object sender, EventArgs e)
         {
             // You only need the following 2 lines of code if you are not 
