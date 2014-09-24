@@ -13,8 +13,8 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h1>Title</h1>
-            <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="eventName" DataValueField="eventID">
+            <hTitle</h1>
+            <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="eventName" DataValueField="eventID" CssClass="form-control input-lg event-drop" >
             </asp:DropDownList>
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventID], [eventName] FROM [EVENT]">
                 <%--<SelectParameters>
@@ -31,7 +31,7 @@
       <div class="col-md-3">
          <form role="form" action="WebForm1.aspx" method="post">   
             <div class="form-group">
-               <label for="eventDate">Date</label>
+               <label for="eventDate">Datete</label>
                <div class="input-group">
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
