@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -14,26 +16,25 @@ namespace ProjectNinja
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            GetScheduledAppointments();
+            PopulateScheduledAppointments();
         }
 
         public class ScheduledAppointment
         {
-            public int    eventID       { get; set; }
-            public string eventName     { get; set; }
-            public string eventLocation { get; set; }
-            public string eventDate     { get; set; }
-            public float  eventDuration { get; set; }
-            public string eventUserName { get; set; }
+            public int      eventID       { get; set; }
+            public string   eventName     { get; set; }
+            public string   eventLocation { get; set; }
+            public DateTime   eventDate     { get; set; }
+            public float    eventDuration { get; set; }
+            public string   eventUserName { get; set; }
         }
 
         public void PopulateScheduledAppointments()
         {
-<<<<<<< HEAD
-            
-=======
-            // agenda
->>>>>>> b5de49b9bc1aee08e2d05aec105d82ffe14a6be2
+            string jsonScheduledAppointments = JsonConvert.SerializeObject(allAppointments);
+
+            hdnScheduledAppointments.Value = jsonScheduledAppointments;
         }
 
         public void GetScheduledAppointments()
@@ -55,7 +56,8 @@ namespace ProjectNinja
                 {
                     var list = new List<ScheduledAppointment>();
                     while (reader.Read())
-                        list.Add(new ScheduledAppointment { eventID = reader.GetInt32(0), eventName = reader.GetString(1), eventLocation = reader.GetString(2), eventDate = reader.GetString(3), eventDuration = reader.GetFloat(4), eventUserName = reader.GetString(5) });
+                        list.Add(new ScheduledAppointment { eventID = reader.GetInt32(0), eventName = reader.GetString(1), eventLocation = reader.GetString(2),
+                                                            eventDate = reader.GetDateTime(3), eventDuration = (float)reader.GetDouble(4), eventUserName = reader.GetString(5) });
                     allAppointments = list.ToArray();
                 }
             }

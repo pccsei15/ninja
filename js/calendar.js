@@ -10,7 +10,14 @@ $(document).ready(function () {
     var year = currentDate.getFullYear();
     var eDate = document.getElementById('eventDate').value;
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
-    generateAgendaTable();
+
+    if (document.title === "Teacher Calendar")
+        generateAgendaTable("false");
+    else
+        generateAgendaTable();
+
+
+    alert(document.title);
 
     // Start the date picker
     $('#eventDate').datepicker({
@@ -79,13 +86,17 @@ function disableSelectedAttendees() {
     return;
 }
 
-function generateAgendaTable() {
+function generateAgendaTable(newEvent) {
+
+    // The default newEvent was added to accommodate small changes for the teacherCalendar page
+    newEvent = newEvent || "true";
+
     // Date must of the form m/d/yyyy
 
     // Number of days to display at a time
     var numberOfDaysToDisplay = 5;
     // Number of minutes each row should be separated by
-    var step = parseInt(document.getElementById('eventTime').value);
+    var step = (newEvent === "true" ? (parseInt(document.getElementById('eventTime').value)) : 15);
     // Holds the agenda table
     var agendaTable;
     // Holds the names of days of the week
@@ -94,11 +105,16 @@ function generateAgendaTable() {
     var inputDate = document.getElementById('eventDate').value.split("/");
     //Holds all the dates that will be displayed
     var datesToDisplay = [];
+    //
+    var includeOnClick = "";
 
     // Gets the dates for each of the days to display
     for (var index = 0; index < numberOfDaysToDisplay; index++) {
         datesToDisplay[datesToDisplay.length] = new Date(inputDate[2], parseInt(inputDate[0]) - 1, parseInt(inputDate[1]) + index);
     }
+
+    
+    
 
     agendaTable = '<div class="btn-group btn-group-justified"><div class="btn-group"><input type="button" class="btn btn-primary" onclick="changeSchedualDateRange(-1)" value="Prev Day" /></div><div class="btn-group"><input type="button" class="btn btn-primary" onclick="changeSchedualDateRange(1)" value="Next Day" /></div></div>';
     agendaTable += '<table class="table table-bordered table-responsive" style="background:#fff;" id="agendaTable"><thead><tr><th style="width:15%"></th>';
@@ -124,9 +140,11 @@ function generateAgendaTable() {
         }
         agendaTable += '<tr><td>' + time + '</td>';
 
+        newEvent === "true" ? includeOnClick = 'onclick="toggleSelectedDateTime(this);"' : includeOnClick = '';
+
         // Add the days
         for (var numColumns = 0; numColumns < numberOfDaysToDisplay; numColumns++) {
-            agendaTable += '<td class="agenda-slot" onclick="toggleSelectedDateTime(this);" data-dateTime="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '"></td>';
+            agendaTable += '<td class="agenda-slot" selectable="false" ' + newEvent + ' data-dateTime="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '" id="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '"></td>';
         }
         agendaTable += '</tr>';
         datesToDisplay[0].setMinutes(datesToDisplay[0].getMinutes() + step);
@@ -140,7 +158,50 @@ function generateAgendaTable() {
     for (index = 0; index < dateTimes.length; index++) {
         $("td[data-datetime='" + dateTimes[index] + "']").addClass("selectedDateTime");
     }
+
+    newEvent === "true" ? null : populateAgendaTable();
+
     return;
+}
+
+// Populate the calendar with scheduled appointments
+function populateAgendaTable() {
+    var appointmentArray = JSON.parse(document.getElementById("mainContent_hdnScheduledAppointments").value);
+
+    //alert(appointmentArray[0].eventDate);
+
+    for (i = 0; i < appointmentArray.length; i++) {
+        //<span>Leah Jennings</span><br><span>First Interviews</span><br><span>Commons 2nd Floor</span>
+
+        var date = parseDate(appointmentArray[i].eventDate);
+
+        var dateID = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + " " + ((date.getHours() == 12) ? date.getHours() : (date.getHours() % 12)) + ":" + zeroPad(date.getMinutes(), 2);
+
+        if (date.getHours() < 12)
+            dateID += 'AM';
+        else
+            dateID += 'PM';
+
+        if (document.getElementById(dateID)) {
+            document.getElementById(dateID).innerHTML = "<span>" + appointmentArray[i].eventUserName + "</span><br /><span>" + appointmentArray[i].eventName + "</span><br /><span>" + appointmentArray[i].eventLocation + "</span>";
+            toggleSelectedDateTime(document.getElementById(dateID));
+            alert(dateID);
+        }
+
+    }
+
+
+}
+
+function parseDate(str) {
+    var m = str.match(/^(\d{4})\-(\d\d)\-(\d\d)T(\d\d):(\d\d):(\d\d)$/);
+    return (m) ? new Date(m[1], m[2] - 1, m[3], m[4], m[5]) : null;
+}
+
+// Pad zeros to the left of a number
+function zeroPad(num, places) {
+    var zero = places - num.toString().length + 1;
+    return Array(+(zero > 0 && zero)).join("0") + num;
 }
 
 // Toggles whether an object is selected or not
@@ -191,6 +252,9 @@ function changeSchedualDateRange(daysToAdd) {
     var month = dateToDisplay.getMonth() + 1;
     var year = dateToDisplay.getFullYear();
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
-    generateAgendaTable();
+    if (document.title === "Teacher Calendar")
+        generateAgendaTable(false);
+    else
+        generateAgendaTable();
     return;
 }
