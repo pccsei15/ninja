@@ -27,11 +27,9 @@ $(document).ready(function () {
     // Start the date picker
     $('#eventDate').datepicker({
         'format': 'm/d/yyyy',
-        'autoclose': true
-    });
-
-    $('#eventDatePicker').datepicker({
-        'format': 'm/d/yyyy'
+        'autoclose': true,
+        todayBtn: "linked",
+        todayHighlight: true
     });
 });
 
