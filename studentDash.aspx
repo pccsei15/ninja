@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Student Dashboard" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="StudentDash.aspx.cs" Inherits="ProjectNinja.studentDash" %>
+﻿<%@ Page Title="Student Dashboard" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="StudentDash.aspx.cs" Inherits="ProjectNinja.studentDash" %>
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Student Dash</title>
     <!-- Glenn and Dory's Page -->
@@ -8,6 +8,8 @@
     <br />
     <br />
     <asp:Label ID="lbltest" runat="server"  />
+
+    <!-- Events available for signup grdView and server select statement -->
     <asp:Label ID="lblEventsAvail" runat="server" Text="Events Available for Sign Up" Font-Size="X-Large"></asp:Label>
        <div class="row">
       <div class="col-sm-12 col-md-12 main">
@@ -55,12 +57,14 @@ SELECT DISTINCT ec.eventID, e.eventLocation, e.eventName, MIN(et.eventDate) AS b
 								  JOIN [SEI_Ninja].[dbo].[EVENT] e ON (et.eventID = e.eventID)
 						    WHERE su.userID = @p_StudentID )																	
   GROUP BY ec.eventID, eventLocation, eventName
- HAVING MAX(et.eventDate) >= SYSDATETIME();" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" ProviderName="<%$ ConnectionStrings:SEI_NinjaConnectionString.ProviderName %>">
+ HAVING MAX(et.eventDate) &gt;= SYSDATETIME();" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" ProviderName="<%$ ConnectionStrings:SEI_NinjaConnectionString.ProviderName %>">
         <SelectParameters>
             <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
         </SelectParameters>
     </asp:SqlDataSource>
     <br />
+
+    <!-- Events signed up for grdView and server select statement -->
     <asp:Label ID="lblStudentEvents" runat="server" Text="Events Signed Up For" Font-Size="X-Large"></asp:Label>
    <div class="row">
       <div class="col-sm-12 col-md-12 main">
