@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="NewEventPage.aspx.cs" Inherits="ProjectNinja.neweventpage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="NewEventPage.aspx.cs" Inherits="ProjectNinja.neweventpage" %>
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Add Event</title>
 </asp:Content>
