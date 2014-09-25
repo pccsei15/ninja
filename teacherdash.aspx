@@ -7,8 +7,13 @@
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
    <asp:HiddenField ID="hdnRowID" runat="server" />
 
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Teacher Dashboard</h1>
+        </div>
+    </div>
    <div class="row">
-      <div class="col-sm-12 col-md-12 main">
+      <div class="col-sm-12 col-md-12 main" style="margin-top: 20px;">
          <div class="table-responsive">
             <asp:GridView ID="grdEventsTable" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
                DataSourceID="sqlEvents" DataKeyNames="eventID" onrowcommand="grdEventsTable_RowCommand" OnPreRender="grdEventsTable_PreRender">

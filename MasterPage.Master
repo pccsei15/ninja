@@ -16,10 +16,10 @@
         <!-- Bootstrap CSS -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="css/jquery-ui.min.css" />
-        <link type="text/css" rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
+        <link type="text/css" rel="stylesheet" href="http://cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.css" />
 
         <!-- Datatables CSS -->
-        <link type="text/css" rel="stylesheet" href="css/bootstrap-datatables.min.css" />
+        <link type="text/css" rel="stylesheet" href="http://cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.css" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -63,13 +63,13 @@
             
 
         <!-- jQuery -->
-        <script type="text/javascript" charset="utf8" src="js/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" charset="utf8" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
         <!-- DataTables -->
-        <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="js/dataTables.bootstrap.js"></script>
+        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.js"></script>
         
         <!-- App-specific JavaScript -->
         <script type="text/javascript" src="js/jquery.timepicker.js"></script>

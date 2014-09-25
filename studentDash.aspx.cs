@@ -11,7 +11,7 @@ namespace ProjectNinja
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            hdnStudentID.Value = "120420";// Session["Ninja.UserID"].ToString();
+            hdnStudentID.Value = "119355";// Session["Ninja.UserID"].ToString();
         }
 
         /// <summary>
