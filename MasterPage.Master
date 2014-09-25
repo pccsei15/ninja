@@ -67,6 +67,7 @@
         <!-- jQuery -->
         <script type="text/javascript" charset="utf8" src="js/jquery.min.js"></script>
         <script type="text/javascript" charset="utf8" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/jquery-ui.min.js"></script>
 
         <!-- DataTables -->
         <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
