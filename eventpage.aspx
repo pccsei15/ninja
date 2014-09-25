@@ -9,6 +9,7 @@
 </asp:content>
 
 <asp:Content ID="Content" ContentPlaceHolderID="mainContent" runat="server">
+    <form id="Form1"  role="form"  runat="server">
     <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
 
     <div class="row">
@@ -61,6 +62,7 @@
       <div class="col-md-9" id="agendaTableHolder">
       </div><!-- end agendaTableHolder -->
     </div>
+        </form>  
 </asp:content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ExtraJs" runat="server">

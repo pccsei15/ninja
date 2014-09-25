@@ -52,8 +52,8 @@ namespace ProjectNinja
                                   JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
                                   JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
                                   JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
-                            WHERE e.eventOwner = 'mgeary'
-                            ORDER BY e.eventID";
+                            WHERE e.eventOwner = 'mgeary' 
+                            ORDER BY e.eventID"; // NEEDS AUTHENTICATION
             using (var command = new SqlCommand(sql, con))
             {
                 con.Open();
