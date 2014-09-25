@@ -92,8 +92,9 @@ function generateAgendaTable(pageName) {
 
     // The default pageName was added to accommodate small changes for the teacherCalendar page
     //pageName = pageName || "true";
-    if (pageName === null)
-        pageName = null;
+    if (pageName === undefined) {
+        pageName = "undefined";
+    }
     
 
     // Date must of the form m/d/yyyy
@@ -101,7 +102,13 @@ function generateAgendaTable(pageName) {
     // Number of days to display at a time
     var numberOfDaysToDisplay = 5;
     // Number of minutes each row should be separated by
-    var step = (pageName === "TC" ? 15 : (parseInt(document.getElementById('eventTime').value)));
+    //var step = (pageName === "TC" ? 15 : (parseInt(document.getElementById('eventTime').value)));
+    if (pageName === "TC")
+        var step = 15;
+    else {
+        var step = parseInt(document.getElementById('eventTime').value);
+    }
+
     // Holds the agenda table
     var agendaTable;
     // Holds the names of days of the week
@@ -171,7 +178,7 @@ function generateAgendaTable(pageName) {
         $("td[data-datetime='" + dateTimes[index] + "']").addClass("selectedDateTime");
     }
 
-    pageName != null ? null : populateAgendaTable();
+    pageName != "undefined" ? populateAgendaTable() : "undefined";
 
     return;
 }
@@ -184,8 +191,13 @@ function populateAgendaTable() {
     var eventsByIDArray = null;
 
     var eventIDIndex = 0;
+                   //  red       purple    green     yellow    blue
+    var colorArray = ["D73A2B", "9A3AE1", "3EE173", "D7D43A", "428BCA"];
+
+    var currentColorNumber = 0;
 
     for (i = 0; i < appointmentArray.length; i++) {
+
 
 
         // Date given from the database
@@ -201,9 +213,16 @@ function populateAgendaTable() {
         // How many rows to fill in total to account for the duration of the event
         var rowsToFill = appointmentArray[i].eventDuration / 15;
 
+        if (i != 0) {
+            if (appointmentArray[i] != appointmentArray[i - 1]) {
+                currentColorNumber = currentColorNumber == 4 ? 1 : currentColorNumber++;
+            }
+        }
+
         if (document.getElementById(dateID)) {
             document.getElementById(dateID).innerHTML = "<p style='font-size: 18px;style=line-height: 100%;'>" + appointmentArray[i].eventUserName + "</p><p style='line-height: 10%;'>" + appointmentArray[i].eventName + "</p><p style='line-height: 30%;'>" + appointmentArray[i].eventLocation + "</p>";
             document.getElementById(dateID).className += " selectedDateTime";
+            document.getElementById(dateID).style.backgroundColor = "#" + colorArray[currentColorNumber];
 
             var minutes = parseInt(zeroPad(date.getMinutes(), 2));
             var hour = ((date.getHours() == 12) ? date.getHours() : (date.getHours() % 12));
