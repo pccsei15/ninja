@@ -4,10 +4,10 @@
     <!-- Glenn and Dory's Page -->
 </asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
+    <form runat="server">
     <asp:HiddenField ID="hdnStudentID" runat="server" />
     <br />
     <br />
-    <asp:Label ID="lbltest" runat="server"  />
 
     <!-- Events available for signup grdView and server select statement -->
     <asp:Label ID="lblEventsAvail" runat="server" Text="Events Available for Sign Up" Font-Size="X-Large"></asp:Label>
@@ -76,7 +76,7 @@ SELECT DISTINCT ec.eventID, e.eventLocation, e.eventName, MIN(et.eventDate) AS b
                    </asp:BoundField>
                    <asp:BoundField DataField="eventLocation" HeaderText="Event Location" SortExpression="eventLocation">
                    </asp:BoundField>
-                   <asp:BoundField DataField="eventDate" HeaderText="Begin Date" SortExpression="eventDate" DataFormatString="{0:f}" >
+                   <asp:BoundField DataField="eventDate" HeaderText="Scheduled Time" SortExpression="eventDate" DataFormatString="{0:f}" >
                    </asp:BoundField>
                    <asp:TemplateField HeaderText="Action">
 				       <itemtemplate>
@@ -105,4 +105,5 @@ SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate
             <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
         </SelectParameters>
    </asp:SqlDataSource>
+   </form>
 </asp:Content>
