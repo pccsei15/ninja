@@ -12,7 +12,6 @@ namespace ProjectNinja
     public partial class eventpage : System.Web.UI.Page
     {
         private ScheduledAppointment[] allAppointments = null;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             GetScheduledAppointments();
@@ -20,7 +19,7 @@ namespace ProjectNinja
 
             if (Session["Ninja.eventID"] != null)
             {
-                DropDownList1.SelectedValue = Session["Ninja.eventID"].ToString();
+                eventSelectList.SelectedValue = Session["Ninja.eventID"].ToString();
             }
         }
 
@@ -48,11 +47,13 @@ namespace ProjectNinja
 
 
 
-            string sql = @"SELECT et.eventDate, et.eventTimeID
-                             FROM [SEI_Ninja].[dbo].EVENT_TIMES et
-                            WHERE et.eventID = 7
-                              AND et.eventTimeID NOT IN (SELECT su.eventTimeID
-							 FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su);";
+            string sql = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, et.eventDuration, u.user_first_name + ' ' + u.user_last_name AS name
+                             FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
+                                  JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
+                                  JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
+                                  JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
+                            WHERE e.eventOwner = 'mgeary'
+                            ORDER BY e.eventID";
             using (var command = new SqlCommand(sql, con))
             {
                 con.Open();
@@ -60,11 +61,23 @@ namespace ProjectNinja
                 {
                     var list = new List<ScheduledAppointment>();
                     while (reader.Read())
-                        list.Add(new ScheduledAppointment { eventDate     = reader.GetDateTime(0),
-                                                            eventTimeID   = reader.GetInt32(1)});
+                        list.Add(new ScheduledAppointment
+                        {
+                            eventID = reader.GetInt32(0),
+                            eventName = reader.GetString(1),
+                            eventLocation = reader.GetString(2),
+                            eventDate = reader.GetDateTime(3),
+                            eventDuration = (float)reader.GetDouble(4),
+                            eventUserName = reader.GetString(5)
+                        });
                     allAppointments = list.ToArray();
                 }
             }
+        }
+
+        protected void eventSelectList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Session["Ninja.eventID"] = eventSelectList.SelectedValue;
         }
     }
 
