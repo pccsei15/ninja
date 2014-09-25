@@ -39,7 +39,6 @@
 
     <body>
 
-        <form id="form1" runat="server">
             <!-- Site Container -->
             <div class="container-fluid">
                 <!-- Menu Bar -->
@@ -62,7 +61,6 @@
                 </asp:ContentPlaceHolder>
             </div>
             
-        </form>
 
         <!-- jQuery -->
         <script type="text/javascript" charset="utf8" src="js/jquery.min.js"></script>
