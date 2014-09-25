@@ -12,31 +12,40 @@
     <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
 
     <div class="row">
-        <div class="col-md-6">
-            <hTitle</h1>
-            <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="eventName" DataValueField="eventID" CssClass="form-control input-lg event-drop" >
+        <%-- Drop down to change the event to sign up for --%> 
+        <div class="col-md-6"> 
+            <asp:DropDownList 
+                ID="DropDownList1" 
+                runat="server" 
+                DataSourceID="SqlDataSource1" 
+                DataTextField="eventName" 
+                DataValueField="eventID" 
+                CssClass="form-control input-lg event-drop" 
+                AutoPostBack="True">
             </asp:DropDownList>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventID], [eventName] FROM [EVENT]">
-                <%--<SelectParameters>
-                   <asp:ControlParameter ControlID="hdnRowID" Name="p_User" PropertyName="Value" />
-               </SelectParameters>--%>
+            <asp:SqlDataSource 
+                ID="SqlDataSource1" 
+                runat="server" 
+                ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" 
+                SelectCommand="
+                   SELECT [eventID], [eventName] 
+                     FROM [EVENT] " 
+                CancelSelectOnNullParameter="False">
+                
             </asp:SqlDataSource>
-
-            
-            
-        </div>
+        </div><!-- end drop-down-->
     </div>
       
     <div class="row">
       <div class="col-md-3">
          <form role="form" action="WebForm1.aspx" method="post">   
             <div class="form-group">
-               <label for="eventDate">Datete</label>
+               <label for="eventDate">Date</label>
                <div class="input-group">
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                   </div><!-- end input-group-addon -->
-                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" data-provide="datepicker-inline"/>
+                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" />
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
