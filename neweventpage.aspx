@@ -21,7 +21,7 @@
     </div>
     <div class="row">
       <div class="col-md-3">
-         <form role="form" action="WebForm1.aspx" method="post">        
+         <form role="form" action="SubmitNewEvent.aspx" method="post">        
             <div class="form-group">
                <label for="eventName">Event Name</label>
                <input type="text" class="form-control" id="eventName" name="eventName" />
@@ -38,7 +38,7 @@
             </div><!-- end form-group -->
             
             <div class="form-group">
-               <label for="eventTime">Time Step (Minutes)</label>
+               <label for="eventTime">Time Step</label>
                <div class="input-group">
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-dashboard"></span>
@@ -60,11 +60,11 @@
                <div class="input-group">
                   <select class="form-control" onchange="disableSelectedAttendees();" name="eventAttendees[]">
                      <option value="" selected></option>
-                     <option value="Class1">Class1</option>
-                     <option value="Class2">Class2</option>
-                     <option value="Class3">Class3</option>
-                     <option value="Class4">Class4</option>
-                     <option value="Class5">Class5</option>
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                     <option value="4">4</option>
+                     <option value="5">5</option>
                   </select>
                   <div class="input-group-addon" onclick="removeRow(this);">
                      <span class="glyphicon glyphicon-minus-sign removeIcon"></span>

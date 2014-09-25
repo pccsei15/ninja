@@ -9,21 +9,19 @@
 <body>
     <form id="form1" runat="server" method="post">
     <div>
-        <form action="#" method="post">
-            <input type="text" name="eventName" value="1234567890123456789012345678901234567890" />
-            <input type="text" name="eventLocation" value="AC 212" />
-            <input type="text" name="eventAttendees[]" value="Class 1" />
-            <input type="text" name="dateTimes[]" value="9/23/2014 8:00AM" />
-            <input type="text" name="dateTimes[]" value="9/24/2014 9:00PM" />
-            <input type="submit" />
-        </form>
         <% 
             string error = "";
+            string eventLocation = "";
+            string eventName = "";
+            ArrayList eventAttendees = new ArrayList();
+            ArrayList dateTimes = new ArrayList();
+            int lastID = -1;
+            int eventDuration = -1;
             
             // Get the event name
             if (Request.Form.GetValues("eventName") != null)
             {
-                string eventName = Request.Form["eventName"];
+                eventName = Request.Form["eventName"];
                 if (!Regex.IsMatch(eventName, @"^[a-zA-Z0-9 _]{1,255}$"))
                 {
                     // Name does not match schema
@@ -38,7 +36,6 @@
             // Get all attendees
             if (Request.Form.GetValues("eventAttendees[]") != null)
             {
-                ArrayList eventAttendees = new ArrayList();
                 foreach(string value in Request.Form.GetValues("eventAttendees[]"))
                 {
                     // Params does post and get
@@ -62,8 +59,8 @@
             // Get the event location
             if (Request.Form.GetValues("eventLocation") != null)
             {
-                string eventName = Request.Form["eventLocation"];
-                if (!Regex.IsMatch(eventName, @"^[a-zA-Z0-9 _]{1,255}$"))
+                eventLocation = Request.Form["eventLocation"];
+                if (!Regex.IsMatch(eventLocation, @"^[a-zA-Z0-9 _]{1,255}$"))
                 {
                     // Name does not match schema
                     error += "<br />Event location must be 255 characters or less";
@@ -73,9 +70,22 @@
             {
                 error += "<br />Event location is required";
             }
+
+            // Get the event duration
+            if (Request.Form.GetValues("eventTime") != null)
+            {
+                if (!int.TryParse(Request.Form["eventTime"], out eventDuration) || (eventDuration % 15) != 0)
+                {
+                    // Name does not match schema
+                    error += "<br />event duration must a multiple of 15";
+                }
+            }
+            else
+            {
+                error += "<br />Event duration is required";
+            }
             
             // Get all the data time componations
-            ArrayList dateTimes = new ArrayList();
             if (Request.Form.GetValues("dateTimes[]") != null)
             {
                 DateTime dateValue;
@@ -96,11 +106,6 @@
             else
             {
                 error += "<br />You must have at least 1 date and time";
-            }
-            
-            foreach (DateTime tempDateTime in dateTimes)
-            {
-                Response.Write("<br />" + tempDateTime.ToString("MM-dd-yyyy HH:mm:ss"));
             }
             
             Response.Write(error);
@@ -125,21 +130,31 @@
 
                 using (System.Data.SqlClient.SqlCommand thisCommand = thisConnection.CreateCommand())
                 {
-                    //thisCommand.CommandText = "SELECT * FROM [SEI_Ninja].[dbo].[SCHEDULED_USERS] NschedUsers JOIN [SEI_TimeMachine2].[dbo].[USER] TMusers ON TMusers.user_id = NschedUsers.userID JOIN [SEI_Ninja].[dbo].[EVENT_TIMES] Ntime ON NschedUsers.eventTimeID = Ntime.eventTimeID JOIN [SEI_Ninja].[dbo].[EVENT] Nevent ON Nevent.eventID = Ntime.eventID WHERE NschedUsers.userID = 113920;";
+                    // Insert an event into the event table
+                    thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT] (eventLocation, eventOwner, eventName) OUTPUT INSERTED.eventID VALUES('" + eventLocation + "', 'IOwnThis', '" + eventName + "')";
+                    // Add and get the id of the event that is being added
+                    lastID = (Int32)thisCommand.ExecuteScalar();
+                    //Response.Write("<br />The last key was:" + lastId);
 
-                    thisCommand.ExecuteNonQuery();
-                    /*using (System.Data.SqlClient.SqlDataReader thisReader = thisCommand.ExecuteReader())
+                    // Add the classes for this event to the EVENT_COURSES table
+                    foreach(object attendee in eventAttendees)
                     {
-                        while (thisReader.Read())
-                        {
-                            MessageBox.Show(thisReader["user_first_name"].ToString());
-                        }
-                    }*/
+                        thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT_COURSES] (courseID, eventID) VALUES('" + attendee.ToString() + "', '" + lastID + "')";
+                        thisCommand.ExecuteNonQuery();
+                    }
+
+                    // Add the times for this event into EVENT_TIMES table
+                    foreach (DateTime dateTime in dateTimes)
+                    {
+                        thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT_TIMES] (eventID, eventDuration, eventDate) VALUES('" + lastID + "', '" + eventDuration + "', '" + dateTime.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                        thisCommand.ExecuteNonQuery();
+                        //Response.Write("<br />" + dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                    }
                 }
             }
             
             // Ridirect when done
-            //Response.Redirect("http://www.google.com/");
+            Response.Redirect("NewEventPage.aspx");
             
         %>
     </div>
