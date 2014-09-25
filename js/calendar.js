@@ -21,9 +21,6 @@ $(document).ready(function () {
     else
         generateAgendaTable();
 
-
-    alert(document.title);
-
     // Start the date picker
     $('#eventDate').datepicker({
         'format': 'm/d/yyyy',
@@ -176,13 +173,19 @@ function generateAgendaTable(newEvent) {
 
 // Populate the calendar with scheduled appointments
 function populateAgendaTable() {
+    // Array/mapping that holds all the info for each scheduled event
     var appointmentArray = JSON.parse(document.getElementById("mainContent_hdnScheduledAppointments").value);
+    // Array/mapping that holds scheduled event information grouped by eventID
+    var eventsByIDArray = null;
+
+    var eventIDIndex = 0;
 
     for (i = 0; i < appointmentArray.length; i++) {
-        //<span>Leah Jennings</span><br><span>First Interviews</span><br><span>Commons 2nd Floor</span>
 
+
+        // Date given from the database
         var date = parseDate(appointmentArray[i].eventDate);
-
+        // Same date from database, just in the right format
         var dateID = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + " " + ((date.getHours() == 12) ? date.getHours() : (date.getHours() % 12)) + ":" + zeroPad(date.getMinutes(), 2);
 
         if (date.getHours() < 12)
@@ -190,8 +193,8 @@ function populateAgendaTable() {
         else
             dateID += 'PM';
 
+        // How many rows to fill in total to account for the duration of the event
         var rowsToFill = appointmentArray[i].eventDuration / 15;
-
 
         if (document.getElementById(dateID)) {
             document.getElementById(dateID).innerHTML = "<p style='font-size: 18px;style=line-height: 100%;'>" + appointmentArray[i].eventUserName + "</p><p style='line-height: 10%;'>" + appointmentArray[i].eventName + "</p><p style='line-height: 30%;'>" + appointmentArray[i].eventLocation + "</p>";
@@ -209,19 +212,21 @@ function populateAgendaTable() {
                     hour += 1;
                 }
 
-
                 dateID = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + " " + hour + ":" + zeroPad(minutes, 2);
                 if (date.getHours() < 12)
                     dateID += 'AM';
                 else
                     dateID += 'PM';
-                alert(dateID);
 
                 document.getElementById(dateID).className += " selectedDateTime";
             }
 
 
         }
+
+
+        //eventsByIDArray[i] = appointmentArray[i].eventID;
+        //eventsByIDArray[i] = appointmentArray[i].eventLocation;
 
     }
 
