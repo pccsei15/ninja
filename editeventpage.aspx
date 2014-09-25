@@ -1,36 +1,8 @@
-﻿ <%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="EditEventPage.aspx.cs" Inherits="ProjectNinja.neweventpage" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sign in to Timeslots</title>
-
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- App CSS -->
-    <link href="css/app.css" rel="stylesheet" />
-    
-   
-   <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
-   <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.css" />
-   <style>
-      .removeIcon {
-         color:#ff0000;
-      }
-      
-      .addIcon {
-         color:#00ff00;
-      }
-    </style>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+﻿ <%@ Page Title="" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="editeventpage.aspx.cs" Inherits="ProjectNinja.neweventpage" %>
+<asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
+    <title>Edit Event</title>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
 
 <div class="container">
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
