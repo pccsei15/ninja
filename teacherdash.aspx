@@ -19,11 +19,8 @@
                     <asp:GridView ID="grdEventsTable" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
                         DataSourceID="sqlEvents" DataKeyNames="eventID" onrowcommand="grdEventsTable_RowCommand" OnPreRender="grdEventsTable_PreRender">
                         <Columns>
-                            <asp:TemplateField HeaderText="Event Name" SortExpression="eventName">
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="lblEditName" runat="server" Text='<%# Bind("eventName") %>' CommandArgument='<%# Bind("eventID") %>' OnClick="lnkEvent_Click"></asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                            <asp:BoundField DataField="eventName" HeaderText="Event Name" SortExpression="eventName" >
+                            </asp:BoundField>
                             <asp:BoundField DataField="eventLocation" HeaderText="Event Location" SortExpression="eventLocation">
                             </asp:BoundField>
                             <asp:BoundField DataField="beginDate" HeaderText="Begin Date" SortExpression="beginDate" DataFormatString="{0:f}" >
@@ -34,9 +31,14 @@
                             </asp:BoundField>
                             <asp:TemplateField HeaderText="Action">
 				                <itemtemplate>
-					                    <asp:LinkButton id="btnDelete" runat="server" commandname="DeleteEvent" text="Delete" CssClass="btn btn-default btn-danger" CommandArgument='<%# Eval("eventID") %>'>
-                                            <i aria-hidden="true" class="glyphicon glyphicon-trash"></i> Delete
+                                   <div class="btn-group btn-group-sm">
+                                        <asp:LinkButton ID="btnEdit" runat="server" CommandName="EditEvent" CssClass="btn btn-default" CommandArgument='<%# Eval("eventID") %>' >
+                                            <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>
                                         </asp:LinkButton>
+					                    <asp:LinkButton id="btnDelete" runat="server" commandname="DeleteEvent" CssClass="btn btn-default btn-danger" CommandArgument='<%# Eval("eventID") %>'>
+                                            <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>
+                                        </asp:LinkButton>
+                                   </div>
 				                </itemtemplate>
                        
 			                </asp:TemplateField>
@@ -49,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
+            <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
             SELECT DISTINCT ev.eventID, eventName, eventLocation, MIN(ev_ti.eventDate) AS beginDate, MAX(ev_ti.eventDate) AS endDate,  ev.eventOwner,
                 ( SELECT COUNT(DISTINCT scheduledUserID)
                     FROM SEI_Ninja.dbo.SCHEDULED_USERS su
