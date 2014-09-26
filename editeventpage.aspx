@@ -10,6 +10,7 @@
      <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
         <div class="row">
       <div class="col-sm-12 col-md-12 main">
+
          <div class="col-md-6">
             <h1>Edit Event</h1>
          </div>

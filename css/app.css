@@ -29,3 +29,13 @@ table td {
 .navbar-fixed-top {
   border: 0;
 }
+
+.event-drop {
+    font-size: 30px;
+    margin: .67em 0;
+    border: 0;
+    background-color: #eee;
+    height: 60px;
+    width: 50%;
+    box-shadow:inherit;
+}

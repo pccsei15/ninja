@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherCalendar.aspx.cs" Inherits="ProjectNinja.teacherCalendar" %>
+
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
+    <!-- Leah & Erin's page -->
     <title>Teacher Calendar</title>
 </asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
@@ -47,6 +49,17 @@
                   <div class="input-group-addon" onclick="removeRow(this);">
                      <span class="glyphicon glyphicon-minus-sign removeIcon"></span>
                   </div><!-- end input-group-addon -->
+               </div><!-- end input-group -->
+            </div><!-- end form-group -->
+
+            <div class="form-group" id="Div1">
+               <label>Export your calendar</label>
+               <!--span class="addAttendees" onclick="addRow(this);"-->
+               <!--/span><!-- end addAttendees -->
+               <div class="input-group">
+                  <asp:LinkButton ID="btnExportCalendar" runat="server" CommandArgument='<%# Eval("hdnScheduledAppointments") %>' CommandName="exportCalendar" OnClick="btnExportCalendar_Click" Text ="Export" >
+                      
+                  </asp:LinkButton>
                </div><!-- end input-group -->
             </div><!-- end form-group -->
                         

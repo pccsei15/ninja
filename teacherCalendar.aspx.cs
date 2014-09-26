@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
@@ -25,7 +27,7 @@ namespace ProjectNinja
             public int      eventID       { get; set; }
             public string   eventName     { get; set; }
             public string   eventLocation { get; set; }
-            public DateTime   eventDate     { get; set; }
+            public DateTime eventDate     { get; set; }
             public float    eventDuration { get; set; }
             public string   eventUserName { get; set; }
         }
@@ -48,7 +50,8 @@ namespace ProjectNinja
                                   JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
                                   JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
                                   JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
-                            WHERE e.eventOwner = 'mgeary'";
+                            WHERE e.eventOwner = 'mgeary'
+                            ORDER BY e.eventID";
             using (var command = new SqlCommand(sql, con))
             {
                 con.Open();
@@ -62,5 +65,39 @@ namespace ProjectNinja
                 }
             }
         }
+
+        protected void btnExportCalendar_Click(object sender, EventArgs e)
+        {
+            //LinkButton btn = (LinkButton) sender;
+
+            HiddenField hdnScheduledAppointmentsJson = (HiddenField)hdnScheduledAppointments.FindControl("hdnScheduledAppointments");
+            String calendarJson = Convert.ToString(hdnScheduledAppointmentsJson.Value);
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            ScheduledAppointment[] appointments = js.Deserialize<ScheduledAppointment[]>(calendarJson);
+
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "clientScript", "<script     language=JavaScript>alert('" + calendarJson + "');</script>");
+
+            // Subject (Name),Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private
+            // Final Exam,05/12/20,07:10:00 PM,05/12/20,10:00:00 PM,False,Two essay questions that will cover topics covered throughout the semester,"Columbia, Schermerhorn 614",True
+
+            StringWriter oStringWriter = new StringWriter();
+            oStringWriter.WriteLine("Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private");
+            for (int i = 0; i < appointments.Length; i++)
+            {
+                oStringWriter.WriteLine("Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private");
+                oStringWriter.WriteLine(appointments[i].eventName + "," + "Start Date" + "," + "Start Time" + "," + "End Date" + "," + "End Time" + "," + "All Day Event" + "," + "" + "," + appointments[i].eventLocation + "," + "Private");
+                
+            }
+            Response.ContentType = "text/plain";
+            Response.AddHeader("content-disposition", "attachment;filename=" + string.Format("members-{0}.csv", string.Format("{0:ddMMyyyy}", DateTime.Today)));
+            Response.Clear();
+
+            using (StreamWriter writer = new StreamWriter(Response.OutputStream, Encoding.UTF8))
+            {
+                writer.Write(oStringWriter.ToString());
+            }
+            Response.End();
+        }   
     }
 }

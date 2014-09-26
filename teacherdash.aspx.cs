@@ -15,6 +15,11 @@ namespace ProjectNinja
             hdnRowID.Value = "mgeary";//Session["Ninja.UserID"].ToString();
         }
 
+        /// <summary>
+        /// Deletes a specified event from the list of events a teacher has on the TeacherDash page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>  
         protected void grdEventsTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "DeleteEvent")
@@ -29,18 +34,24 @@ namespace ProjectNinja
 
         }
 
+        /// <summary>
+        /// Redirects to the eventpage, and stores the eventID in a session variable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void lnkEvent_Click(object sender, EventArgs e)
         {
             Session["Ninja.eventID"] = ((LinkButton)sender).CommandArgument;
             Response.Redirect("eventpage.aspx");
         }
 
+        /// <summary>
+        /// Nessessary for getting grdView header in the EventsTable to display its style
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void grdEventsTable_PreRender(object sender, EventArgs e)
         {
-            // You only need the following 2 lines of code if you are not 
-            // using an ObjectDataSource of SqlDataSource
-            //grdEventsTable.DataSource = Sample.GetData();
-            //grdEventsTable.DataBind();
 
             if (grdEventsTable.Rows.Count > 0)
             {

@@ -17,21 +17,18 @@ $(document).ready(function () {
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
 
     if (document.title === "Teacher Calendar")
-        generateAgendaTable("false");
+        generateAgendaTable("TC");
+    else if (document.title === "Event Sign Up")
+        generateAgendaTable("ESU");
     else
         generateAgendaTable();
-
-
-    alert(document.title);
 
     // Start the date picker
     $('#eventDate').datepicker({
         'format': 'm/d/yyyy',
-        'autoclose': true
-    });
-
-    $('#eventDatePicker').datepicker({
-        'format': 'm/d/yyyy'
+        'autoclose': true,
+        todayBtn: "linked",
+        todayHighlight: true
     });
 });
 
@@ -91,17 +88,27 @@ function disableSelectedAttendees() {
     return;
 }
 
-function generateAgendaTable(newEvent) {
+function generateAgendaTable(pageName) {
 
-    // The default newEvent was added to accommodate small changes for the teacherCalendar page
-    newEvent = newEvent || "true";
+    // The default pageName was added to accommodate small changes for the teacherCalendar page
+    //pageName = pageName || "true";
+    if (pageName === undefined) {
+        pageName = "undefined";
+    }
+    
 
     // Date must of the form m/d/yyyy
 
     // Number of days to display at a time
     var numberOfDaysToDisplay = 5;
     // Number of minutes each row should be separated by
-    var step = (newEvent === "true" ? (parseInt(document.getElementById('eventTime').value)) : 15);
+    //var step = (pageName === "TC" ? 15 : (parseInt(document.getElementById('eventTime').value)));
+    if (pageName === "TC")
+        var step = 15;
+    else {
+        var step = parseInt(document.getElementById('eventTime').value);
+    }
+
     // Holds the agenda table
     var agendaTable;
     // Holds the names of days of the week
@@ -138,19 +145,25 @@ function generateAgendaTable(newEvent) {
     endDateTime.setHours(endHour, 0, 0, 0);
     var time;
     while (datesToDisplay[0] <= endDateTime) {
-        if (datesToDisplay[0].getHours() <= 12) {
+        if (datesToDisplay[0].getHours() < 12) {
             time = datesToDisplay[0].getHours() + ':' + ('0' + datesToDisplay[0].getMinutes()).slice(-2) + 'AM';
         }
         else {
-            time = (datesToDisplay[0].getHours() % 12) + ':' + ('0' + datesToDisplay[0].getMinutes()).slice(-2) + 'PM';
+            if (datesToDisplay[0].getHours() == 12) {
+                time = 12;
+            }
+            else {
+                time = (datesToDisplay[0].getHours() % 12);
+            }
+            time += ':' + ('0' + datesToDisplay[0].getMinutes()).slice(-2) + 'PM';
         }
         agendaTable += '<tr><td>' + time + '</td>';
 
-        newEvent === "true" ? includeOnClick = 'onclick="toggleSelectedDateTime(this);"' : includeOnClick = '';
+        pageName === "TC" ? includeOnClick = '' : includeOnClick = 'onclick="toggleSelectedDateTime(this);"';
 
         // Add the days
         for (var numColumns = 0; numColumns < numberOfDaysToDisplay; numColumns++) {
-            agendaTable += '<td class="agenda-slot" selectable="false" ' + newEvent + ' data-dateTime="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '" id="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '"></td>';
+            agendaTable += '<td class="agenda-slot" selectable="false" ' + includeOnClick + ' data-dateTime="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '" id="' + datesToDisplay[numColumns].toLocaleDateString() + ' ' + time + '"></td>';
         }
         agendaTable += '</tr>';
         datesToDisplay[0].setMinutes(datesToDisplay[0].getMinutes() + step);
@@ -165,20 +178,31 @@ function generateAgendaTable(newEvent) {
         $("td[data-datetime='" + dateTimes[index] + "']").addClass("selectedDateTime");
     }
 
-    newEvent === "true" ? null : populateAgendaTable();
+    pageName != "undefined" ? populateAgendaTable() : "undefined";
 
     return;
 }
 
 // Populate the calendar with scheduled appointments
 function populateAgendaTable() {
+    // Array/mapping that holds all the info for each scheduled event
     var appointmentArray = JSON.parse(document.getElementById("mainContent_hdnScheduledAppointments").value);
+    // Array/mapping that holds scheduled event information grouped by eventID
+    var eventsByIDArray = null;
+
+    var eventIDIndex = 0;
+                   //  red       purple    green     yellow    blue
+    var colorArray = ["D73A2B", "9A3AE1", "3EE173", "D7D43A", "428BCA"];
+
+    var currentColorNumber = 0;
 
     for (i = 0; i < appointmentArray.length; i++) {
-        //<span>Leah Jennings</span><br><span>First Interviews</span><br><span>Commons 2nd Floor</span>
 
+
+
+        // Date given from the database
         var date = parseDate(appointmentArray[i].eventDate);
-
+        // Same date from database, just in the right format
         var dateID = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + " " + ((date.getHours() == 12) ? date.getHours() : (date.getHours() % 12)) + ":" + zeroPad(date.getMinutes(), 2);
 
         if (date.getHours() < 12)
@@ -186,12 +210,19 @@ function populateAgendaTable() {
         else
             dateID += 'PM';
 
+        // How many rows to fill in total to account for the duration of the event
         var rowsToFill = appointmentArray[i].eventDuration / 15;
 
+        if (i != 0) {
+            if (appointmentArray[i] != appointmentArray[i - 1]) {
+                currentColorNumber = currentColorNumber == 4 ? 1 : currentColorNumber++;
+            }
+        }
 
         if (document.getElementById(dateID)) {
             document.getElementById(dateID).innerHTML = "<p style='font-size: 18px;style=line-height: 100%;'>" + appointmentArray[i].eventUserName + "</p><p style='line-height: 10%;'>" + appointmentArray[i].eventName + "</p><p style='line-height: 30%;'>" + appointmentArray[i].eventLocation + "</p>";
             document.getElementById(dateID).className += " selectedDateTime";
+            document.getElementById(dateID).style.backgroundColor = "#" + colorArray[currentColorNumber];
 
             var minutes = parseInt(zeroPad(date.getMinutes(), 2));
             var hour = ((date.getHours() == 12) ? date.getHours() : (date.getHours() % 12));
@@ -205,19 +236,21 @@ function populateAgendaTable() {
                     hour += 1;
                 }
 
-
                 dateID = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + " " + hour + ":" + zeroPad(minutes, 2);
                 if (date.getHours() < 12)
                     dateID += 'AM';
                 else
                     dateID += 'PM';
-                alert(dateID);
 
                 document.getElementById(dateID).className += " selectedDateTime";
             }
 
 
         }
+
+
+        //eventsByIDArray[i] = appointmentArray[i].eventID;
+        //eventsByIDArray[i] = appointmentArray[i].eventLocation;
 
     }
 
@@ -284,7 +317,9 @@ function changeSchedualDateRange(daysToAdd) {
     var year = dateToDisplay.getFullYear();
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
     if (document.title === "Teacher Calendar")
-        generateAgendaTable("false");
+        generateAgendaTable("TC");
+    else if (document.title === "Event Sign Up")
+        generateAgendaTable("ESU");
     else
         generateAgendaTable();
     return;

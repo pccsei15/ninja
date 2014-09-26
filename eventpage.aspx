@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Sign up" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="EventPage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
+﻿<%@ Page Title="Sign up" Language="C#" MasterPageFile="MasterPage.Master" AutoEventWireup="true" CodeBehind="EventPage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Event Sign Up</title>
@@ -9,21 +9,33 @@
 </asp:content>
 
 <asp:Content ID="Content" ContentPlaceHolderID="mainContent" runat="server">
+    <form id="Form1"  role="form"  runat="server">
+    <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
 
     <div class="row">
-        <div class="col-md-6">
-            <h1>Title</h1>
-            <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="eventName" DataValueField="eventID">
+        <%-- Drop down to change the event to sign up for --%> 
+        <div class="col-md-6"> 
+            <asp:DropDownList 
+                ID="eventSelectList" 
+                runat="server" 
+                DataSourceID="selectedDataSource" 
+                DataTextField="eventName" 
+                DataValueField="eventID" 
+                CssClass="form-control input-lg event-drop" 
+                AutoPostBack="True" 
+                OnSelectedIndexChanged="eventSelectList_SelectedIndexChanged">
             </asp:DropDownList>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" SelectCommand="SELECT [eventID], [eventName] FROM [EVENT]">
-                <%--<SelectParameters>
-                   <asp:ControlParameter ControlID="hdnRowID" Name="p_User" PropertyName="Value" />
-               </SelectParameters>--%>
+            <asp:SqlDataSource 
+                ID="selectedDataSource" 
+                runat="server" 
+                ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" 
+                SelectCommand="
+                   SELECT [eventID], [eventName] 
+                     FROM [EVENT] " 
+                CancelSelectOnNullParameter="False">
+                
             </asp:SqlDataSource>
-
-            
-            
-        </div>
+        </div><!-- end drop-down-->
     </div>
       
     <div class="row">
@@ -35,14 +47,14 @@
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                   </div><!-- end input-group-addon -->
-                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" data-provide="datepicker-inline"/>
+                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" />
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
             <div class="form-group">
                <div class="input-group">
                    <!--pull value from db -->
-                   <input type="hidden" value="30" class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();" />
+                   <input type="hidden" value="30" class="form-control" id="eventTime" name="eventTime" />
                </div><!-- end input-group -->
             </div><!-- end form-group -->
          </form>
@@ -50,6 +62,7 @@
       <div class="col-md-9" id="agendaTableHolder">
       </div><!-- end agendaTableHolder -->
     </div>
+        </form>  
 </asp:content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ExtraJs" runat="server">

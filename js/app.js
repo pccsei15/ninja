@@ -1,52 +1,50 @@
-$(document).ready(function () {
-    $("#ContentPlaceHolder1_grdTeacherEventsTable").dataTable({
-        "paging": false,
-        "columns": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            { "orderable": false }
-        ],
-        "order": [0, 'asc'],
-        "info": true
-    });
-
-    $("#ContentPlaceHolder1_grdStudentEventsTable").dataTable({
-      "paging": false,
-      "columns": [
-          null,
-          null,
-          null,
-          { "orderable": false }
-        ],
-      "order": [0, 'asc'],
-      "info": false
-    });
-
-    $("#ContentPlaceHolder1_grdEventsAvailable").dataTable({
-        "paging": false,
-        "columns": [
-            null,
-            null,
-            null,
-            null,
-            { "orderable": false }
-        ],
-        "order": [0, 'asc'],
-        "info": false
-    });
-    fixGridView($("#grdTeacherEventsTable"));
-    $("#grdTeacherEventsTable").tablesorter({ sortList: [[1, 0]] });
-    fixGridView($("#grdStudentEventTable"));
-    $("#grdStudentEventTable").tablesorter({ sortList: [[1, 0]] });
-    fixGridView($("#grdEventsAvailable"));
-    $("#grdEventsAvailable").tablesorter({ sortList: [[1, 0]] });
+$("#mainContent_grdEventsTable").dataTable({
+    "paging": true,
+    "columns": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        { "orderable": false }
+    ],
+    "order": [0, 'asc'],
+    "info": false
 });
 
-//GridviewFix Plugin Code
+$("#mainContent_grdStudentEventsTable").dataTable({
+    "paging": true,
+    "columns": [
+        null,
+        null,
+        null,
+        { "orderable": false }
+    ],
+    "order": [0, 'asc'],
+    "info": false
+});
 
+$("#mainContent_grdEventsAvailable").dataTable({
+    "paging": true,
+    "columns": [
+        null,
+        null,
+        null,
+        null,
+        { "orderable": false }
+    ],
+    "order": [0, 'asc'],
+    "info": false
+});
+
+fixGridView($("#mainContent_grdEventsTable"));
+$("#mainContent_grdEventsTable").tablesorter({ sortlist: [[1, 0]] });
+fixGridView($("#grdStudentEventsTable"));
+$("#grdStudentEventsTable").tablesorter({ sortlist: [[1, 0]] });
+fixGridView($("#mainContent_grdEventsAvailable"));
+$("#mainContent_grdEventsAvailable").tablesorter({ sortlist: [[1, 0]] });
+
+//GridviewFix Plugin Code
 function fixGridView(tableEl) {
     var jTbl = $(tableEl);
 
