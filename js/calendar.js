@@ -18,18 +18,18 @@ $(document).ready(function () {
 
     if (document.title === "Teacher Calendar")
         generateAgendaTable("TC");
-    else if (document.title === "Event Sign Up")
+    else if (document.title === "Event Sign Up") 
         generateAgendaTable("ESU");
     else
         generateAgendaTable();
+});
 
-    // Start the date picker
-    $('#eventDate').datepicker({
-        'format': 'm/d/yyyy',
-        'autoclose': true,
-        todayBtn: "linked",
-        todayHighlight: true
-    });
+// Start the date picker
+$('#eventDate').datepicker({
+    'format': 'm/d/yyyy',
+    'autoclose': true,
+    todayBtn: "linked",
+    todayHighlight: true
 });
 
 $("#eventDatePicker").datepicker({
@@ -197,9 +197,8 @@ function populateAgendaTable() {
     var currentColorNumber = 0;
 
     for (i = 0; i < appointmentArray.length; i++) {
-
-
-
+        var message = appointmentArray.length + ' arrayLength';
+        alert(message);
         // Date given from the database
         var date = parseDate(appointmentArray[i].eventDate);
         // Same date from database, just in the right format
@@ -243,6 +242,7 @@ function populateAgendaTable() {
                     dateID += 'PM';
 
                 document.getElementById(dateID).className += " selectedDateTime";
+                alert(dateID);
             }
 
 

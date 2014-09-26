@@ -50,8 +50,6 @@ function fixGridView(tableEl) {
         jTbl.find("thead tr").append(jTbl.find("th"));
         jTbl.find("tbody tr:first").remove();
     }
-}
-
 
     //$("#mainContent_eventSelectList").onchange = function () {
     //    alert("YO!");
@@ -61,4 +59,3 @@ function fixGridView(tableEl) {
     //               alert("Data: " + data + "\nStatus: " + status);
     //           });
     //}
-
