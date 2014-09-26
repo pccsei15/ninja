@@ -51,22 +51,3 @@ function fixGridView(tableEl) {
         jTbl.find("tbody tr:first").remove();
     }
 }
-
-function callGetEventData() {
-    $.ajax({
-        type: "POST",
-        url: "GetEventData.aspx",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: OnSuccess,
-        failure: function (response) {
-            alert(response.d);
-        }
-    });
-    $.post("GetEventData.aspx",
-      ,
-      function(data,status){
-          alert("Data: " + data + "\nStatus: " + status);
-      });
-    });
-}
