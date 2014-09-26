@@ -13,9 +13,17 @@ namespace ProjectNinja
     {
         private ScheduledAppointment[] allAppointments = null;
         public string selectedEventId = "7";
+        public string currentStudentId;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //if (Session["Ninja.userID"] == null)
+            //    Response.Redirect("Default.aspx");
+            //else
+            //    currentStudentId = Session["Ninja.userID"];
+            Session["Ninja.userID"] = "119080";
+            currentStudentId = "119080";
+
             if (!IsPostBack)
             {
                 if (Session["Ninja.eventID"] != null)
@@ -26,9 +34,10 @@ namespace ProjectNinja
                 }
                 else
                     eventSelectList.SelectedValue = selectedEventId; // Make drop-down selected value equal to default value
+                GetScheduledAppointments();
+                PopulateScheduledAppointments();
             }
-            GetScheduledAppointments();
-            PopulateScheduledAppointments();
+            
         }
 
         public class ScheduledAppointment

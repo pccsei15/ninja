@@ -324,3 +324,30 @@ function changeSchedualDateRange(daysToAdd) {
         generateAgendaTable();
     return;
 }
+
+// Populates selected cell with user and event data (need to send to the db)
+function signUp(object) {
+    // Array/mapping that holds all the info for each scheduled event
+    var appointmentArray = JSON.parse(document.getElementById("mainContent_hdnScheduledAppointments").value);
+    // Array/mapping that holds scheduled event information grouped by eventID
+    var eventsByIDArray = null;
+
+    var eventIDIndex = 0;
+    //  red       purple    green     yellow    blue
+    var colorArray = ["D73A2B", "9A3AE1", "3EE173", "D7D43A", "428BCA"];
+
+    var currentColorNumber = 0;
+
+    // Need dateID, username, eventname and eventlocation -> userID and eventID and timeID for updating database
+    // Figure out how to place in right cell with the updated plugin code
+    document.getElementById(dateID).innerHTML =
+        "<p style='font-size: 18px;style=line-height: 100%;'>"
+        + appointmentArray[i].eventUserName
+        + "</p><p style='line-height: 10%;'>"
+        + appointmentArray[i].eventName
+        + "</p><p style='line-height: 30%;'>"
+        + appointmentArray[i].eventLocation
+        + "</p>";
+    document.getElementById(dateID).className += " selectedDateTime";
+    document.getElementById(dateID).style.backgroundColor = "#" + colorArray[currentColorNumber];
+}
