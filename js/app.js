@@ -54,3 +54,11 @@ function fixGridView(tableEl) {
         jTbl.find("tbody tr:first").remove();
     }
 }
+
+// Student page tabs
+$('#available a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+});
+
+$('#scheduled a[href="#scheduled"]').tab('show');
