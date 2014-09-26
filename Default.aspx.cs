@@ -2,30 +2,32 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ProjectNinja.VersionedCode
 {
+   // DONT TOUCH IT!!!
    public partial class Defualt : System.Web.UI.Page
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-
+         
       }
 
       protected void btnUser_Click(object sender, EventArgs e)
       {
+         //Page.ClientScript.RegisterStartupScript(this.GetType(), "clientScript", "<script     language=JavaScript>alert('Testing');</script>");
+
          Session["Ninja.UserID"] = txtUserName.Text;
 
-         Page.ClientScript.RegisterStartupScript(this.GetType(), "clientScript", "<script     language=JavaScript>alert('Testing');</script>");
-
-         int isStudent = 0,
-             isTeacher = 0,
-             isEnabled = 0;
-         //string current_login_id,
-         //       current_user_id;
+         int    isStudent = 0,
+                isTeacher = 0,
+                isEnabled = 0;
+         string current_login_id,
+                current_user_id;
 
          //if (HttpContext.Current.Session["username"] == null)
          //{
@@ -33,7 +35,7 @@ namespace ProjectNinja.VersionedCode
          //current_login_id = HttpContext.Current.User.Identity.Name;
          //current_user_id = current_login_id.Substring(current_login_id.LastIndexOf('\\') + 1);
          //HttpContext.Current.Session["username"] = 100;//current_user_id;
-
+         
          SqlCommand cmdLoadID = new SqlCommand(@"
 SELECT user_is_enabled, user_is_student, user_is_teacher
   FROM SEI_TimeMachine2.dbo.[USER]
@@ -49,6 +51,9 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
             isTeacher = Convert.ToInt32(drUser["user_is_teacher"]);
             isEnabled = Convert.ToInt32(drUser["user_is_enabled"]);
          }
+
+         Session["Ninja.isTeacher"] = isTeacher;
+
          cmdLoadID.Connection.Close();
          if (isStudent == 1 && isEnabled == 1)
          {

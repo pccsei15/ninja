@@ -7,6 +7,12 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
+public static class GlobalVar
+{
+   public const string True  = "1";
+   public const string False = "0";
+}
+
 namespace ProjectNinja
 {
    public partial class MasterPage : System.Web.UI.MasterPage
