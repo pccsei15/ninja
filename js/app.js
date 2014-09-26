@@ -38,11 +38,8 @@ $("#mainContent_grdEventsAvailable").dataTable({
 });
 
 fixGridView($("#mainContent_grdEventsTable"));
-$("#mainContent_grdEventsTable").tablesorter({ sortlist: [[1, 0]] });
 fixGridView($("#grdStudentEventsTable"));
-$("#grdStudentEventsTable").tablesorter({ sortlist: [[1, 0]] });
 fixGridView($("#mainContent_grdEventsAvailable"));
-$("#mainContent_grdEventsAvailable").tablesorter({ sortlist: [[1, 0]] });
 
 //GridviewFix Plugin Code
 function fixGridView(tableEl) {
