@@ -91,17 +91,17 @@ function disableSelectedAttendees() {
 function generateAgendaTable(pageName) {
 
     // The default pageName was added to accommodate small changes for the teacherCalendar page
-    // pageName = pageName || "true";
+    //pageName = pageName || "true";
     if (pageName === undefined) {
         pageName = "undefined";
     }
     
+
     // Date must of the form m/d/yyyy
 
     // Number of days to display at a time
     var numberOfDaysToDisplay = 5;
     // Number of minutes each row should be separated by
-
     //var step = (pageName === "TC" ? 15 : (parseInt(document.getElementById('eventTime').value)));
     if (pageName === "TC")
         var step = 15;
@@ -180,7 +180,6 @@ function generateAgendaTable(pageName) {
 
     pageName != "undefined" ? populateAgendaTable() : "undefined";
 
-
     return;
 }
 
@@ -193,9 +192,9 @@ function populateAgendaTable() {
 
     var eventIDIndex = 0;
                    //  red       purple    green     yellow    blue
-    //var colorArray = ["D73A2B", "9A3AE1", "3EE173", "D7D43A", "428BCA"];
+    var colorArray = ["D73A2B", "9A3AE1", "3EE173", "D7D43A", "428BCA"];
 
-    //var currentColorNumber = 0;
+    var currentColorNumber = 0;
 
     for (i = 0; i < appointmentArray.length; i++) {
         var message = appointmentArray.length + ' arrayLength';
@@ -213,16 +212,16 @@ function populateAgendaTable() {
         // How many rows to fill in total to account for the duration of the event
         var rowsToFill = appointmentArray[i].eventDuration / 15;
 
-        /*if (i != 0) {
+        if (i != 0) {
             if (appointmentArray[i] != appointmentArray[i - 1]) {
                 currentColorNumber = currentColorNumber == 4 ? 1 : currentColorNumber++;
             }
-        }*/
+        }
 
         if (document.getElementById(dateID)) {
             document.getElementById(dateID).innerHTML = "<p style='font-size: 18px;style=line-height: 100%;'>" + appointmentArray[i].eventUserName + "</p><p style='line-height: 10%;'>" + appointmentArray[i].eventName + "</p><p style='line-height: 30%;'>" + appointmentArray[i].eventLocation + "</p>";
             document.getElementById(dateID).className += " selectedDateTime";
-            //document.getElementById(dateID).style.backgroundColor = "#" + colorArray[currentColorNumber];
+            document.getElementById(dateID).style.backgroundColor = "#" + colorArray[currentColorNumber];
 
             var minutes = parseInt(zeroPad(date.getMinutes(), 2));
             var hour = ((date.getHours() == 12) ? date.getHours() : (date.getHours() % 12));
@@ -236,14 +235,12 @@ function populateAgendaTable() {
                     hour += 1;
                 }
 
-                // This is here so the duration of the event is filled in accordingly
                 dateID = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + " " + hour + ":" + zeroPad(minutes, 2);
                 if (date.getHours() < 12)
                     dateID += 'AM';
                 else
                     dateID += 'PM';
 
-                //alert(dateID);
                 document.getElementById(dateID).className += " selectedDateTime";
             }
 
@@ -322,5 +319,7 @@ function changeSchedualDateRange(daysToAdd) {
         generateAgendaTable("TC");
     else if (document.title === "Event Sign Up")
         generateAgendaTable("ESU");
+    else
+        generateAgendaTable();
     return;
 }

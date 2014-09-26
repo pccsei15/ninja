@@ -31,11 +31,6 @@ namespace ProjectNinja
 
                 hdnRowID.Value = null;
             }
-            else if (e.CommandName == "EditEvent")
-            {
-               Session["Ninja.eventID"] = e.CommandArgument.ToString();
-               Response.Redirect("eventpage.aspx");
-            }
 
         }
 
@@ -46,7 +41,8 @@ namespace ProjectNinja
         /// <param name="e"></param>
         protected void lnkEvent_Click(object sender, EventArgs e)
         {
-            
+            Session["Ninja.eventID"] = ((LinkButton)sender).CommandArgument;
+            Response.Redirect("eventpage.aspx");
         }
 
         /// <summary>

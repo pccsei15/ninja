@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
+            <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
             SELECT DISTINCT ev.eventID, eventName, eventLocation, MIN(ev_ti.eventDate) AS beginDate, MAX(ev_ti.eventDate) AS endDate,  ev.eventOwner,
                 ( SELECT COUNT(DISTINCT scheduledUserID)
                     FROM SEI_Ninja.dbo.SCHEDULED_USERS su

@@ -13,12 +13,6 @@ namespace ProjectNinja
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-          int isStudent = 0,
-             isTeacher = 0,
-             isEnabled = 0;
-          string current_login_id,
-                 current_user_id;
-
           //if (HttpContext.Current.Session["username"] == null)
           //{
               current_login_id = HttpContext.Current.User.Identity.Name;

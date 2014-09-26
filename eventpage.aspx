@@ -1,5 +1,4 @@
-﻿<%@ Page Title="Sign up" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="EventPage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
-
+﻿<%@ Page Title="Sign up" Language="C#" MasterPageFile="MasterPage.Master" AutoEventWireup="true" CodeBehind="EventPage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Event Sign Up</title>
@@ -14,20 +13,20 @@
     <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
 
     <div class="row">
-        
         <%-- Drop down to change the event to sign up for --%> 
         <div class="col-md-6"> 
             <asp:DropDownList 
-                ID="DropDownList1" 
+                ID="eventSelectList" 
                 runat="server" 
-                DataSourceID="SqlDataSource1" 
+                DataSourceID="selectedDataSource" 
                 DataTextField="eventName" 
                 DataValueField="eventID" 
                 CssClass="form-control input-lg event-drop" 
-                AutoPostBack="True">
+                AutoPostBack="True" 
+                OnSelectedIndexChanged="eventSelectList_SelectedIndexChanged">
             </asp:DropDownList>
             <asp:SqlDataSource 
-                ID="SqlDataSource1" 
+                ID="selectedDataSource" 
                 runat="server" 
                 ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" 
                 SelectCommand="
@@ -37,7 +36,6 @@
                 
             </asp:SqlDataSource>
         </div><!-- end drop-down-->
-        
     </div>
       
     <div class="row">
@@ -56,7 +54,7 @@
             <div class="form-group">
                <div class="input-group">
                    <!--pull value from db -->
-                   <input type="hidden" value="30" class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();" />
+                   <input type="hidden" value="30" class="form-control" id="eventTime" name="eventTime" />
                </div><!-- end input-group -->
             </div><!-- end form-group -->
          </form>
@@ -71,9 +69,6 @@
     <script type="text/javascript" src="js/jquery.timepicker.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" charset="utf8" src="js/calendar.js"></script>
-    <script type="text/javascript">
-        alert(Session["Ninja.eventID"]);
-    </script>
 </asp:content>
 
 

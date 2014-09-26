@@ -5,9 +5,9 @@
 </asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
     <form runat="server">
-        <asp:HiddenField ID="hdnStudentID" runat="server" />
+   <asp:HiddenField ID="hdnStudentID" runat="server" />
 
-            <div class="row" style="margin-top: 15px;">
+    <div class="row" style="margin-top: 15px;">
                 <div class="col-md-12">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
@@ -45,8 +45,7 @@
                                                     <i aria-hidden="true" class="glyphicon glyphicon-ok-sign"></i> Sign Up
                                                 </asp:LinkButton>
 				                        </itemtemplate>
-                       
-			                        </asp:TemplateField>
+                       </asp:TemplateField>
                                 </Columns>
                                 <RowStyle CssClass="rowStyle" />
                                 <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
@@ -56,8 +55,7 @@
                     </div>
                 </div>
               </div>
-
-              <div class="tab-pane" id="scheduled">
+<div class="tab-pane" id="scheduled">
                   <div class="row">
                      <div class="col-md-6">
                         <h1>Events Scheduled</h1>
@@ -81,10 +79,8 @@
                                                 <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Edit
                                             </asp:LinkButton>
 				                    </itemtemplate>
-                       
-			                       </asp:TemplateField>
-                  
-                               </Columns>
+                               </asp:TemplateField>
+                  </Columns>
                                <RowStyle CssClass="rowStyle" />
                                <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
                                <FooterStyle CssClass="footerStyle" />

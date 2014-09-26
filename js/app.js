@@ -52,10 +52,21 @@ function fixGridView(tableEl) {
     }
 }
 
-// Student page tabs
-$('#available a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-});
-
-$('#scheduled a[href="#scheduled"]').tab('show');
+function callGetEventData() {
+    $.ajax({
+        type: "POST",
+        url: "GetEventData.aspx",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: OnSuccess,
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+    $.post("GetEventData.aspx",
+      ,
+      function(data,status){
+          alert("Data: " + data + "\nStatus: " + status);
+      });
+    });
+}
