@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="Sign up" Language="C#" MasterPageFile="MasterPage.Master" AutoEventWireup="true" CodeBehind="EventPage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Event Sign Up</title>
 </asp:content>
@@ -13,6 +14,7 @@
     <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
 
     <div class="row">
+        
         <%-- Drop down to change the event to sign up for --%> 
         <div class="col-md-6"> 
             <asp:DropDownList 
@@ -36,6 +38,7 @@
                 
             </asp:SqlDataSource>
         </div><!-- end drop-down-->
+        
     </div>
       
     <div class="row">
@@ -69,6 +72,9 @@
     <script type="text/javascript" src="js/jquery.timepicker.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" charset="utf8" src="js/calendar.js"></script>
+    <script type="text/javascript">
+        alert(Session["Ninja.eventID"]);
+    </script>
 </asp:content>
 
 

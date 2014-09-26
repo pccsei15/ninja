@@ -80,10 +80,4 @@ namespace ProjectNinja
             //Session["Ninja.eventID"] = eventSelectList.SelectedValue;
         }
     }
-
-        
-
-
-
-
-    }
+}
