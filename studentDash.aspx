@@ -57,7 +57,7 @@ SELECT DISTINCT ec.eventID, e.eventLocation, e.eventName, MIN(et.eventDate) AS b
 								  JOIN [SEI_Ninja].[dbo].[EVENT] e ON (et.eventID = e.eventID)
 						    WHERE su.userID = @p_StudentID )																	
   GROUP BY ec.eventID, eventLocation, eventName
- HAVING MAX(et.eventDate) &gt;= SYSDATETIME();" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" ProviderName="<%$ ConnectionStrings:SEI_NinjaConnectionString.ProviderName %>">
+ HAVING MAX(et.eventDate) &gt;= SYSDATETIME();" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="<%$ ConnectionStrings:SEI_NinjaConnectionString.ProviderName %>">
         <SelectParameters>
             <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
         </SelectParameters>
@@ -95,7 +95,7 @@ SELECT DISTINCT ec.eventID, e.eventLocation, e.eventName, MIN(et.eventDate) AS b
          </div>
       </div>
    </div>
-   <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
+   <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
 SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate
   FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
        JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
