@@ -7,36 +7,63 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectNinja {
+namespace ProjectNinja.VersionedCode {
     
     
-    public partial class neweventpage {
+    public partial class EditEventPage1 {
         
         /// <summary>
-        /// eventFormView control.
+        /// hdnScheduledAppointments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView eventFormView;
+        protected global::System.Web.UI.WebControls.HiddenField hdnScheduledAppointments;
         
         /// <summary>
-        /// sqlEvents control.
+        /// eventName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sqlEvents;
+        protected global::System.Web.UI.WebControls.TextBox eventName;
         
         /// <summary>
-        /// Timeslots control.
+        /// eventDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource Timeslots;
+        protected global::System.Web.UI.WebControls.TextBox eventDate;
+        
+        /// <summary>
+        /// eventTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList eventTime;
+        
+        /// <summary>
+        /// evenAttendees control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList evenAttendees;
+        
+        /// <summary>
+        /// eventLocationList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList eventLocationList;
     }
 }
