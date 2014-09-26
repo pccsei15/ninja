@@ -40,7 +40,7 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
                   isTeacher = Convert.ToInt32(drUser["user_is_teacher"]);
                   isEnabled = Convert.ToInt32(drUser["user_is_enabled"]);
               }
-
+              cmdLoadID.Connection.Close();
               if (isStudent == 1 && isEnabled == 1)
               {
                   Response.Redirect("studentDash.aspx");
@@ -49,7 +49,6 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
               {
                   Response.Redirect("techerDeash.aspx");
               }
-
           }
       }
    }
