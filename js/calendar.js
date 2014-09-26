@@ -242,6 +242,7 @@ function populateAgendaTable() {
                     dateID += 'PM';
 
                 document.getElementById(dateID).className += " selectedDateTime";
+                alert(dateID);
             }
 
 
