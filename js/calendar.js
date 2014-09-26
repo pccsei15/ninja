@@ -89,7 +89,7 @@ function disableSelectedAttendees() {
 function generateAgendaTable(newEvent) {
 
     // The default pageName was added to accommodate small changes for the teacherCalendar page
-    //pageName = pageName || "true";
+    // pageName = pageName || "true";
     if (pageName === undefined) {
         pageName = "undefined";
     }
