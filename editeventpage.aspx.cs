@@ -13,7 +13,7 @@ namespace ProjectNinja.VersionedCode
 {
     public partial class EditEventPage1 : System.Web.UI.Page
     {
-        private Info[]      info = null;
+        /*private Info[]      info = null;
         private Timeslots[] timeslots = null;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -105,6 +105,41 @@ namespace ProjectNinja.VersionedCode
                 }
                 con.Close();
             }
+        }*/
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            SqlCommand cmdLoadID = new SqlCommand(@"
+SELECT e.eventLocation, e.eventName 
+                            FROM [SEI_Ninja].[dbo].EVENT e
+                            WHERE e.eventID = @p_userID;",
+      new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
+            cmdLoadID.Parameters.AddWithValue("p_userID", 5);//Session["Ninja.eventID"].ToString());
+
+            cmdLoadID.Connection.Open();
+            SqlDataReader drUser = cmdLoadID.ExecuteReader();
+            if (drUser.Read())
+            {
+                txteventLocation.Text = Convert.ToString(drUser["eventLocation"]);
+                txteventName.Text = Convert.ToString(drUser["eventName"]);
+            }
+            cmdLoadID.Connection.Close();
+        }
+
+        protected void submit_Click(object sender, EventArgs e)
+        {
+            SqlCommand cmdLoadID = new SqlCommand(@"
+                UPDATE [SEI_Ninja].[dbo].EVENT 
+                SET eventName='@p_eventName', eventLocation='@p_eventLocation' 
+                WHERE eventID='@p_eventID'",
+        new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
+            cmdLoadID.Parameters.AddWithValue("p_userID", 5);
+            cmdLoadID.Parameters.AddWithValue("p_eventName", txteventName.Text);
+            cmdLoadID.Parameters.AddWithValue("p_eventLocation", txteventLocation.Text);
+            cmdLoadID.Parameters.AddWithValue("p_eventTime", ddleventTime.SelectedValue);
+
+            cmdLoadID.Connection.Open();
         }
     }
+
 }

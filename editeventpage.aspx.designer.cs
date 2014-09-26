@@ -13,13 +13,13 @@ namespace ProjectNinja.VersionedCode {
     public partial class EditEventPage1 {
         
         /// <summary>
-        /// eventName control.
+        /// txteventName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox eventName;
+        protected global::System.Web.UI.WebControls.TextBox txteventName;
         
         /// <summary>
         /// eventInfo control.
@@ -58,13 +58,13 @@ namespace ProjectNinja.VersionedCode {
         protected global::System.Web.UI.WebControls.TextBox eventDate;
         
         /// <summary>
-        /// eventTime control.
+        /// ddleventTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList eventTime;
+        protected global::System.Web.UI.WebControls.DropDownList ddleventTime;
         
         /// <summary>
         /// evenAttendees control.
@@ -76,6 +76,15 @@ namespace ProjectNinja.VersionedCode {
         protected global::System.Web.UI.WebControls.DropDownList evenAttendees;
         
         /// <summary>
+        /// sqlCourses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sqlCourses;
+        
+        /// <summary>
         /// eventLocationList control.
         /// </summary>
         /// <remarks>
@@ -83,5 +92,23 @@ namespace ProjectNinja.VersionedCode {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList eventLocationList;
+        
+        /// <summary>
+        /// txteventLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txteventLocation;
+        
+        /// <summary>
+        /// submit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button submit;
     }
 }
