@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Sign up" Language="C#" MasterPageFile="MasterPage.Master" AutoEventWireup="true" CodeBehind="EventPage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
+﻿<%@ Page Title="Sign up" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="EventPage.aspx.cs" Inherits="ProjectNinja.eventpage" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="pageTitle" runat="server">
@@ -18,17 +18,16 @@
         <%-- Drop down to change the event to sign up for --%> 
         <div class="col-md-6"> 
             <asp:DropDownList 
-                ID="eventSelectList" 
+                ID="DropDownList1" 
                 runat="server" 
-                DataSourceID="selectedDataSource" 
+                DataSourceID="SqlDataSource1" 
                 DataTextField="eventName" 
                 DataValueField="eventID" 
                 CssClass="form-control input-lg event-drop" 
-                AutoPostBack="True" 
-                OnSelectedIndexChanged="eventSelectList_SelectedIndexChanged">
+                AutoPostBack="True">
             </asp:DropDownList>
             <asp:SqlDataSource 
-                ID="selectedDataSource" 
+                ID="SqlDataSource1" 
                 runat="server" 
                 ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" 
                 SelectCommand="
@@ -57,7 +56,7 @@
             <div class="form-group">
                <div class="input-group">
                    <!--pull value from db -->
-                   <input type="hidden" value="30" class="form-control" id="eventTime" name="eventTime" />
+                   <input type="hidden" value="30" class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();" />
                </div><!-- end input-group -->
             </div><!-- end form-group -->
          </form>

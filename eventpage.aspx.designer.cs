@@ -31,21 +31,21 @@ namespace ProjectNinja {
         protected global::System.Web.UI.WebControls.HiddenField hdnScheduledAppointments;
         
         /// <summary>
-        /// eventSelectList control.
+        /// DropDownList1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList eventSelectList;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
         
         /// <summary>
-        /// selectedDataSource control.
+        /// SqlDataSource1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource selectedDataSource;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
     }
 }

@@ -17,9 +17,7 @@ $(document).ready(function () {
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
 
     if (document.title === "Teacher Calendar")
-        generateAgendaTable("TC");
-    else if (document.title === "Event Sign Up")
-        generateAgendaTable("ESU");
+        generateAgendaTable("false");
     else
         generateAgendaTable();
 
@@ -88,7 +86,7 @@ function disableSelectedAttendees() {
     return;
 }
 
-function generateAgendaTable(pageName) {
+function generateAgendaTable(newEvent) {
 
     // The default pageName was added to accommodate small changes for the teacherCalendar page
     //pageName = pageName || "true";
@@ -96,12 +94,12 @@ function generateAgendaTable(pageName) {
         pageName = "undefined";
     }
     
-
     // Date must of the form m/d/yyyy
 
     // Number of days to display at a time
     var numberOfDaysToDisplay = 5;
     // Number of minutes each row should be separated by
+
     //var step = (pageName === "TC" ? 15 : (parseInt(document.getElementById('eventTime').value)));
     if (pageName === "TC")
         var step = 15;
@@ -159,7 +157,7 @@ function generateAgendaTable(pageName) {
         }
         agendaTable += '<tr><td>' + time + '</td>';
 
-        pageName === "TC" ? includeOnClick = '' : includeOnClick = 'onclick="toggleSelectedDateTime(this);"';
+        newEvent === "true" ? includeOnClick = 'onclick="toggleSelectedDateTime(this);"' : includeOnClick = '';
 
         // Add the days
         for (var numColumns = 0; numColumns < numberOfDaysToDisplay; numColumns++) {
@@ -179,6 +177,7 @@ function generateAgendaTable(pageName) {
     }
 
     pageName != "undefined" ? populateAgendaTable() : "undefined";
+
 
     return;
 }
@@ -318,9 +317,7 @@ function changeSchedualDateRange(daysToAdd) {
     var year = dateToDisplay.getFullYear();
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
     if (document.title === "Teacher Calendar")
-        generateAgendaTable("TC");
-    else if (document.title === "Event Sign Up")
-        generateAgendaTable("ESU");
+        generateAgendaTable("false");
     else
         generateAgendaTable();
     return;
