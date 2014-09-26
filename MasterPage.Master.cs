@@ -24,7 +24,6 @@ namespace ProjectNinja
           //if (HttpContext.Current.Session["username"] == null)
           //{
 
-      
               current_login_id = HttpContext.Current.User.Identity.Name;
               current_user_id = current_login_id.Substring(current_login_id.LastIndexOf('\\') + 1);
               HttpContext.Current.Session["username"] = 100;//current_user_id;
@@ -44,19 +43,18 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
                   isTeacher = Convert.ToInt32(drUser["user_is_teacher"]);
                   isEnabled = Convert.ToInt32(drUser["user_is_enabled"]);
               }
-
-              Page.ClientScript.RegisterStartupScript(this.GetType(), "clientScript", "<script     language=JavaScript>alert('" + " " + isStudent + " " + " " + isTeacher + " " + " " + isEnabled + " " + HttpContext.Current.Session["username"].ToString() + "');</script>");
-
+              cmdLoadID.Connection.Close();
               if (isStudent == 1 && isEnabled == 1)
               {
-                  //Response.Redirect("studentDash.aspx");
+                  Response.Redirect("studentDash.aspx");
               }
               else if (isTeacher == 1 && isEnabled == 1)
               {
-                  //Response.Redirect("teacherDash.aspx");
+                  Response.Redirect("techerDeash.aspx");
               }
 
           //}
+
       }
    }
 }

@@ -22,6 +22,15 @@ namespace ProjectNinja {
         protected global::System.Web.UI.WebControls.HiddenField hdnStudentID;
         
         /// <summary>
+        /// lblEventsAvail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEventsAvail;
+        
+        /// <summary>
         /// grdEventsAvailable control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,24 @@ namespace ProjectNinja {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdEventsAvailable;
+        
+        /// <summary>
+        /// sqlAvailEvents control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sqlAvailEvents;
+        
+        /// <summary>
+        /// lblStudentEvents control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStudentEvents;
         
         /// <summary>
         /// grdStudentEventsTable control.
@@ -47,14 +74,5 @@ namespace ProjectNinja {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource sqlEvents;
-        
-        /// <summary>
-        /// sqlAvailEvents control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sqlAvailEvents;
     }
 }

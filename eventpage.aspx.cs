@@ -12,7 +12,6 @@ namespace ProjectNinja
     public partial class eventpage : System.Web.UI.Page
     {
         private ScheduledAppointment[] allAppointments = null;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             GetScheduledAppointments();
@@ -20,8 +19,10 @@ namespace ProjectNinja
 
             if (Session["Ninja.eventID"] != null)
             {
-                DropDownList1.SelectedValue = Session["Ninja.eventID"].ToString();
+                eventSelectList.SelectedValue = Session["Ninja.eventID"].ToString();
+                Session["Ninja.eventID"] = null;
             }
+            
         }
 
         public class ScheduledAppointment
@@ -55,7 +56,6 @@ namespace ProjectNinja
                                   JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
                             WHERE e.eventOwner = 'mgeary' 
                             ORDER BY e.eventID"; // NEEDS AUTHENTICATION
-
             using (var command = new SqlCommand(sql, con))
             {
                 con.Open();
@@ -63,11 +63,30 @@ namespace ProjectNinja
                 {
                     var list = new List<ScheduledAppointment>();
                     while (reader.Read())
-                        list.Add(new ScheduledAppointment { eventDate     = reader.GetDateTime(0),
-                                                            eventTimeID   = reader.GetInt32(1)});
+                        list.Add(new ScheduledAppointment
+                        {
+                            eventID = reader.GetInt32(0),
+                            eventName = reader.GetString(1),
+                            eventLocation = reader.GetString(2),
+                            eventDate = reader.GetDateTime(3),
+                            eventDuration = (float)reader.GetDouble(4),
+                            eventUserName = reader.GetString(5)
+                        });
                     allAppointments = list.ToArray();
                 }
             }
         }
+
+        protected void eventSelectList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Session["Ninja.eventID"] = eventSelectList.SelectedValue;
+            Session["Ninja.eventID"] = null;
+        }
     }
-}
+
+        
+
+
+
+
+    }
