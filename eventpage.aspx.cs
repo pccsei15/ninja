@@ -83,10 +83,4 @@ namespace ProjectNinja
             Session["Ninja.eventID"] = null;
         }
     }
-
-        
-
-
-
-
-    }
+}
