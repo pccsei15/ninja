@@ -13,67 +13,98 @@ namespace ProjectNinja.VersionedCode
 {
     public partial class EditEventPage1 : System.Web.UI.Page
     {
-        private ScheduledAppointment[] allAppointments = null;
+        private Info[]      info = null;
+        private Timeslots[] timeslots = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            GetScheduledAppointments();
+            GetInfo();
+            GetTimeslots();
             PopulateScheduledAppointments();
+            
         }
 
-        public class ScheduledAppointment
+        public class Info
         {
-            public int eventID { get; set; }
-            public string eventName { get; set; }
+            public int courseID { get; set; }
             public string eventLocation { get; set; }
+            public string eventName { get; set; }
+        }
+
+        public class Timeslots
+        {
+            public int eventTimeID { get; set; }
             public DateTime eventDate { get; set; }
-            public float eventDuration { get; set; }
-            public string eventUserName { get; set; }
         }
 
         public void PopulateScheduledAppointments()
         {
-            string jsonScheduledAppointments = JsonConvert.SerializeObject(allAppointments);
+            string jsonInfo = JsonConvert.SerializeObject(info);
+            string jsonTimeslots = JsonConvert.SerializeObject(timeslots);
 
-            hdnScheduledAppointments.Value = jsonScheduledAppointments;
+            eventInfo.Value = jsonInfo;
+            eventTimeslots.Value = jsonTimeslots;
+
         }
 
-        public void GetScheduledAppointments()
+        public void GetInfo()
         {
             var con = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0");
 
 
 
-            string sql = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, et.eventDuration, u.user_first_name + ' ' + u.user_last_name AS name
-                             FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
-                                  JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
-                                  JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
-                                  JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
-                            WHERE e.eventOwner = 'mgeary'";
-            using (var command = new SqlCommand(sql, con))
+            string sql1 = @"SELECT ec.courseID, e.eventLocation, e.eventName
+                            FROM [SEI_Ninja].[dbo].EVENT e
+                            JOIN [SEI_Ninja].[dbo].EVENT_COURSES ec ON (e.eventID = ec.eventID)
+                            WHERE ec.eventID = 5;";
+            //" + (String)Session["Ninja.eventID"] + "
+
+            using (var command = new SqlCommand(sql1, con))
             {
                 con.Open();
                 using (var reader = command.ExecuteReader())
                 {
-                    var list = new List<ScheduledAppointment>();
+                    var list = new List<Info>();
                     while (reader.Read())
-                        list.Add(new ScheduledAppointment
+                        list.Add(new Info
                         {
-                            eventID = reader.GetInt32(0),
-                            eventName = reader.GetString(1),
-                            eventLocation = reader.GetString(2),
-                            eventDate = reader.GetDateTime(3),
-                            eventDuration = (float)reader.GetDouble(4),
-                            eventUserName = reader.GetString(5)
+                            courseID = reader.GetInt32(0),
+                            eventLocation = reader.GetString(1),
+                            eventName = reader.GetString(2)
                         });
-                    allAppointments = list.ToArray();
+                    info = list.ToArray();
                 }
+                con.Close();
             }
         }
 
-        private void submit(object sender, EventArgs e)
+        public void GetTimeslots()
         {
-            eventName.Text = "Test";
+            var con = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0");
+
+
+
+            //" + (String)Session["Ninja.eventID"] + "
+            string sql2 = @"SELECT et.eventDate, et.eventTimeID
+                            FROM [SEI_Ninja].[dbo].EVENT_TIMES et
+                            WHERE et.eventID = 5 AND et.eventTimeID NOT IN (SELECT su.eventTimeID FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su);";
+
+            using (var command = new SqlCommand(sql2, con))
+            {
+                con.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    var list = new List<Timeslots>();
+                    while (reader.Read())
+                        list.Add(new Timeslots
+                        {
+                            eventDate = reader.GetDateTime(0),
+                            eventTimeID = reader.GetInt32(1)
+                        });
+                    timeslots = list.ToArray();
+                }
+                con.Close();
+            }
         }
     }
 }

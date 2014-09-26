@@ -7,7 +7,9 @@
     <li class="active">Edit Event</li>
 </asp:content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">  
-     <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
+     
+
+
         <div class="row">
       <div class="col-sm-12 col-md-12 main">
 
@@ -15,27 +17,31 @@
             <h1>Edit Event</h1>
          </div>
          <div class="col-md-6">
-            <a href="TeacherCalender.aspx" class="btn btn-primary pull-right">Save Event</a>
+            <a href="javascript:getAllSelectedDateTimes();" class="btn btn-primary pull-right">Save Event</a>
          </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
-        
+        <form runat="server">
             <div class="form-group">
                <label for="eventName">Event Name</label>
-             <!--  <input type="text" class="form-control" id="eventName" name="eventName" /> -->
-                <asp:TextBox ID="eventName" runat="server"></asp:TextBox>
+               <input type="text" class="form-control" id="eventName" name="eventName" value="" /> 
+              <!--  <asp:TextBox ID="eventName" runat="server"></asp:TextBox>-->
             </div><!-- end form-group -->
             
+            <asp:HiddenField ID="eventInfo" runat="server" />
+            <asp:HiddenField ID="eventTimeslots" runat="server" />
+
             <div class="form-group">
                <label for="eventDate">Date</label>
                <div class="input-group">
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                   </div><!-- end input-group-addon -->
-                 <!-- <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" />-->
-                   <asp:TextBox ID="eventDate" runat="server"></asp:TextBox>
+                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" value="" />
+                   <!--<asp:HiddenField ID="calJS" value="" runat="server" />
+                   <asp:TextBox ID="eventDate" Text="12/12/2012" onchange="javascript: generateAgendaTable();" runat="server"></asp:TextBox>-->
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
@@ -46,16 +52,16 @@
                      <span class="glyphicon glyphicon-dashboard"></span>
                   </div><!-- end input-group-addon -->
                   <!-- <input type="text" class="form-control" id="eventTime" name="eventTime" /> -->
-                 <!-- <select class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();">
+                 <select class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();">
                       
                      <option>15</option>
                      <option>30</option>
                      <option selected="selected">60</option>
-                  </select> -->
-                   <asp:DropDownList ID="eventTime" runat="server">  
+                  </select> 
+                   <!--<asp:DropDownList ID="eventTime" runat="server">  
 
 
-                   </asp:DropDownList>
+                   </asp:DropDownList>-->
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
@@ -65,17 +71,17 @@
                   <span class="glyphicon glyphicon-plus-sign addIcon"></span> (Add Class)
                </span><!-- end addAttendees -->
                <div class="input-group">
-            <!--      <select class="form-control" onchange="disableSelectedAttendees();" name="eventAttendees[]">
+                  <select class="form-control" id="courseID" onchange="disableSelectedAttendees();" name="eventAttendees[]">
                      <option value="" selected></option>
                      <option value="1">1</option>
                      <option value="2">2</option>
                      <option value="3">3</option>
                      <option value="4">4</option>
                      <option value="5">5</option>
-                  </select>-->
-                   <asp:DropDownList ID="evenAttendees" runat="server">
+                  </select>
+                <!--   <asp:DropDownList ID="evenAttendees" runat="server">
 
-                   </asp:DropDownList>
+                   </asp:DropDownList>-->
                   <div class="input-group-addon" onclick="removeRow(this);">
                      <span class="glyphicon glyphicon-minus-sign removeIcon"></span>
                   </div><!-- end input-group-addon -->
@@ -88,18 +94,18 @@
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-globe"></span>
                   </div><!-- end input-group-addon -->
-                 <!-- <select class="form-control" name="eventLocation">
+                  <select class="form-control" name="eventLocation" id="eventBuilding">
                      <option value="" selected></option>
                      <option value="AC">AC</option>
                      <option value="MK">MK</option>
-                  </select>-->
-                   <asp:DropDownList ID="eventLocationList" runat="server">
+                     <option value="DHA">DHA</option>
+                  </select>
+               <!--    <asp:DropDownList ID="eventLocationList" runat="server">
 
-                   </asp:DropDownList>
+                   </asp:DropDownList>-->
                </div><!-- end input-group -->
-                <asp:Button OnClick="submit" Text="Submit" runat="server" />
             </div><!-- end form-group -->
-     
+        </form>
       </div>
       <div class="col-md-9" id="agendaTableHolder">
       </div><!-- end agendaTableHolder -->

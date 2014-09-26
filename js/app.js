@@ -54,3 +54,28 @@ function fixGridView(tableEl) {
         jTbl.find("tbody tr:first").remove();
     }
 }
+
+function fillText() {
+    var infoArray = JSON.parse(document.getElementById("mainContent_info").value);
+    var timeslotsArray = JSON.parse(document.getElementById("mainContent_timeslots").value);
+
+    for (i = 0; i < infoArray.length; i++) {
+        var courseID = parseInt(infoArray[i].courseID);
+        var eventLocation;
+        switch (infoArray[i].eventLocation)
+        {
+            case "AC":  eventLocation = 1; break;
+            case "MK":  eventLocation = 2; break;
+            case "DHA": eventLocation = 3; break;
+            default:    eventLocation = 0; break;
+        }
+        var eventName = infoArray[i].eventName;
+
+        var pageEventName = document.getElementById("eventName");
+        var pageEventLocation = document.getElementById("eventBuilding");
+        var pageCourseID = document.getElementById("courseID");
+
+        pageEventName.textContent = eventName;
+        pageEventLocation.selectedIndex = eventLocation;
+    }
+}

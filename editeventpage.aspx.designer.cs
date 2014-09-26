@@ -13,15 +13,6 @@ namespace ProjectNinja.VersionedCode {
     public partial class EditEventPage1 {
         
         /// <summary>
-        /// hdnScheduledAppointments control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnScheduledAppointments;
-        
-        /// <summary>
         /// eventName control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,33 @@ namespace ProjectNinja.VersionedCode {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox eventName;
+        
+        /// <summary>
+        /// eventInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField eventInfo;
+        
+        /// <summary>
+        /// eventTimeslots control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField eventTimeslots;
+        
+        /// <summary>
+        /// calJS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField calJS;
         
         /// <summary>
         /// eventDate control.
