@@ -19,7 +19,7 @@ namespace ProjectNinja
           string current_login_id,
                  current_user_id;
 
-          if (HttpContext.Current.Session["username"] == null)
+          //if (HttpContext.Current.Session["username"] == null)
           {
               current_login_id = HttpContext.Current.User.Identity.Name;
               current_user_id = current_login_id.Substring(current_login_id.LastIndexOf('\\') + 1);
@@ -45,11 +45,11 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
 
               if (isStudent == 1 && isEnabled == 1)
               {
-                  Response.Redirect("studentDash.aspx");
+                  //Response.Redirect("studentDash.aspx");
               }
               else if (isTeacher == 1 && isEnabled == 1)
               {
-                  Response.Redirect("teacherDash.aspx");
+                  //Response.Redirect("teacherDash.aspx");
               }
 
           }
