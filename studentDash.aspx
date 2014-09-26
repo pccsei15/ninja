@@ -96,7 +96,7 @@
             </div>
 
        <!-- Events available for signup grdView and server select statement -->
-       <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
+       <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
     SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate
       FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
            JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
