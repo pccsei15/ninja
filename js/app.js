@@ -59,3 +59,47 @@ function fixGridView(tableEl) {
 //               alert("Data: " + data + "\nStatus: " + status);
 //           });
 //}
+
+//----------------------------------------------------------------
+// AJAX handler for changing the week of the calendar
+//----------------------------------------------------------------
+$('body').on('click', '#forward-btn', function () {
+    var firstDay = $('#sunday-header').html();
+
+    $.ajax({
+        type: 'GET',
+        url: '../GenerateCalendar.aspx',
+        data: firstDay + 'forward'
+    }).done(function (responseText) {
+        console.log('Forward button changed the week');
+        $('#agendaTableHolder').html() = responseText;
+    });
+
+    return false;
+});
+
+$('body').on('click', '#back-btn', function () {
+    var firstDay = $('#sunday-header').html();
+
+    $.ajax({
+        type: 'GET',
+        url: '../GenerateCalendar.aspx',
+        data: firstDay + 'back'
+    }).done(function (responseText) {
+        console.log('Backward button changed the week');
+        $('#agendaTableHolder').html() = responseText;
+    });
+
+    return false;
+});
+
+$('.datepicker').datepicker().on(changeDate, function() {
+    $.ajax({
+        type: 'GET',
+        url: '../GenerateCalendar.aspx',
+        data: day
+    }).done(function (responseText) {
+        console.log('Datepicker changed the week');
+        $('#agendaTableHolder').html() = responseText;
+    });
+});
