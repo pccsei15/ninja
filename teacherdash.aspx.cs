@@ -12,7 +12,7 @@ namespace ProjectNinja
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            hdnRowID.Value = "mgeary";//Session["Ninja.UserID"].ToString();
+            hdnRowID.Value = Session["Ninja.UserID"].ToString();
         }
 
         /// <summary>
