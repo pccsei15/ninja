@@ -52,21 +52,13 @@ function fixGridView(tableEl) {
     }
 }
 
-function callGetEventData() {
-    $.ajax({
-        type: "POST",
-        url: "GetEventData.aspx",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: OnSuccess,
-        failure: function (response) {
-            alert(response.d);
-        }
-    });
-    $.post("GetEventData.aspx",
-      ,
-      function(data,status){
-          alert("Data: " + data + "\nStatus: " + status);
-      });
-    });
-}
+
+    //$("#mainContent_eventSelectList").onchange = function () {
+    //    alert("YO!");
+    //    $.post("demo_test_post.asp",
+    //           $("#mainContent_eventSelectList :selected").val(),
+    //           function (data, status) {
+    //               alert("Data: " + data + "\nStatus: " + status);
+    //           });
+    //}
+
