@@ -12,28 +12,33 @@ namespace ProjectNinja
     public partial class eventpage : System.Web.UI.Page
     {
         private ScheduledAppointment[] allAppointments = null;
+        public string selectedEventId = "7";
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["Ninja.eventID"] != null)
+                {
+                    eventSelectList.SelectedValue = Session["Ninja.eventID"].ToString();
+                    selectedEventId = Session["Ninja.eventID"].ToString();
+                    Session["Ninja.eventID"] = null;
+                }
+                else
+                    eventSelectList.SelectedValue = selectedEventId; // Make drop-down selected value equal to default value
+            }
             GetScheduledAppointments();
             PopulateScheduledAppointments();
-
-            if (Session["Ninja.eventID"] != null)
-            {
-                eventSelectList.SelectedValue = Session["Ninja.eventID"].ToString();
-                Session["Ninja.eventID"] = null;
-            }
-            
         }
 
         public class ScheduledAppointment
         {
-            public int        eventID       { get; set; }
-            public string     eventName     { get; set; }
-            public string     eventLocation { get; set; }
-            public DateTime   eventDate     { get; set; }
-            public float      eventDuration { get; set; }
-            public string     eventUserName { get; set; }
-            public int        eventTimeID   { get; set; }
+            public int eventID { get; set; }
+            public string eventName { get; set; }
+            public string eventLocation { get; set; }
+            public DateTime eventDate { get; set; }
+            public float eventDuration { get; set; }
+            public string eventUserName { get; set; }
         }
 
         public void PopulateScheduledAppointments()
@@ -47,15 +52,13 @@ namespace ProjectNinja
         {
             var con = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True");
 
-
-
             string sql = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, et.eventDuration, u.user_first_name + ' ' + u.user_last_name AS name
-                             FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
-                                  JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
-                                  JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
-                                  JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
-                            WHERE e.eventOwner = 'mgeary' 
-                            ORDER BY e.eventID"; // NEEDS AUTHENTICATION
+                            FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
+                                JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
+                                JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
+                                JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
+                        WHERE e.eventID = " + selectedEventId
+                            + "ORDER BY e.eventID"; // NEEDS AUTHENTICATION
             using (var command = new SqlCommand(sql, con))
             {
                 con.Open();
@@ -79,8 +82,9 @@ namespace ProjectNinja
 
         protected void eventSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Session["Ninja.eventID"] = eventSelectList.SelectedValue;
-            Session["Ninja.eventID"] = null;
+            selectedEventId = eventSelectList.SelectedValue;
+            GetScheduledAppointments();
+            PopulateScheduledAppointments();
         }
     }
 }

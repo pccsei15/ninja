@@ -33,6 +33,7 @@ table td {
 .event-drop {
     font-size: 30px;
     margin: .67em 0;
+    padding: 3px;
     border: 0;
     background-color: #eee;
     height: 60px;

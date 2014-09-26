@@ -23,7 +23,7 @@
                 DataValueField="eventID" 
                 CssClass="form-control input-lg event-drop" 
                 
-                OnSelectedIndexChanged="eventSelectList_SelectedIndexChanged">
+                OnSelectedIndexChanged="eventSelectList_SelectedIndexChanged" AutoPostBack="True">
             </asp:DropDownList>
             <asp:SqlDataSource 
                 ID="selectedDataSource" 
