@@ -13,17 +13,21 @@ namespace ProjectNinja
    {
       protected void Page_Load(object sender, EventArgs e)
       {
+         Page.ClientScript.RegisterStartupScript(this.GetType(), "clientScript", "<script     language=JavaScript>alert('Testing');</script>");
+
           int isStudent = 0,
-             isTeacher = 0,
-             isEnabled = 0;
+              isTeacher = 0,
+              isEnabled = 0;
           string current_login_id,
                  current_user_id;
 
           //if (HttpContext.Current.Session["username"] == null)
           //{
+
+      
               current_login_id = HttpContext.Current.User.Identity.Name;
               current_user_id = current_login_id.Substring(current_login_id.LastIndexOf('\\') + 1);
-              HttpContext.Current.Session["username"] = current_user_id;
+              HttpContext.Current.Session["username"] = 100;//current_user_id;
 
               SqlCommand cmdLoadID = new SqlCommand(@"
 SELECT user_is_enabled, user_is_student, user_is_teacher
