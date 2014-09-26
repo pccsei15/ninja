@@ -5,105 +5,123 @@
 </asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
     <form runat="server">
-    <asp:HiddenField ID="hdnStudentID" runat="server" />
-    <br />
-    <br />
+   <asp:HiddenField ID="hdnStudentID" runat="server" />
 
-    <!-- Events available for signup grdView and server select statement -->
-    <asp:Label ID="lblEventsAvail" runat="server" Text="Events Available for Sign Up" Font-Size="X-Large"></asp:Label>
-       <div class="row">
-      <div class="col-sm-12 col-md-12 main">
-         <div class="table-responsive">
-            <asp:GridView ID="grdEventsAvailable" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
-               DataSourceID="sqlAvailEvents" DataKeyNames="eventID" onrowcommand="grdStudentEventsTable_RowCommand" OnPreRender="grdEventsAvailable_PreRender1">
-               <Columns>
-                   <asp:BoundField DataField="eventName" HeaderText="Event Name" SortExpression="eventName">
-                   </asp:BoundField>
-                   <asp:BoundField DataField="eventLocation" HeaderText="Event Location" SortExpression="eventLocation">
-                   </asp:BoundField>
-                   <asp:BoundField DataField="beginDate" HeaderText="Begin Date" SortExpression="beginDate" DataFormatString="{0:f}" >
-                   </asp:BoundField>
-                   <asp:BoundField DataField="endDate" HeaderText="End Date" SortExpression="endDate" DataFormatString="{0:f}" >
-                   </asp:BoundField>
-                   <asp:TemplateField HeaderText="Action">
-				       <itemtemplate>
-					         <asp:LinkButton id="btnSignUp" runat="server" commandname="signUpEvent" CssClass="btn btn-default" CommandArgument='<%# Eval("eventID") %>'>
-                                 <i aria-hidden="true" class="glyphicon glyphicon-ok-sign"></i> Sign Up
-                             </asp:LinkButton>
-				       </itemtemplate>
-                       
-			       </asp:TemplateField>
-                  
-               </Columns>
-               <RowStyle CssClass="rowStyle" />
-               <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
-               <FooterStyle CssClass="footerStyle" />
-            </asp:GridView>
-         </div>
-      </div>
-   </div>
-    <asp:SqlDataSource ID="sqlAvailEvents" runat="server" SelectCommand="
-SELECT DISTINCT ec.eventID, e.eventLocation, e.eventName, MIN(et.eventDate) AS beginDate, MAX(et.eventDate) AS endDate
-   FROM [SEI_Ninja].[dbo].[EVENT_COURSES] [ec]
-		JOIN [SEI_Ninja].[dbo].[EVENT] [e] ON (ec.eventID = e.eventID)
-		LEFT OUTER JOIN [SEI_Ninja].[dbo].[EVENT_TIMES] [et] ON (e.eventID = et.eventID)
-  WHERE ec.courseID IN (SELECT DISTINCT course.course_id
-								   FROM [SEI_TimeMachine2].[dbo].COURSE [course]
-								        JOIN [SEI_TimeMachine2].[dbo].MEMBER [member] ON (course.course_id = member.member_course_id)
-								  WHERE member.member_user_id = @p_StudentID)
-    AND e.eventID NOT IN ( SELECT e.eventID
-							 FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
-							      JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
-								  JOIN [SEI_Ninja].[dbo].[EVENT] e ON (et.eventID = e.eventID)
-						    WHERE su.userID = @p_StudentID )																	
-  GROUP BY ec.eventID, eventLocation, eventName
- HAVING MAX(et.eventDate) &gt;= SYSDATETIME();" ConnectionString="<%$ ConnectionStrings:SEI_NinjaConnectionString %>" ProviderName="<%$ ConnectionStrings:SEI_NinjaConnectionString.ProviderName %>">
-        <SelectParameters>
-            <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
-        </SelectParameters>
-    </asp:SqlDataSource>
-    <br />
+    <div class="row" style="margin-top: 15px;">
+                <div class="col-md-12">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="active"><a href="#available" role="tab" data-toggle="tab">Available</a></li>
+                      <li><a href="#scheduled" role="tab" data-toggle="tab">Scheduled</a></li>
+                    </ul>
+                </div>
+            </div>
 
-    <!-- Events signed up for grdView and server select statement -->
-    <asp:Label ID="lblStudentEvents" runat="server" Text="Events Signed Up For" Font-Size="X-Large"></asp:Label>
-   <div class="row">
-      <div class="col-sm-12 col-md-12 main">
-         <div class="table-responsive">
-            <asp:GridView ID="grdStudentEventsTable" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
-               DataSourceID="sqlEvents" DataKeyNames="eventID" onrowcommand="grdStudentEventsTable_RowCommand" OnPreRender="grdStudentEventsTable_PreRender1">
-               <Columns>
-                   <asp:BoundField DataField="eventName" HeaderText="Event Name" SortExpression="eventName">
-                   </asp:BoundField>
-                   <asp:BoundField DataField="eventLocation" HeaderText="Event Location" SortExpression="eventLocation">
-                   </asp:BoundField>
-                   <asp:BoundField DataField="eventDate" HeaderText="Scheduled Time" SortExpression="eventDate" DataFormatString="{0:f}" >
-                   </asp:BoundField>
-                   <asp:TemplateField HeaderText="Action">
-				       <itemtemplate>
-					         <asp:LinkButton id="btnEdit" runat="server" commandname="editEvent" CssClass="btn btn-default" CommandArgument='<%# Eval("eventID") %>'>
-                                 <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Edit
-                             </asp:LinkButton>
-				       </itemtemplate>
-                       
-			       </asp:TemplateField>
-                  
-               </Columns>
-               <RowStyle CssClass="rowStyle" />
-               <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
-               <FooterStyle CssClass="footerStyle" />
-            </asp:GridView>
-         </div>
-      </div>
-   </div>
-   <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True" ProviderName="System.Data.SqlClient" SelectCommand="
-SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate
-  FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
-       JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
-       JOIN [SEI_Ninja].[dbo].[EVENT] e ON (et.eventID = e.eventID)
- WHERE su.userID = @p_StudentID " CancelSelectOnNullParameter="False">
-        <SelectParameters>
-            <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
-        </SelectParameters>
-   </asp:SqlDataSource>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane active" id="available">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1>Events Available</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="table-responsive">
+                            <asp:GridView ID="grdEventsAvailable" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
+                                DataSourceID="sqlAvailEvents" DataKeyNames="eventID" onrowcommand="grdStudentEventsTable_RowCommand" OnPreRender="grdEventsAvailable_PreRender1">
+                                <Columns>
+                                    <asp:BoundField DataField="eventName" HeaderText="Event" SortExpression="eventName">
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="eventLocation" HeaderText="Location" SortExpression="eventLocation">
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="beginDate" HeaderText="Begin Date" SortExpression="beginDate" DataFormatString="{0:f}" >
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="endDate" HeaderText="End Date" SortExpression="endDate" DataFormatString="{0:f}" >
+                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText="Action">
+				                        <itemtemplate>
+					                            <asp:LinkButton id="btnSignUp" runat="server" commandname="signUpEvent" CssClass="btn btn-success" CommandArgument='<%# Eval("eventID") %>'>
+                                                    <i aria-hidden="true" class="glyphicon glyphicon-ok-sign"></i> Sign Up
+                                                </asp:LinkButton>
+				                        </itemtemplate>
+                       </asp:TemplateField>
+                                </Columns>
+                                <RowStyle CssClass="rowStyle" />
+                                <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
+                                <FooterStyle CssClass="footerStyle" />
+                            </asp:GridView>
+                        </div>
+                    </div>
+                </div>
+              </div>
+<div class="tab-pane" id="scheduled">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <h1>Events Scheduled</h1>
+                     </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-12 col-md-12 main">
+                         <div class="table-responsive">
+                            <asp:GridView ID="grdStudentEventsTable" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
+                               DataSourceID="sqlEvents" DataKeyNames="eventID" onrowcommand="grdStudentEventsTable_RowCommand" OnPreRender="grdStudentEventsTable_PreRender1">
+                               <Columns>
+                                   <asp:BoundField DataField="eventName" HeaderText="Event" SortExpression="eventName">
+                                   </asp:BoundField>
+                                   <asp:BoundField DataField="eventLocation" HeaderText="Location" SortExpression="eventLocation">
+                                   </asp:BoundField>
+                                   <asp:BoundField DataField="eventDate" HeaderText="Scheduled Time" SortExpression="eventDate" DataFormatString="{0:f}" >
+                                   </asp:BoundField>
+                                   <asp:TemplateField HeaderText="Action">
+				                    <itemtemplate>
+					                        <asp:LinkButton id="btnEdit" runat="server" commandname="editEvent" CssClass="btn btn-default" CommandArgument='<%# Eval("eventID") %>'>
+                                                <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Edit
+                                            </asp:LinkButton>
+				                    </itemtemplate>
+                               </asp:TemplateField>
+                  </Columns>
+                               <RowStyle CssClass="rowStyle" />
+                               <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
+                               <FooterStyle CssClass="footerStyle" />
+                            </asp:GridView>
+                         </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+       <!-- Events available for signup grdView and server select statement -->
+       <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
+    SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate
+      FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
+           JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
+           JOIN [SEI_Ninja].[dbo].[EVENT] e ON (et.eventID = e.eventID)
+     WHERE su.userID = @p_StudentID " CancelSelectOnNullParameter="False">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
+            </SelectParameters>
+       </asp:SqlDataSource>
+
+       <asp:SqlDataSource ID="sqlAvailEvents" runat="server" SelectCommand="
+    SELECT DISTINCT ec.eventID, e.eventLocation, e.eventName, MIN(et.eventDate) AS beginDate, MAX(et.eventDate) AS endDate
+       FROM [SEI_Ninja].[dbo].[EVENT_COURSES] [ec]
+		    JOIN [SEI_Ninja].[dbo].[EVENT] [e] ON (ec.eventID = e.eventID)
+		    LEFT OUTER JOIN [SEI_Ninja].[dbo].[EVENT_TIMES] [et] ON (e.eventID = et.eventID)
+      WHERE ec.courseID IN (SELECT DISTINCT course.course_id
+								       FROM [SEI_TimeMachine2].[dbo].COURSE [course]
+								            JOIN [SEI_TimeMachine2].[dbo].MEMBER [member] ON (course.course_id = member.member_course_id)
+								      WHERE member.member_user_id = @p_StudentID)
+        AND e.eventID NOT IN ( SELECT e.eventID
+							     FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
+							          JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
+								      JOIN [SEI_Ninja].[dbo].[EVENT] e ON (et.eventID = e.eventID)
+						        WHERE su.userID = @p_StudentID )																	
+      GROUP BY ec.eventID, eventLocation, eventName
+     HAVING MAX(et.eventDate) &gt;= SYSDATETIME();" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="<%$ ConnectionStrings:SEI_NinjaConnectionString.ProviderName %>">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
+            </SelectParameters>
+        </asp:SqlDataSource>
    </form>
 </asp:Content>

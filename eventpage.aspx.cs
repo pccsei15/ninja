@@ -20,7 +20,9 @@ namespace ProjectNinja
             if (Session["Ninja.eventID"] != null)
             {
                 eventSelectList.SelectedValue = Session["Ninja.eventID"].ToString();
+                Session["Ninja.eventID"] = null;
             }
+            
         }
 
         public class ScheduledAppointment
@@ -77,13 +79,8 @@ namespace ProjectNinja
 
         protected void eventSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Session["Ninja.eventID"] = eventSelectList.SelectedValue;
+            Session["Ninja.eventID"] = eventSelectList.SelectedValue;
+            Session["Ninja.eventID"] = null;
         }
     }
-
-        
-
-
-
-
-    }
+}

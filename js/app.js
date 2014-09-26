@@ -38,11 +38,8 @@ $("#mainContent_grdEventsAvailable").dataTable({
 });
 
 fixGridView($("#mainContent_grdEventsTable"));
-$("#mainContent_grdEventsTable").tablesorter({ sortlist: [[1, 0]] });
 fixGridView($("#grdStudentEventsTable"));
-$("#grdStudentEventsTable").tablesorter({ sortlist: [[1, 0]] });
 fixGridView($("#mainContent_grdEventsAvailable"));
-$("#mainContent_grdEventsAvailable").tablesorter({ sortlist: [[1, 0]] });
 
 //GridviewFix Plugin Code
 function fixGridView(tableEl) {
@@ -53,6 +50,7 @@ function fixGridView(tableEl) {
         jTbl.find("thead tr").append(jTbl.find("th"));
         jTbl.find("tbody tr:first").remove();
     }
+
 }
 
 function fillText() {
@@ -79,3 +77,14 @@ function fillText() {
         pageEventLocation.selectedIndex = eventLocation;
     }
 }
+
+
+    //$("#mainContent_eventSelectList").onchange = function () {
+    //    alert("YO!");
+    //    $.post("demo_test_post.asp",
+    //           $("#mainContent_eventSelectList :selected").val(),
+    //           function (data, status) {
+    //               alert("Data: " + data + "\nStatus: " + status);
+    //           });
+    //}
+
