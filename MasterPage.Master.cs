@@ -41,8 +41,6 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
                   isEnabled = Convert.ToInt32(drUser["user_is_enabled"]);
               }
 
-              Page.ClientScript.RegisterStartupScript(this.GetType(), "clientScript", "<script     language=JavaScript>alert('" + " " + isStudent + " " + " " + isTeacher + " " + " " + isEnabled + " " + HttpContext.Current.Session["username"].ToString() + "');</script>");
-
               if (isStudent == 1 && isEnabled == 1)
               {
                   //Response.Redirect("studentDash.aspx");

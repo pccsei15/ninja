@@ -17,17 +17,19 @@ $(document).ready(function () {
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
 
     if (document.title === "Teacher Calendar")
-        generateAgendaTable("false");
+        generateAgendaTable("TC");
+    else if (document.title === "Event Sign Up") 
+        generateAgendaTable("ESU");
     else
         generateAgendaTable();
+});
 
-    // Start the date picker
-    $('#eventDate').datepicker({
-        'format': 'm/d/yyyy',
-        'autoclose': true,
-        todayBtn: "linked",
-        todayHighlight: true
-    });
+// Start the date picker
+$('#eventDate').datepicker({
+    'format': 'm/d/yyyy',
+    'autoclose': true,
+    todayBtn: "linked",
+    todayHighlight: true
 });
 
 $("#eventDatePicker").datepicker({
@@ -86,7 +88,7 @@ function disableSelectedAttendees() {
     return;
 }
 
-function generateAgendaTable(newEvent) {
+function generateAgendaTable(pageName) {
 
     // The default pageName was added to accommodate small changes for the teacherCalendar page
     // pageName = pageName || "true";
@@ -157,7 +159,7 @@ function generateAgendaTable(newEvent) {
         }
         agendaTable += '<tr><td>' + time + '</td>';
 
-        newEvent === "true" ? includeOnClick = 'onclick="toggleSelectedDateTime(this);"' : includeOnClick = '';
+        pageName === "TC" ? includeOnClick = '' : includeOnClick = 'onclick="toggleSelectedDateTime(this);"';
 
         // Add the days
         for (var numColumns = 0; numColumns < numberOfDaysToDisplay; numColumns++) {
@@ -196,8 +198,8 @@ function populateAgendaTable() {
     //var currentColorNumber = 0;
 
     for (i = 0; i < appointmentArray.length; i++) {
-
-        alert(appointmentArray.length);
+        var message = appointmentArray.length + ' arrayLength';
+        alert(message);
         // Date given from the database
         var date = parseDate(appointmentArray[i].eventDate);
         // Same date from database, just in the right format
@@ -241,7 +243,7 @@ function populateAgendaTable() {
                 else
                     dateID += 'PM';
 
-                alert(dateID);
+                //alert(dateID);
                 document.getElementById(dateID).className += " selectedDateTime";
             }
 
@@ -317,8 +319,8 @@ function changeSchedualDateRange(daysToAdd) {
     var year = dateToDisplay.getFullYear();
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
     if (document.title === "Teacher Calendar")
-        generateAgendaTable("false");
-    else
-        generateAgendaTable();
+        generateAgendaTable("TC");
+    else if (document.title === "Event Sign Up")
+        generateAgendaTable("ESU");
     return;
 }
