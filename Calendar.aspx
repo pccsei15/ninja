@@ -1,11 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="teacherCalendar.aspx.cs" Inherits="ProjectNinja.teacherCalendar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="Calendar.aspx.cs" Inherits="ProjectNinja.Calendar" %>
 
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <!-- Leah & Erin's page -->
     <title>Teacher Calendar</title>
 </asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
-    <form runat="server">
+    <form id="Form1" runat="server">
     
     <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
 

@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace ProjectNinja
 {
-    public partial class teacherCalendar : System.Web.UI.Page
+    public partial class Calendar : System.Web.UI.Page
     {
         private ScheduledAppointment[] allAppointments = null;
 
@@ -24,12 +24,12 @@ namespace ProjectNinja
 
         public class ScheduledAppointment
         {
-            public int      eventID       { get; set; }
-            public string   eventName     { get; set; }
-            public string   eventLocation { get; set; }
-            public DateTime eventDate     { get; set; }
-            public float    eventDuration { get; set; }
-            public string   eventUserName { get; set; }
+            public int eventID { get; set; }
+            public string eventName { get; set; }
+            public string eventLocation { get; set; }
+            public DateTime eventDate { get; set; }
+            public float eventDuration { get; set; }
+            public string eventUserName { get; set; }
         }
 
         public void PopulateScheduledAppointments()
@@ -58,8 +58,15 @@ namespace ProjectNinja
                 {
                     var list = new List<ScheduledAppointment>();
                     while (reader.Read())
-                        list.Add(new ScheduledAppointment { eventID = reader.GetInt32(0), eventName = reader.GetString(1), eventLocation = reader.GetString(2),
-                                                            eventDate = reader.GetDateTime(3), eventDuration = (float)reader.GetDouble(4), eventUserName = reader.GetString(5) });
+                        list.Add(new ScheduledAppointment
+                        {
+                            eventID = reader.GetInt32(0),
+                            eventName = reader.GetString(1),
+                            eventLocation = reader.GetString(2),
+                            eventDate = reader.GetDateTime(3),
+                            eventDuration = (float)reader.GetDouble(4),
+                            eventUserName = reader.GetString(5)
+                        });
                     allAppointments = list.ToArray();
                 }
             }
@@ -72,7 +79,7 @@ namespace ProjectNinja
 
             JavaScriptSerializer js = new JavaScriptSerializer();
             ScheduledAppointment[] appointments = js.Deserialize<ScheduledAppointment[]>(calendarJson);
-           
+
             StringWriter oStringWriter = new StringWriter();
             oStringWriter.WriteLine("Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private");
 
@@ -81,15 +88,15 @@ namespace ProjectNinja
                 DateTime date = new DateTime();
                 date = appointments[i].eventDate;
                 //oStringWriter.WriteLine("Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private");
-                oStringWriter.WriteLine("\"" + appointments[i].eventName + "\""     + "," + 
-                                       (date.Date.ToString()).Split(' ').First()    + "," +
-                                        date.TimeOfDay                              + "," +
-                                       (date.Date.ToString()).Split(' ').First()    + "," +
+                oStringWriter.WriteLine("\"" + appointments[i].eventName + "\"" + "," +
+                                       (date.Date.ToString()).Split(' ').First() + "," +
+                                        date.TimeOfDay + "," +
+                                       (date.Date.ToString()).Split(' ').First() + "," +
                                         date.AddMinutes(appointments[i].eventDuration).TimeOfDay + "," +
-                                        "False"                                     + "," +
+                                        "False" + "," +
                                         "\"" + appointments[i].eventUserName + "\"" + "," +
                                         "\"" + appointments[i].eventLocation + "\"" + "," + "True");
-                
+
             }
             Response.ContentType = "text/plain";
             Response.AddHeader("content-disposition", "attachment;filename=" + string.Format("scheduledEvents-{0}.csv", string.Format("{0:ddMMyyyy}", DateTime.Today)));
@@ -100,6 +107,6 @@ namespace ProjectNinja
                 writer.Write(oStringWriter.ToString());
             }
             Response.End();
-        }   
+        }
     }
 }
