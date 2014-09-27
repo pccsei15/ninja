@@ -93,7 +93,7 @@ $('body').on('click', '#back-btn', function () {
     return false;
 });
 
-$('.datepicker').datepicker().on("change", function() {
+$('.datepicker').datepicker().on("changeDate", function() {
     $.ajax({
         type: 'GET',
         url: '../GenerateCalendar.aspx',
