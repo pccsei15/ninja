@@ -23,7 +23,7 @@ namespace ProjectNinja
             }
          }
          else
-            Response.Redirect("Defualt.aspx");
+            Response.Redirect("Default.aspx");
 
          // Sets the value of the hidden field to the users id, use for select statments.
          hdnRowID.Value = Session["Ninja.UserID"].ToString();

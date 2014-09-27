@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace ProjectNinja.VersionedCode
 {
-   // DONT TOUCH IT!!!
+   // DON'T TOUCH IT!!!
    public partial class Defualt : System.Web.UI.Page
    {
       protected void Page_Load(object sender, EventArgs e)
@@ -29,12 +29,12 @@ namespace ProjectNinja.VersionedCode
          string current_login_id,
                 current_user_id;
 
-         //if (HttpContext.Current.Session["username"] == null)
-         //{
-
-         //current_login_id = HttpContext.Current.User.Identity.Name;
-         //current_user_id = current_login_id.Substring(current_login_id.LastIndexOf('\\') + 1);
-         //HttpContext.Current.Session["username"] = 100;//current_user_id;
+         if (HttpContext.Current.Session["username"] == null)
+         {
+            current_login_id = HttpContext.Current.User.Identity.Name;
+            current_user_id  = current_login_id.Substring(current_login_id.LastIndexOf('\\') + 1);
+            HttpContext.Current.Session["username"] = 112043;//current_user_id;
+         }
          
          SqlCommand cmdLoadID = new SqlCommand(@"
 SELECT user_is_enabled, user_is_student, user_is_teacher
@@ -63,7 +63,6 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
          {
             Response.Redirect("teacherDash.aspx");
          }
-         //}
       }
    }
 }
