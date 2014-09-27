@@ -13,7 +13,7 @@ $(document).ready(function () {
     var day = currentDate.getDate();
     var month = currentDate.getMonth() + 1;
     var year = currentDate.getFullYear();
-    var eDate = document.getElementById('eventDate').value;
+   // var eDate = document.getElementById('eventDate').value;
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
 
     if (document.title === "Teacher Calendar")

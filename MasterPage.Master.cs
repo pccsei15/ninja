@@ -19,8 +19,9 @@ namespace ProjectNinja
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-         if (Session["Ninja.isEnabled"] == null || Session["Ninja.isEnabled"].ToString() != GlobalVar.True) ;
-            //Response.Redirect("Default.aspx");
+         //if (Session["Ninja.isEnabled"] == null || Session["Ninja.isEnabled"].ToString() != GlobalVar.True)
+         //   Response.Redirect("Default.aspx");
+
       }
    }
 }
