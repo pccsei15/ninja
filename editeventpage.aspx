@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="MasterPage.Master" CodeBehind="EditEventPage.aspx.cs" Inherits="ProjectNinja.VersionedCode.EditEventPage1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="./MasterPage.Master" CodeBehind="EditEventPage.aspx.cs" Inherits="ProjectNinja.VersionedCode.EditEventPage1" %>
 
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Edit Event</title>
