@@ -8,12 +8,27 @@ using System.Web.UI.WebControls;
 
 namespace ProjectNinja
 {
+
     public partial class studentDash : System.Web.UI.Page
     {
+       int ddlSelectedValue;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+
            //if (Session["Ninja.UserID"] == null)
            //   hdnStudentID.Value = Session["Ninja.UserID"].ToString();  
+
+           //if (Session["Ninja.UserID"] != null)
+           //   hdnStudentID.Value = Session["Ninja.UserID"].ToString();
+           //   hdnStudentID.Value = "112043";
+        }
+
+        protected void ddlEventTimes_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+           DropDownList SelecteTime = (DropDownList)sender;
+           lblTest.Text = SelecteTime.SelectedValue;
+
         }
 
         /// <summary>
@@ -23,8 +38,19 @@ namespace ProjectNinja
         /// <param name="e"></param>
         protected void grdStudentEventsTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect("eventpage.aspx");
+            //Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
+            //Response.Redirect("eventpage.aspx");
+           //hdnEventTimes.Value = e.CommandArgument.ToString();
+           if (e.CommandName == "signUpEvent")
+           {
+              //(DropDownList)e.Row.FindControl("DDL_StatusList1");
+              //lblTest.Text = grdEventsAvailable;
+              //hdnEventTimes.Value = e.CommandArgument.ToString();
+              //grdEventsAvailable.EditIndex = Convert.ToInt32(e.CommandArgument);
+              //grdEventsAvailable.DataBind();
+              //Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
+              //Response.Redirect("eventpage.aspx");
+           }
         }
 
         /// <summary>

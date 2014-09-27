@@ -21,6 +21,7 @@ namespace ProjectNinja
       {
          //if (Session["Ninja.isEnabled"] == null || Session["Ninja.isEnabled"].ToString() != GlobalVar.True)
          //   Response.Redirect("Default.aspx");
+
       }
    }
 }
