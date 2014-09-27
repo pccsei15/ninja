@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="MasterPage.Master" CodeBehind="Default.aspx.cs" Inherits="ProjectNinja.VersionedCode.Defualt" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="./MasterPage.Master" CodeBehind="Default.aspx.cs" Inherits="ProjectNinja.VersionedCode.Defualt" %>
 
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Defualt</title>
