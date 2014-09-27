@@ -12,8 +12,8 @@ namespace ProjectNinja
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (Session["Ninja.UserID"] == null)
-              hdnStudentID.Value = Session["Ninja.UserID"].ToString();  
+           //if (Session["Ninja.UserID"] == null)
+           //   hdnStudentID.Value = Session["Ninja.UserID"].ToString();  
         }
 
         /// <summary>
