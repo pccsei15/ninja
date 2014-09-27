@@ -35,10 +35,25 @@
                                     </asp:BoundField>
                                     <asp:BoundField DataField="eventLocation" HeaderText="Location" SortExpression="eventLocation">
                                     </asp:BoundField>
-                                    <asp:BoundField DataField="beginDate" HeaderText="Begin Date" SortExpression="beginDate" DataFormatString="{0:f}" >
-                                    </asp:BoundField>
-                                    <asp:BoundField DataField="endDate" HeaderText="End Date" SortExpression="endDate" DataFormatString="{0:f}" >
-                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText="Times">
+                                        <EditItemTemplate>
+                                            
+                                        </EditItemTemplate>
+                                        <itemtemplate>
+                                            <asp:HiddenField ID="hdnEventTimes" Value='<%# Bind("eventID") %>' runat="server" />
+                                            <asp:DropDownList ID="ddlEventTimes" runat="server" DataSourceID="sqlEventTimes" DataValueField="eventTimeID" DataTextField="eventDate"></asp:DropDownList>
+                                            <asp:SqlDataSource ID="sqlEventTimes" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
+SELECT et.eventDate, et.eventTimeID
+  FROM [SEI_Ninja].[dbo].EVENT_TIMES et
+ WHERE et.eventID = @eventID
+   AND et.eventTimeID NOT IN (SELECT su.eventTimeID
+							    FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su);">
+                                                <SelectParameters>
+                                                    <asp:ControlParameter ControlID="hdnEventTimes" Name="eventID" PropertyName="Value" />
+                                                </SelectParameters>
+                                            </asp:SqlDataSource>
+                                        </itemtemplate>
+                                    </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Action">
 				                        <itemtemplate>
 					                            <asp:LinkButton id="btnSignUp" runat="server" commandname="signUpEvent" CssClass="btn btn-success" CommandArgument='<%# Eval("eventID") %>'>

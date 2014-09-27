@@ -12,8 +12,9 @@ namespace ProjectNinja
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           if (Session["Ninja.UserID"] == null)
-              hdnStudentID.Value = Session["Ninja.UserID"].ToString();  
+           if (Session["Ninja.UserID"] != null)
+              hdnStudentID.Value = Session["Ninja.UserID"].ToString();
+              hdnStudentID.Value = "112043";
         }
 
         /// <summary>
@@ -23,8 +24,19 @@ namespace ProjectNinja
         /// <param name="e"></param>
         protected void grdStudentEventsTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect("eventpage.aspx");
+           //hdnEventTimes.Value = e.CommandArgument.ToString();
+           if (e.CommandName == "signUpEvent")
+           {
+              //hdnEventTimes.Value = e.CommandArgument.ToString();
+              grdEventsAvailable.EditIndex = Convert.ToInt32(e.CommandArgument);
+              grdEventsAvailable.DataBind();
+              //Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
+              //Response.Redirect("eventpage.aspx");
+           }
+           else if (e.CommandName == "commit")
+           {
+
+           }
         }
 
         /// <summary>
