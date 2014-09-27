@@ -51,7 +51,7 @@ INSERT INTO [SEI_Ninja].[dbo].SCHEDULED_USERS (eventTimeID, userID)
 VALUES(@p_eventTimeID, @p_userID)",
       new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
               cmdSignUp.Parameters.AddWithValue("p_eventTimeID", ddlEventTimes.SelectedValue);
-              cmdSignUp.Parameters.AddWithValue("p_userID", "112043");//Session["Ninja.UserID"].ToString());
+              cmdSignUp.Parameters.AddWithValue("p_userID", HttpContext.Current.Session["username"].ToString());
 
               cmdSignUp.Connection.Open();
 
