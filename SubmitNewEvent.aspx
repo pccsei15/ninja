@@ -131,7 +131,7 @@
                 using (System.Data.SqlClient.SqlCommand thisCommand = thisConnection.CreateCommand())
                 {
                     // Insert an event into the event table
-                    thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT] (eventLocation, eventOwner, eventName) OUTPUT INSERTED.eventID VALUES('" + eventLocation + "', 'IOwnThis', '" + eventName + "')";
+                    thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT] (eventLocation, eventOwner, eventStep, eventName) OUTPUT INSERTED.eventID VALUES('" + eventLocation + "', 'IOwnThis', '" + eventDuration + "', '" + eventName + "')";
                     // Add and get the id of the event that is being added
                     lastID = (Int32)thisCommand.ExecuteScalar();
                     //Response.Write("<br />The last key was:" + lastId);
@@ -146,7 +146,7 @@
                     // Add the times for this event into EVENT_TIMES table
                     foreach (DateTime dateTime in dateTimes)
                     {
-                        thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT_TIMES] (eventID, eventDuration, eventDate) VALUES('" + lastID + "', '" + eventDuration + "', '" + dateTime.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                        thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT_TIMES] (eventID,  eventDate) VALUES('" + lastID + "', '"  + dateTime.ToString("yyyy-MM-dd HH:mm:ss") + "')";
                         thisCommand.ExecuteNonQuery();
                         //Response.Write("<br />" + dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
                     }
