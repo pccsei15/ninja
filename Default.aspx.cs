@@ -29,14 +29,12 @@ namespace ProjectNinja.VersionedCode
             HttpContext.Current.Session["username"] = current_user_id;
          }
 
-         Session["Ninja.UserID"] = HttpContext.Current.Session["username"];
-
          SqlCommand cmdLoadID = new SqlCommand(@"
 SELECT user_is_enabled, user_is_student, user_is_teacher
   FROM SEI_TimeMachine2.dbo.[USER]
  WHERE user_id = @p_userID",
       new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
-         cmdLoadID.Parameters.AddWithValue("p_userID", Session["Ninja.UserID"].ToString());
+         cmdLoadID.Parameters.AddWithValue("p_userID", HttpContext.Current.Session["username"].ToString());
 
          cmdLoadID.Connection.Open();
          SqlDataReader drUser = cmdLoadID.ExecuteReader();
@@ -59,11 +57,6 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
          {
             Response.Redirect("teacherDash.aspx");
          }
-      }
-
-      protected void btnUser_Click(object sender, EventArgs e)
-      {
-
       }
    }
 }

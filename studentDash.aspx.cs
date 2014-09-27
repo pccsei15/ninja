@@ -12,17 +12,11 @@ namespace ProjectNinja
 
     public partial class studentDash : System.Web.UI.Page
     {
-       int ddlSelectedValue;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-           //if (Session["Ninja.UserID"] == null)
-           //   hdnStudentID.Value = Session["Ninja.UserID"].ToString();  
-
-           //if (Session["Ninja.UserID"] != null)
-           //   hdnStudentID.Value = Session["Ninja.UserID"].ToString();
-           //   hdnStudentID.Value = "112043";
+           if (HttpContext.Current.Session["username"] != null)
+              hdnStudentID.Value = HttpContext.Current.Session["username"].ToString();
         }
 
         protected void ddlEventTimes_SelectedIndexChanged(object sender, System.EventArgs e)

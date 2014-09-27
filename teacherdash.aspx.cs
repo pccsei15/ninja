@@ -15,7 +15,7 @@ namespace ProjectNinja
       protected void Page_Load(object sender, EventArgs e)
       {
          // Makes sure only teachers can be on the teacherDash page.
-         if (Session["Ninja.userID"] != null)
+         if (HttpContext.Current.Session["username"] != null)
          {
             if (Session["Ninja.isTeacher"].ToString() != GlobalVar.True)
             {
@@ -23,10 +23,10 @@ namespace ProjectNinja
             }
          }
          else
-            //Response.Redirect("Default.aspx");
+            Response.Redirect("Default.aspx");
 
             // Sets the value of the hidden field to the users id, use for select statments.
-            hdnRowID.Value = "mgeary";//Session["Ninja.UserID"].ToString();
+            hdnRowID.Value = HttpContext.Current.Session["username"].ToString();
       }
 
       /// <summary>
