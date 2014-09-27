@@ -17,8 +17,7 @@ $("#mainContent_grdStudentEventsTable").dataTable({
     "columns": [
         null,
         null,
-        null,
-        { "orderable": false }
+        null
     ],
     "order": [0, 'asc'],
     "info": false

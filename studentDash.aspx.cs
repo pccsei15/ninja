@@ -19,13 +19,6 @@ namespace ProjectNinja
               hdnStudentID.Value = HttpContext.Current.Session["username"].ToString();
         }
 
-        protected void ddlEventTimes_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-           //DropDownList SelecteTime = (DropDownList)sender;
-           //lblTest.Text = SelecteTime.SelectedValue;
-
-        }
-
         /// <summary>
         /// Redirects to the eventpage, and stores the eventID in a session variable
         /// </summary>

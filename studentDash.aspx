@@ -81,13 +81,6 @@ VALUES(@p_eventTimeID, @p_userID)">
                                    </asp:BoundField>
                                    <asp:BoundField DataField="eventDate" HeaderText="Scheduled Time" SortExpression="eventDate" DataFormatString="{0:f}" >
                                    </asp:BoundField>
-                                   <asp:TemplateField HeaderText="Action">
-				                      <itemtemplate>
-					                        <asp:LinkButton id="btnEdit" runat="server" commandname="editEvent" CssClass="btn btn-default" CommandArgument='<%# Eval("eventID") %>'>
-                                                <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Edit
-                                            </asp:LinkButton>
-				                      </itemtemplate>
-                                   </asp:TemplateField>
                                </Columns>
                                <RowStyle CssClass="rowStyle" />
                                <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
@@ -131,6 +124,5 @@ VALUES(@p_eventTimeID, @p_userID)">
                 <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:Label ID="lblTest" runat="server" Text="Needs to go away."></asp:Label>
    </form>
 </asp:Content>
