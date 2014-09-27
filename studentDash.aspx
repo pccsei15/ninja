@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Student Dashboard" Language="C#" MasterPageFile="./MasterPage.Master" AutoEventWireup="true" CodeBehind="StudentDash.aspx.cs" Inherits="ProjectNinja.studentDash" %>
+﻿<%@ Page Title="Student Dashboard" Language="C#" MasterPageFile="MasterPage.Master" AutoEventWireup="true" CodeBehind="StudentDash.aspx.cs" Inherits="ProjectNinja.studentDash" %>
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Student Dash</title>
     <!-- Glenn and Dory's Page -->
@@ -36,12 +36,11 @@
                                     <asp:BoundField DataField="eventLocation" HeaderText="Location" SortExpression="eventLocation">
                                     </asp:BoundField>
                                     <asp:TemplateField HeaderText="Times">
-                                        <EditItemTemplate>
-                                            
-                                        </EditItemTemplate>
                                         <itemtemplate>
                                             <asp:HiddenField ID="hdnEventTimes" Value='<%# Bind("eventID") %>' runat="server" />
-                                            <asp:DropDownList ID="ddlEventTimes" runat="server" DataSourceID="sqlEventTimes" DataValueField="eventTimeID" DataTextField="eventDate"></asp:DropDownList>
+                                            <asp:DropDownList ID="ddlEventTimes" runat="server" DataSourceID="sqlEventTimes" DataValueField="eventTimeID" DataTextField="eventDate" AppendDataBoundItems="true" OnSelectedIndexChanged="ddlEventTimes_SelectedIndexChanged">
+                                                <asp:ListItem></asp:ListItem>
+                                            </asp:DropDownList>
                                             <asp:SqlDataSource ID="sqlEventTimes" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
 SELECT et.eventDate, et.eventTimeID
   FROM [SEI_Ninja].[dbo].EVENT_TIMES et
@@ -56,7 +55,7 @@ SELECT et.eventDate, et.eventTimeID
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Action">
 				                        <itemtemplate>
-					                            <asp:LinkButton id="btnSignUp" runat="server" commandname="signUpEvent" CssClass="btn btn-success" CommandArgument='<%# Eval("eventID") %>'>
+					                            <asp:LinkButton id="btnSignUp" runat="server" commandname="signUpEvent" CssClass="btn btn-success" CommandArgument='<%# Eval("eventID") %> + "," + ddlEventTimes.'>
                                                     <i aria-hidden="true" class="glyphicon glyphicon-ok-sign"></i> Sign Up
                                                 </asp:LinkButton>
 				                        </itemtemplate>
@@ -89,11 +88,11 @@ SELECT et.eventDate, et.eventTimeID
                                    <asp:BoundField DataField="eventDate" HeaderText="Scheduled Time" SortExpression="eventDate" DataFormatString="{0:f}" >
                                    </asp:BoundField>
                                    <asp:TemplateField HeaderText="Action">
-				                    <itemtemplate>
+				                      <itemtemplate>
 					                        <asp:LinkButton id="btnEdit" runat="server" commandname="editEvent" CssClass="btn btn-default" CommandArgument='<%# Eval("eventID") %>'>
                                                 <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Edit
                                             </asp:LinkButton>
-				                    </itemtemplate>
+				                      </itemtemplate>
                                </asp:TemplateField>
                   </Columns>
                                <RowStyle CssClass="rowStyle" />
@@ -138,5 +137,6 @@ SELECT et.eventDate, et.eventTimeID
                 <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
             </SelectParameters>
         </asp:SqlDataSource>
+        <asp:Label ID="lblTest" runat="server"></asp:Label>
    </form>
 </asp:Content>
