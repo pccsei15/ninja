@@ -48,13 +48,14 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
          }
 
          Session["Ninja.isTeacher"] = isTeacher;
+         Session["Ninja.isEnabled"] = isEnabled;
 
          cmdLoadID.Connection.Close();
-         if (isStudent == 1 && isEnabled == 1)
+         if (isStudent == int.Parse(GlobalVar.True) && isEnabled == int.Parse(GlobalVar.True))
          {
             Response.Redirect("studentDash.aspx");
          }
-         else if (isTeacher == 1 && isEnabled == 1)
+         else if (isTeacher == int.Parse(GlobalVar.True) && isEnabled == int.Parse(GlobalVar.True))
          {
             Response.Redirect("teacherDash.aspx");
          }
