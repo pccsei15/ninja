@@ -29,8 +29,7 @@ $("#mainContent_grdEventsAvailable").dataTable({
     "columns": [
         null,
         null,
-        null,
-        null,
+        { "orderable": false },
         { "orderable": false }
     ],
     "order": [0, 'asc'],

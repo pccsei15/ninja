@@ -6,11 +6,15 @@
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
     <form runat="server">
    <asp:HiddenField ID="hdnStudentID" runat="server" />
-
-    <div class="row" style="margin-top: 15px;">
-                <div class="col-md-12">
+   <div class="row">
+      <div class="col-md-6">
+         <h1>Student Dashboard</h1>
+                    </div>
+                </div>
+            <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                <div class="col-md-6 col-sm-12">
                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs nav-justified" role="tablist">
                       <li class="active"><a href="#available" role="tab" data-toggle="tab">Available</a></li>
                       <li><a href="#scheduled" role="tab" data-toggle="tab">Scheduled</a></li>
                     </ul>
@@ -20,11 +24,6 @@
             <!-- Tab panes -->
             <div class="tab-content">
               <div class="tab-pane active" id="available">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h1>Events Available</h1>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-12">
                         <div class="table-responsive">
@@ -37,25 +36,25 @@
                                     </asp:BoundField>
                                     <asp:TemplateField HeaderText="Times">
                                         <itemtemplate>
-                                            <asp:HiddenField ID="hdnEventTimes" Value='<%# Bind("eventID") %>' runat="server" />
-                                            <asp:DropDownList ID="ddlEventTimes" runat="server" DataSourceID="sqlEventTimes" DataValueField="eventTimeID" DataTextField="eventDate" AppendDataBoundItems="true" OnSelectedIndexChanged="ddlEventTimes_SelectedIndexChanged">
-                                                <asp:ListItem></asp:ListItem>
+                                            <asp:HiddenField ID="hdnEventTimesID" Value='<%# Bind("eventID") %>' runat="server" />
+                                            <asp:DropDownList ID="ddlEventTimes" runat="server" DataSourceID="sqlEventTimes" DataValueField="eventTimeID" DataTextField="eventDate" AppendDataBoundItems="true" CssClass="form-control" >
                                             </asp:DropDownList>
                                             <asp:SqlDataSource ID="sqlEventTimes" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
 SELECT et.eventDate, et.eventTimeID
   FROM [SEI_Ninja].[dbo].EVENT_TIMES et
  WHERE et.eventID = @eventID
    AND et.eventTimeID NOT IN (SELECT su.eventTimeID
-							    FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su);">
+							    FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su);" UpdateCommand="INSERT INTO [SEI_Ninja].[dbo].SCHEDULED_USERS (eventTimeID, userID)
+VALUES(@p_eventTimeID, @p_userID)">
                                                 <SelectParameters>
-                                                    <asp:ControlParameter ControlID="hdnEventTimes" Name="eventID" PropertyName="Value" />
+                                                    <asp:ControlParameter ControlID="hdnEventTimesID" Name="eventID" PropertyName="Value" />
                                                 </SelectParameters>
                                             </asp:SqlDataSource>
                                         </itemtemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Action">
 				                        <itemtemplate>
-					                            <asp:LinkButton id="btnSignUp" runat="server" commandname="signUpEvent" CssClass="btn btn-success" CommandArgument='<%# Eval("eventID") %> + "," + ddlEventTimes.'>
+					                            <asp:LinkButton id="btnSignUp" runat="server" commandname="signUpEvent" CssClass="btn btn-success" CommandArgument='<%# Eval("eventID") + "," + ((GridViewRow)Container).RowIndex  %>'>
                                                     <i aria-hidden="true" class="glyphicon glyphicon-ok-sign"></i> Sign Up
                                                 </asp:LinkButton>
 				                        </itemtemplate>
@@ -70,11 +69,6 @@ SELECT et.eventDate, et.eventTimeID
                 </div>
               </div>
 <div class="tab-pane" id="scheduled">
-                  <div class="row">
-                     <div class="col-md-6">
-                        <h1>Events Scheduled</h1>
-                     </div>
-                  </div>
                   <div class="row">
                       <div class="col-sm-12 col-md-12 main">
                          <div class="table-responsive">
@@ -93,8 +87,8 @@ SELECT et.eventDate, et.eventTimeID
                                                 <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i> Edit
                                             </asp:LinkButton>
 				                      </itemtemplate>
-                               </asp:TemplateField>
-                  </Columns>
+                                   </asp:TemplateField>
+                               </Columns>
                                <RowStyle CssClass="rowStyle" />
                                <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
                                <FooterStyle CssClass="footerStyle" />
@@ -137,6 +131,6 @@ SELECT et.eventDate, et.eventTimeID
                 <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:Label ID="lblTest" runat="server"></asp:Label>
+        <asp:Label ID="lblTest" runat="server" Text="Needs to go away."></asp:Label>
    </form>
 </asp:Content>

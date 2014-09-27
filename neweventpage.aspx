@@ -15,11 +15,11 @@
             <h1>Add Event</h1>
          </div>
          <div class="col-md-6">
-            <a href="javascript:getAllSelectedDateTimes();" class="btn btn-primary pull-right">Create Event</a>
+            <a href="javascript:getAllSelectedDateTimes();" class="btn btn-primary pull-right" style="margin-top:28px;">Create Event</a>
          </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top: 20px;">
       <div class="col-md-3">
          <form role="form" action="SubmitNewEvent.aspx" method="post">        
             <div class="form-group">

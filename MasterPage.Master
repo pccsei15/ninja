@@ -49,7 +49,7 @@
                 <!-- Page breadcrumb -->
                 <div class="row">
                     <ol class="breadcrumb" style="margin-bottom: 0;">
-                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="teacherDash.aspx">Dashboard</a></li>
                         <asp:ContentPlaceHolder ID="breadCrumb" runat="server">
                         </asp:ContentPlaceHolder>
                     </ol>

@@ -23,10 +23,10 @@ namespace ProjectNinja
             }
          }
          else
-            Response.Redirect("Default.aspx");
+            //Response.Redirect("Default.aspx");
 
-         // Sets the value of the hidden field to the users id, use for select statments.
-         hdnRowID.Value = Session["Ninja.UserID"].ToString();
+            // Sets the value of the hidden field to the users id, use for select statments.
+            hdnRowID.Value = "mgeary";//Session["Ninja.UserID"].ToString();
       }
 
       /// <summary>

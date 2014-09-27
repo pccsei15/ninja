@@ -12,7 +12,11 @@
                 <div class="col-md-6">
                     <h1>Teacher Dashboard</h1>
                 </div>
+                <div class="col-md-6">
+                    <a href="neweventpage.aspx" class="btn btn-primary pull-right" style="margin-top:28px;">Create Event</a>
+                </div>
             </div>
+
             <div class="row">
                 <div class="col-sm-12 col-md-12 main" style="margin-top: 20px;">
                     <div class="table-responsive">

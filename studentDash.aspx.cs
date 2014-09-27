@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -22,8 +23,8 @@ namespace ProjectNinja
 
         protected void ddlEventTimes_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-           DropDownList SelecteTime = (DropDownList)sender;
-           lblTest.Text = SelecteTime.SelectedValue;
+           //DropDownList SelecteTime = (DropDownList)sender;
+           //lblTest.Text = SelecteTime.SelectedValue;
         }
 
         /// <summary>
@@ -36,13 +37,29 @@ namespace ProjectNinja
            //hdnEventTimes.Value = e.CommandArgument.ToString();
            if (e.CommandName == "signUpEvent")
            {
-              //(DropDownList)e.Row.FindControl("DDL_StatusList1");
-              //lblTest.Text = grdEventsAvailable;
-              //hdnEventTimes.Value = e.CommandArgument.ToString();
-              //grdEventsAvailable.EditIndex = Convert.ToInt32(e.CommandArgument);
-              //grdEventsAvailable.DataBind();
-              //Session["Ninja.eventID"] = Convert.ToInt32(e.CommandArgument);
-              //Response.Redirect("eventpage.aspx");
+              string[] arguments = new string[2];
+              arguments = e.CommandArgument.ToString().Split(',');
+
+              //DataRowView drv = ((GridView)e).Row
+              DropDownList ddlEventTimes = (DropDownList)(grdEventsAvailable.Rows[int.Parse(arguments[1])].Cells[2].FindControl("ddlEventTimes"));//(DropDownList)((GridView)e).Rows[int.Parse(arguments[1])].Cells[2].FindControl("ddlEventTimes");
+
+              //lblTest.Text = ddlEventTimes.SelectedValue;
+              
+              SqlCommand cmdSignUp = new SqlCommand(@"
+INSERT INTO [SEI_Ninja].[dbo].SCHEDULED_USERS (eventTimeID, userID)
+VALUES(@p_eventTimeID, @p_userID)",
+      new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
+              cmdSignUp.Parameters.AddWithValue("p_eventTimeID", ddlEventTimes.SelectedValue);
+              cmdSignUp.Parameters.AddWithValue("p_userID", "112043");//Session["Ninja.UserID"].ToString());
+
+              cmdSignUp.Connection.Open();
+
+              cmdSignUp.ExecuteNonQuery();
+
+              cmdSignUp.Connection.Close();
+
+              grdStudentEventsTable.DataBind();
+              grdEventsAvailable.DataBind();
            }
         }
 
