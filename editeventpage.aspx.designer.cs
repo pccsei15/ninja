@@ -67,22 +67,13 @@ namespace ProjectNinja.VersionedCode {
         protected global::System.Web.UI.WebControls.DropDownList ddleventTime;
         
         /// <summary>
-        /// evenAttendees control.
+        /// cblAttendees control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList evenAttendees;
-        
-        /// <summary>
-        /// sqlCourses control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource sqlCourses;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblAttendees;
         
         /// <summary>
         /// eventLocationList control.
