@@ -12,11 +12,6 @@ namespace ProjectNinja.VersionedCode
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-
-      }
-
-      protected void btnUser_Click(object sender, EventArgs e)
-      {
          //Page.ClientScript.RegisterStartupScript(this.GetType(), "clientScript", "<script     language=JavaScript>alert('Testing');</script>");
 
          //Session["Ninja.UserID"] = txtUserName.Text;
@@ -31,7 +26,7 @@ namespace ProjectNinja.VersionedCode
          {
             current_login_id = HttpContext.Current.User.Identity.Name;
             current_user_id = current_login_id.Substring(current_login_id.LastIndexOf('\\') + 1);
-            HttpContext.Current.Session["username"] = 112043;//current_user_id;
+            HttpContext.Current.Session["username"] = current_user_id;
          }
 
          Session["Ninja.UserID"] = HttpContext.Current.Session["username"];
@@ -63,6 +58,11 @@ SELECT user_is_enabled, user_is_student, user_is_teacher
          {
             Response.Redirect("teacherDash.aspx");
          }
+      }
+
+      protected void btnUser_Click(object sender, EventArgs e)
+      {
+
       }
    }
 }
