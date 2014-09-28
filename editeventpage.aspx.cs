@@ -13,102 +13,6 @@ namespace ProjectNinja.VersionedCode
 {
     public partial class EditEventPage1 : System.Web.UI.Page
     {
-        /*private Info[]      info = null;
-        private Timeslots[] timeslots = null;
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            GetInfo();
-            GetTimeslots();
-            PopulateScheduledAppointments();
-            
-        }
-
-        public class Info
-        {
-            public int courseID { get; set; }
-            public string eventLocation { get; set; }
-            public string eventName { get; set; }
-        }
-
-        public class Timeslots
-        {
-            public int eventTimeID { get; set; }
-            public DateTime eventDate { get; set; }
-        }
-
-        public void PopulateScheduledAppointments()
-        {
-            string jsonInfo = JsonConvert.SerializeObject(info);
-            string jsonTimeslots = JsonConvert.SerializeObject(timeslots);
-
-            eventInfo.Value = jsonInfo;
-            eventTimeslots.Value = jsonTimeslots;
-
-        }
-
-        public void GetInfo()
-        {
-            var con = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0");
-
-
-
-            string sql1 = @"SELECT ec.courseID, e.eventLocation, e.eventName
-                            FROM [SEI_Ninja].[dbo].EVENT e
-                            JOIN [SEI_Ninja].[dbo].EVENT_COURSES ec ON (e.eventID = ec.eventID)
-                            WHERE ec.eventID = 5;";
-            //" + (String)Session["Ninja.eventID"] + "
-
-            using (var command = new SqlCommand(sql1, con))
-            {
-                con.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    var list = new List<Info>();
-                    while (reader.Read())
-                        list.Add(new Info
-                        {
-                            courseID = reader.GetInt32(0),
-                            eventLocation = reader.GetString(1),
-                            eventName = reader.GetString(2)
-                        });
-                    info = list.ToArray();
-                }
-                con.Close();
-            }
-        }
-
-        public void GetTimeslots()
-        {
-            var con = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0");
-
-
-
-            //" + (String)Session["Ninja.eventID"] + "
-            string sql2 = @"SELECT et.eventDate, et.eventTimeID
-                            FROM [SEI_Ninja].[dbo].EVENT_TIMES et
-                            WHERE et.eventID = 5 AND et.eventTimeID NOT IN (SELECT su.eventTimeID FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su);";
-
-            using (var command = new SqlCommand(sql2, con))
-            {
-                con.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    var list = new List<Timeslots>();
-                    while (reader.Read())
-                        list.Add(new Timeslots
-                        {
-                            eventDate = reader.GetDateTime(0),
-                            eventTimeID = reader.GetInt32(1)
-                        });
-                    timeslots = list.ToArray();
-                }
-                con.Close();
-            }
-        }*/
-
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -118,7 +22,7 @@ namespace ProjectNinja.VersionedCode
                       FROM [SEI_Ninja].[dbo].EVENT e
                      WHERE e.eventID = @p_eventID;",
             new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
-                cmdLoadID.Parameters.AddWithValue("p_eventID", 5);//Session["Ninja.eventID"].ToString());
+                cmdLoadID.Parameters.AddWithValue("p_eventID", 5);
 
                 cmdLoadID.Connection.Open();
                 SqlDataReader drUser = cmdLoadID.ExecuteReader();
@@ -130,10 +34,10 @@ namespace ProjectNinja.VersionedCode
                 }
                 cmdLoadID.Connection.Close();
 
-
                 SqlCommand cmdLoadList = new SqlCommand(@"
-                    SELECT [course_id], [course_name] 
-                    FROM [SEI_TimeMachine2].[dbo].[COURSE]",
+                    SELECT [course_id], [course_name]
+                    FROM [SEI_TimeMachine2].[dbo].[COURSE]
+                   WHERE course_end_date >= SYSDATETIME()",
             new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
 
                 cmdLoadList.Connection.Open();
@@ -163,7 +67,6 @@ namespace ProjectNinja.VersionedCode
                         if (cblAttendees.Items[i].Text == Convert.ToString(drUser3["course_name"])) 
                             cblAttendees.Items[i].Selected = true;
                     }
-                    //ListItem cb = cblAttendees.Items.FindByText(Convert.ToString(drUser2["course_name"]));
                 
                 }
                 cmdLoadID2.Connection.Close();

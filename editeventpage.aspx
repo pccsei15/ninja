@@ -7,8 +7,6 @@
     <li class="active">Edit Event</li>
 </asp:content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">  
-     
-
 
         <div class="row">
       <div class="col-sm-12 col-md-12 main">
@@ -17,7 +15,6 @@
             <h1>Edit Event</h1>
          </div>
          <div class="col-md-6">
-           <!-- <a href="javascript:getAllSelectedDateTimes();" class="btn btn-primary pull-right">Save Event</a>-->
          </div>
       </div>
     </div>
@@ -39,9 +36,7 @@
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                   </div><!-- end input-group-addon -->
-                  <!--<input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" value="" />
-                   <asp:HiddenField ID="calJS" value="" runat="server" />-->
-                   <asp:TextBox CssClass="form-control" ID="eventDate" runat="server"></asp:TextBox>
+                  <asp:TextBox CssClass="form-control" ID="eventDate" runat="server"></asp:TextBox>
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
@@ -51,14 +46,7 @@
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-dashboard"></span>
                   </div><!-- end input-group-addon -->
-                  <!-- <input type="text" class="form-control" id="eventTime" name="eventTime" /> -->
-                 <!--<select class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();">
-                      
-                     <option>15</option>
-                     <option>30</option>
-                     <option selected="selected">60</option>
-                  </select> -->
-                   <asp:DropDownList CssClass="form-control" ID="ddleventTime" runat="server">  
+                  <asp:DropDownList CssClass="form-control" ID="ddleventTime" runat="server">  
                        <asp:ListItem>15</asp:ListItem>
                        <asp:ListItem>30</asp:ListItem>
                        <asp:ListItem>60</asp:ListItem>
@@ -68,21 +56,9 @@
             
             <div class="form-group" id="eventAttendees">
                <label><span class="glyphicon glyphicon-user"></span> Attendees</label>
- <!--              <span class="addAttendees" onclick="addRow(this);">
-                  <span class="glyphicon glyphicon-plus-sign addIcon"></span> (Add Class)
-               </span> end addAttendees -->
                <div class="input-group">
-                
                    <asp:CheckBoxList ID="cblAttendees" runat="server">
-                       
                    </asp:CheckBoxList>
-<%--                   <asp:SqlDataSource 
-                        ID="sqlCourses" 
-                        runat="server" 
-                        SelectCommand="SELECT [course_id], [course_name] FROM [SEI_TimeMachine2].[dbo].[COURSE]" 
-                        ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" 
-                        ProviderName="System.Data.SqlClient">
-                   </asp:SqlDataSource>--%>
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             
@@ -92,27 +68,14 @@
                   <div class="input-group-addon">
                      <span class="glyphicon glyphicon-globe"></span>
                   </div><!-- end input-group-addon -->
-                <!--  <select class="form-control" name="eventLocation" id="eventBuilding">
-                     <option value="" selected></option>
-                     <option value="AC">AC</option>
-                     <option value="MK">MK</option>
-                     <option value="DHA">DHA</option>
-                  </select>
-                   <asp:DropDownList CssClass="form-control" ID="eventLocationList" runat="server">
-                       <asp:ListItem Selected="True" Text=" "></asp:ListItem>
-                       <asp:ListItem>AC</asp:ListItem>
-                       <asp:ListItem>MK</asp:ListItem>
-                       <asp:ListItem>DHA</asp:ListItem>
-                   </asp:DropDownList>-->
-                   <asp:TextBox CssClass="form-control" ID="txteventLocation" runat="server" ></asp:TextBox>
+                  <asp:TextBox CssClass="form-control" ID="txteventLocation" runat="server" ></asp:TextBox>
                </div><!-- end input-group -->
             </div><!-- end form-group -->
             <asp:Button CssClass="btn btn-primary pull-right" Text="Submit" ID="submit" OnClick="submit_Click" runat="server" />
         </form>
       </div>
       <div class="col-md-9" id="agendaTableHolder">
-      </div><!-- end agendaTableHolder -->
-      
+      </div><!-- end agendaTableHolder -->     
       <!-- end main content -->      
     </div>   
 </asp:Content>
