@@ -17,7 +17,8 @@ $("#mainContent_grdStudentEventsTable").dataTable({
     "columns": [
         null,
         null,
-        null
+        null,
+        { "orderable": false }
     ],
     "order": [0, 'asc'],
     "info": false
@@ -28,8 +29,9 @@ $("#mainContent_grdEventsAvailable").dataTable({
     "columns": [
         null,
         null,
-        { "orderable": false },
+        null,
         { "orderable": false }
+
     ],
     "order": [0, 'asc'],
     "info": false
@@ -49,55 +51,107 @@ function fixGridView(tableEl) {
         jTbl.find("tbody tr:first").remove();
     }
 }
-//$("#mainContent_eventSelectList").onchange = function () {
-//    alert("YO!");
-//    $.post("demo_test_post.asp",
-//           $("#mainContent_eventSelectList :selected").val(),
-//           function (data, status) {
-//               alert("Data: " + data + "\nStatus: " + status);
-//           });
-//}
 
 //----------------------------------------------------------------
 // AJAX handler for changing the week of the calendar
 //----------------------------------------------------------------
-$('body').on('click', '#forward-btn', function () {
-    var firstDay = $('#sunday-header').html();
+function getDate() {
+
+
+    var dateObj = new Date(),
+        day = dateObj.getDate(),
+        month = dateObj.getMonth() + 1,
+        year = dateObj.getFullYear(),
+        date = month + '/' + day + '/' + year;
+
+    return date;
+}
+
+$(function () {
+    var colCount = 0;
+    $('tr:nth-child(1) td').each(function () {
+        if ($(this).attr('colspan')) {
+            colCount += +$(this).attr('colspan');
+        } else {
+            colCount++;
+        }
+    });
+});
+
+$(function () {
+    var child;
+    $(this).attr('rowspan');
+});
+
+function getParameters() {
+    var parameters = "";
+
+    if (document.title === "Teacher Calendar")
+        parameters = "?haveInfo=";
+    else if (document.title === "Add Event")
+        parameters = "?selectable=";
+    else if (document.title === "Edit Event")
+        parameters = "?haveInfo=&selectable=";
+
+    return parameters;
+}
+
+$(function () {
+    var dateParam = getDate();
 
     $.ajax({
-        type: 'GET',
-        url: '../GenerateCalendar.aspx',
-        data: firstDay + 'forward'
+        url: 'GenerateCalendar.aspx' + getParameters()
     }).done(function (responseText) {
+        $('#agendaTableHolder').html(responseText);
+        console.log('Calendar added successfully on page load');
+    });
+});
+
+$('body').on('click', '#forward-btn', function () {
+    var currentDate = getDate(),
+        dateParam = $('#sunday-header').html().split(">");
+    dateParam = dateParam[1];
+
+    console.log(getParameters());
+
+    $.ajax({
+        url: 'GenerateCalendar.aspx' + getParameters() + '&direction=' + 'forward&startDate=' + dateParam
+    }).done(function (responseText) {
+
+        $('#agendaTableHolder').html(responseText);
         console.log('Forward button changed the week');
-        $('#agendaTableHolder').html() = responseText;
     });
 
     return false;
 });
 
 $('body').on('click', '#back-btn', function () {
-    var firstDay = $('#sunday-header').html();
+    var currentDate = getDate(),
+        dateParam = $('#sunday-header').html().split(">");
+    dateParam = dateParam[1];
+
+    console.log(getParameters());
 
     $.ajax({
-        type: 'GET',
-        url: '../GenerateCalendar.aspx',
-        data: firstDay + 'back'
+        url: 'GenerateCalendar.aspx' + getParameters() + '&direction=back&startDate=' + dateParam
     }).done(function (responseText) {
+        console.log(responseText);
+        $('#agendaTableHolder').html(responseText);
         console.log('Backward button changed the week');
-        $('#agendaTableHolder').html() = responseText;
     });
 
     return false;
 });
 
-$('.datepicker').datepicker().on(changeDate, function() {
+$('.datepicker').datepicker().on("changeDate", function () {
+    var dateParam = $('.datepicker').datepicker().getDate();
+
     $.ajax({
-        type: 'GET',
-        url: '../GenerateCalendar.aspx',
-        data: day
+        url: 'GenerateCalendar.aspx' + getParameters() + '&startDate=' + dateParam
     }).done(function (responseText) {
         console.log('Datepicker changed the week');
-        $('#agendaTableHolder').html() = responseText;
+        $('#agendaTableHolder').html(responseText);
     });
+
+    return false;
 });

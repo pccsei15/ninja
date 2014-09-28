@@ -8,6 +8,12 @@ using System.Web.UI.WebControls;
 
 namespace ProjectNinja.VersionedCode
 {
+    /**
+     *  Parameters to pass by URL:
+     *      haveInfo
+     *      selectable
+     *      startDate
+     * */
     public partial class GenerateCalendar : System.Web.UI.Page
     {
 
@@ -68,22 +74,39 @@ namespace ProjectNinja.VersionedCode
 
             if (Request.QueryString["startDate"] == null)
             {
-                startDate = DateTime.Now;
+                startDate = getSundayFromDate(DateTime.Now);
 
                 startDay = startDate.Day;
                 startMonth = startDate.Month;
                 startYear = startDate.Year;
-
             }
             else
             {
                 string[] dateParts = Request.QueryString["startDate"].Split('/'); // Input is month[0], day[1], year[2]
 
-                startYear  = int.Parse(dateParts[2]);
+
+
+                startDay = int.Parse(dateParts[1]);
                 startMonth = int.Parse(dateParts[0]);
-                startDay   = int.Parse(dateParts[1]);
+                startYear = int.Parse(dateParts[2]);
+
+                Response.Write("INPUT DATE: " + startDay + "/" + startMonth + "/" + startYear);
 
                 startDate = new DateTime(startYear, startMonth, startDay);
+
+                if (Request.QueryString["direction"] == "forward")
+                {
+                    startDate = startDate.AddDays(7);
+                }
+                else if (Request.QueryString["direction"] == "back")
+                {
+                    startDate = startDate.AddDays(-7);
+                }
+
+                startDay = startDate.Day;
+                startMonth = startDate.Month;
+                startYear = startDate.Year;
+
             }
 
             TimeSpan STARTTIME = new TimeSpan(8, 0, 0);

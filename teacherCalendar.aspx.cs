@@ -18,8 +18,10 @@ namespace ProjectNinja
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            GetScheduledAppointments();
-            PopulateScheduledAppointments();
+
+
+            //GetScheduledAppointments();
+            //PopulateScheduledAppointments();
         }
 
         public class ScheduledAppointment

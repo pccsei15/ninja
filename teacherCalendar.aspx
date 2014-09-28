@@ -64,6 +64,8 @@
                </div><!-- end input-group -->
             </div><!-- end form-group -->
       </div>
+        <div class="btn-group"><input type="button" class="btn btn-primary" id="back-btn" value="Previous Week" /></div>
+        <div class="btn-group"><input type="button" class="btn btn-primary" id="forward-btn" value="Next Week" /></div>
       <div class="col-md-9" id="agendaTableHolder">
       </div><!-- end agendaTableHolder -->  
     </form>
