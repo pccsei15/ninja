@@ -155,3 +155,7 @@ $('.datepicker').datepicker().on("changeDate", function () {
 
     return false;
 });
+
+$('body').on('click', 'td', function () {
+    $(this).addClass('success');
+});
