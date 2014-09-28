@@ -20,9 +20,9 @@ namespace ProjectNinja
    {
       protected void Page_Load(object sender, EventArgs e)
       {
-         //Make sure the user has logged on
-         if (HttpContext.Current.Session["username"] == null || Session["Ninja.isEnabled"].ToString() != GlobalVar.True)
-            Response.Redirect("Default.aspx");
+         ////Make sure the user has logged on
+         //if (HttpContext.Current.Session["username"] == null || Session["Ninja.isEnabled"].ToString() != GlobalVar.True)
+         //   Response.Redirect("Default.aspx");
 
       }
    }
