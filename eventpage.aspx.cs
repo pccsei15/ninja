@@ -46,7 +46,6 @@ namespace ProjectNinja
             public string eventName { get; set; }
             public string eventLocation { get; set; }
             public DateTime eventDate { get; set; }
-            public float eventDuration { get; set; }
             public string eventUserName { get; set; }
         }
 
@@ -61,7 +60,7 @@ namespace ProjectNinja
         {
             var con = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Integrated Security=True");
 
-            string sql = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, et.eventDuration, u.user_first_name + ' ' + u.user_last_name AS name
+            string sql = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, u.user_first_name + ' ' + u.user_last_name AS name
                             FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
                                 JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
                                 JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
@@ -81,8 +80,7 @@ namespace ProjectNinja
                             eventName = reader.GetString(1),
                             eventLocation = reader.GetString(2),
                             eventDate = reader.GetDateTime(3),
-                            eventDuration = (float)reader.GetDouble(4),
-                            eventUserName = reader.GetString(5)
+                            eventUserName = reader.GetString(4)
                         });
                     allAppointments = list.ToArray();
                 }
