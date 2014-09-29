@@ -134,7 +134,12 @@ VALUES(@p_eventTimeID, @p_userID)">
           FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
                JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
                JOIN [SEI_Ninja].[dbo].[EVENT] e ON (et.eventID = e.eventID)
-         WHERE su.userID = @p_StudentID " CancelSelectOnNullParameter="False">
+         WHERE su.userID = @p_StudentID " CancelSelectOnNullParameter="False" DeleteCommand="
+DELETE FROM [SEI_Ninja].[dbo].SCHEDULED_USERS
+WHERE (userID           = @p_userID)">
+           <DeleteParameters>
+               <asp:ControlParameter ControlID="hdnStudentID" Name="p_userID" PropertyName="Value" />
+           </DeleteParameters>
           <SelectParameters>
              <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
           </SelectParameters>
