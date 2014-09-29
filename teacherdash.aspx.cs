@@ -25,8 +25,8 @@ namespace ProjectNinja
          //else
          //   Response.Redirect("Default.aspx");
 
-         //   // Sets the value of the hidden field to the users id, use for select statments.
-         //   hdnRowID.Value = HttpContext.Current.Session["username"].ToString();
+            // Sets the value of the hidden field to the users id, use for select statments.
+          hdnRowID.Value = "mgeary";// HttpContext.Current.Session["username"].ToString();
       }
 
       /// <summary>
@@ -45,6 +45,9 @@ namespace ProjectNinja
             //grdEventsTable.DataBind();
 
             hdnRowID.Value = null;
+            Page_Load(sender, e);
+            grdEventsTable.DataBind();
+
          }
          // Redirects to the edit event page.
          else if (e.CommandName == "EditEvent")

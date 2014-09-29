@@ -15,8 +15,8 @@ namespace ProjectNinja
 
       protected void Page_Load(object sender, EventArgs e)
       {
-         if (HttpContext.Current.Session["username"] != null)
-            hdnStudentID.Value = HttpContext.Current.Session["username"].ToString();
+          //if (HttpContext.Current.Session["username"] != null)
+              hdnStudentID.Value = "112043";//HttpContext.Current.Session["username"].ToString();
       }
 
       /// <summary>
@@ -38,7 +38,7 @@ INSERT INTO [SEI_Ninja].[dbo].SCHEDULED_USERS (eventTimeID, userID)
 VALUES(@p_eventTimeID, @p_userID)",
         new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
             cmdSignUp.Parameters.AddWithValue("p_eventTimeID", ddlEventTimes.SelectedValue);
-            cmdSignUp.Parameters.AddWithValue("p_userID", HttpContext.Current.Session["username"].ToString());
+            cmdSignUp.Parameters.AddWithValue("p_userID", hdnStudentID.Value);
 
             //Execute the insert
             cmdSignUp.Connection.Open();

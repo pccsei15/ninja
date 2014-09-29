@@ -1,3 +1,5 @@
+var todayColumn;
+
 // Start the date picker
 $('#eventDate').datepicker({
     'format': 'm/d/yyyy',
@@ -85,13 +87,32 @@ $(function () {
 });
 
 $(function () {
-    var child;
-    $(this).attr('rowspan');
+    $('#eventDate').datepicker('update', getDate());
+    $('#eventTime').val('15');
 });
 
-$(function () {
-    $('#eventDate').datepicker('update', getDate());
-});
+var QueryString = function () {
+    // This function is anonymous, is executed immediately and 
+    // the return value is assigned to QueryString!
+    var query_string = {};
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        // If first entry with this name
+        if (typeof query_string[pair[0]] === "undefined") {
+            query_string[pair[0]] = pair[1];
+            // If second entry with this name
+        } else if (typeof query_string[pair[0]] === "string") {
+            var arr = [query_string[pair[0]], pair[1]];
+            query_string[pair[0]] = arr;
+            // If third or later entry with this name
+        } else {
+            query_string[pair[0]].push(pair[1]);
+        }
+    }
+    return query_string;
+}();
 
 function getParameters() {
     var parameters = "";
@@ -100,8 +121,10 @@ function getParameters() {
         parameters = "?haveInfo=";
     else if (document.title === "Add Event")
         parameters = "?selectable=yes";
-    else if (document.title === "Edit Event")
-        parameters = "?haveInfo=&selectable=";
+    else if (document.title === "Edit Event") {
+        parameters = "?haveInfo=&selectable=&eventId=" + QueryString.eventID;
+        console.log(QueryString.eventID);
+    }
 
     return parameters;
 }
@@ -162,16 +185,6 @@ $('body').on('click', '#back-btn', function () {
 });
 
 $('#eventDate').datepicker().on("changeDate", function () {
-    /*var dateParam = $('.datepicker').datepicker().getDate();
-
-    $.ajax({
-        url: 'GenerateCalendar.aspx' + getParameters() + '&startDate=' + dateParam
-    }).done(function (responseText) {
-        console.log('Datepicker changed the week');
-        $('#agendaTableHolder').html(responseText);
-    });
-
-    return false;*/
 
     var currentDate = getDate(),
     dateParam = $('#eventDate').data('date');
@@ -190,18 +203,22 @@ $('#eventDate').datepicker().on("changeDate", function () {
     return false;
 });
 
-// Update the calendar when the duration changes
 $('#eventTime').on("change", function () {
+    var currentDate = getDate(),
+        dateParam = $('#eventDate').data('date'),
+        timeStep = $('#eventTime').val();
+
+    console.log(dateParam);
+    console.log(getParameters());
+
     $.ajax({
-        url: 'GenerateCalendar.aspx' + getParameters() + '&startDate=' + $('#eventDate').data('date') + "&step=" + document.getElementById('eventTime').value
+        url: 'GenerateCalendar.aspx' + getParameters() + '&startDate=' + dateParam + '&eventStep=' + timeStep
     }).done(function (responseText) {
 
         $('#agendaTableHolder').html(responseText);
+        console.log(timeStep);
+        console.log('Time step changed the time step');
     });
 
     return false;
-});
-
-$('body').on('click', 'td', function () {
-    $(this).addClass('success');
 });

@@ -136,9 +136,26 @@ namespace ProjectNinja.VersionedCode
                             while (thisReader.Read())
                             {
                                 // Get the smallest duration (They will usually all be the same, but just in case)
-                                if (duration > int.Parse(thisReader["eventStep"].ToString()))
+                                if (Request.QueryString["eventStep"] != null)
                                 {
-                                    duration = int.Parse(thisReader["eventStep"].ToString());
+                                    try
+                                    {
+                                        duration = int.Parse(Request.QueryString["eventStep"]);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        if (duration > int.Parse(thisReader["eventStep"].ToString()))
+                                        {
+                                            duration = int.Parse(thisReader["eventStep"].ToString());
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (duration > int.Parse(thisReader["eventStep"].ToString()))
+                                    {
+                                        duration = int.Parse(thisReader["eventStep"].ToString());
+                                    }
                                 }
 
                                 // Create a list of all of the events that are going to be in the table
@@ -171,9 +188,26 @@ namespace ProjectNinja.VersionedCode
                             while (thisReader.Read())
                             {
                                 // Get the smallest duration (They will usually all be the same, but just in case)
-                                if (duration > int.Parse(thisReader["eventStep"].ToString()))
+                                if (Request.QueryString["eventStep"] != null)
                                 {
-                                    duration = int.Parse(thisReader["eventStep"].ToString());
+                                    try
+                                    {
+                                        duration = int.Parse(Request.QueryString["eventStep"]);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        if (duration > int.Parse(thisReader["eventStep"].ToString()))
+                                        {
+                                            duration = int.Parse(thisReader["eventStep"].ToString());
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (duration > int.Parse(thisReader["eventStep"].ToString()))
+                                    {
+                                        duration = int.Parse(thisReader["eventStep"].ToString());
+                                    }
                                 }
 
                                 // Create a list of all of the events that are going to be in the table

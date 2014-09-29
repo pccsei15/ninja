@@ -20,7 +20,7 @@
                     thisCommand.CommandText = @"
                     SELECT e.eventLocation, e.eventName, e.eventStep 
                       FROM [SEI_Ninja].[dbo].EVENT e
-                     WHERE e.eventID = 5;";
+                     WHERE e.eventID = " + Request.QueryString["eventID"] + ";";
                     System.Data.SqlClient.SqlDataReader drUser = thisCommand.ExecuteReader();
                     if (drUser.Read())
                     {
@@ -40,7 +40,7 @@
                 <h1>Edit Event</h1>
              </div>
              <div class="col-md-6">
-                <a href="javascript:getAllSelectedDateTimes();" class="btn btn-primary pull-right" style="margin-top:28px;">Create Event</a>
+                <a href="javascript:getAllSelectedDateTimes();" class="btn btn-primary pull-right" style="margin-top:28px;">Edit Event</a>
              </div>
           </div>
         </div>
@@ -86,7 +86,7 @@
                                             SELECT c.course_name
                             FROM [SEI_Ninja].[dbo].EVENT_COURSES ec
                                  JOIN [SEI_TimeMachine2].[dbo].COURSE c ON (ec.courseID = c.course_id)
-                           WHERE ec.eventID = 5;",
+                           WHERE ec.eventID = " + Request.QueryString["eventID"] + ";",
                             new System.Data.SqlClient.SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
                            cmdLoadID.Connection.Open();
                             System.Data.SqlClient.SqlDataReader drUser = cmdLoadID.ExecuteReader();
