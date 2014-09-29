@@ -56,7 +56,7 @@ VALUES(@p_eventTimeID, @p_userID)",
          //Delete funcationality
          if (e.CommandName == "delete")
          {
-
+             hdnEventTime.Value = e.CommandArgument.ToString();
              sqlEvents.Delete();
             //Prepair the DB for the Delete
 //            SqlCommand cmdDrop = new SqlCommand(@"

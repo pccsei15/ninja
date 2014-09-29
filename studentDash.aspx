@@ -6,6 +6,7 @@
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
    <form runat="server">
        <asp:HiddenField ID="hdnStudentID" runat="server" />
+       <asp:HiddenField ID="hdnEventTime" runat="server" />
        <div class="row">
           <div class="col-md-6">
              <h1>Student Dashboard</h1>
@@ -108,7 +109,7 @@ VALUES(@p_eventTimeID, @p_userID)">
 				                   </EditItemTemplate>--%>
 			                      <itemtemplate>
                                    <%--<div class="btn-group btn-group-sm">--%>
-					                       <asp:LinkButton id="btnSignUp" runat="server" commandname="delete" CssClass="btn btn-danger" CommandArgument='<%# Eval("eventID")  %>'>
+					                       <asp:LinkButton id="btnSignUp" runat="server" commandname="delete" CssClass="btn btn-danger" CommandArgument='<%# Eval("eventTimeID")  %>'>
                                          <i aria-hidden="true" class="glyphicon glyphicon-trash"></i> Unsign Up
                                       </asp:LinkButton>
 <%--                                      <asp:LinkButton id="btnEdit" runat="server" commandname="edit" CssClass="btn btn-default" CommandArgument='<%# ((GridViewRow)Container).RowIndex  %>'>
@@ -130,15 +131,17 @@ VALUES(@p_eventTimeID, @p_userID)">
 
        <!-- The select statment for the Scheduled events in the gridview table -->
        <asp:SqlDataSource ID="sqlEvents" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
-        SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate
+        SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, su.eventTimeID
           FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
-               JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
-               JOIN [SEI_Ninja].[dbo].[EVENT] e ON (et.eventID = e.eventID)
+               JOIN [SEI_Ninja].[dbo].EVENT_TIMES et     ON (su.eventTimeID = et.eventTimeID)
+               JOIN [SEI_Ninja].[dbo].[EVENT] e          ON (et.eventID =     e.eventID)
          WHERE su.userID = @p_StudentID " CancelSelectOnNullParameter="False" DeleteCommand="
 DELETE FROM [SEI_Ninja].[dbo].SCHEDULED_USERS
-WHERE (userID           = @p_userID)">
+WHERE (userID           = @p_userID)
+  AND (eventTimeID      =@p_eventTimeID)">
            <DeleteParameters>
                <asp:ControlParameter ControlID="hdnStudentID" Name="p_userID" PropertyName="Value" />
+               <asp:ControlParameter ControlID="hdnEventTime" Name="p_eventTimeID" PropertyName="Value" />
            </DeleteParameters>
           <SelectParameters>
              <asp:ControlParameter ControlID="hdnStudentID" Name="p_StudentID" PropertyName="Value" />
