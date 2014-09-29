@@ -28,7 +28,7 @@
                    <div class="table-responsive">
                       <!-- Events Available for signup gridview table inside the available tab -->
                       <asp:GridView ID="grdEventsAvailable" runat="server" CssClass="table table-striped table-hover table-responsive" GridLines="None" AutoGenerateColumns="False" 
-                         DataSourceID="sqlAvailEvents" DataKeyNames="eventID" onrowcommand="grdStudentEventsTable_RowCommand" OnPreRender="grdEventsAvailable_PreRender1">
+                         DataSourceID="sqlAvailEvents" DataKeyNames="eventID" onrowcommand="grdAvailEventsTable_RowCommand" OnPreRender="grdEventsAvailable_PreRender1">
                          <Columns>
                             <asp:BoundField DataField="eventName" HeaderText="Event" SortExpression="eventName" />
                             <asp:BoundField DataField="eventLocation" HeaderText="Location" SortExpression="eventLocation" />
@@ -75,7 +75,48 @@
                          <Columns>
                             <asp:BoundField DataField="eventName" HeaderText="Event" SortExpression="eventName" />
                             <asp:BoundField DataField="eventLocation" HeaderText="Location" SortExpression="eventLocation" />
-                            <asp:BoundField DataField="eventDate" HeaderText="Scheduled Time" SortExpression="eventDate" DataFormatString="{0:f}" />
+                            <asp:TemplateField HeaderText="Scheduled Time" SortExpression="eventDate">
+                               <%--<EditItemTemplate>
+                                  <asp:HiddenField ID="hdnEventTimesID" Value='<%# Bind("eventID") %>' runat="server" />
+                                  <asp:DropDownList ID="ddlEventTimes" runat="server" DataSourceID="sqlEventTimes" DataValueField="eventTimeID" DataTextField="eventDate" AppendDataBoundItems="true" CssClass="form-control" />
+                                  <asp:SqlDataSource ID="sqlEventTimes" runat="server" ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" ProviderName="System.Data.SqlClient" SelectCommand="
+SELECT et.eventDate, et.eventTimeID
+  FROM [SEI_Ninja].[dbo].EVENT_TIMES et
+ WHERE et.eventID = @eventID
+   AND et.eventTimeID NOT IN (SELECT su.eventTimeID
+   							        FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su);" UpdateCommand="INSERT INTO [SEI_Ninja].[dbo].SCHEDULED_USERS (eventTimeID, userID)
+VALUES(@p_eventTimeID, @p_userID)">
+                                      <SelectParameters>
+                                         <asp:ControlParameter ControlID="hdnEventTimesID" Name="eventID" PropertyName="Value" />
+                                      </SelectParameters>
+                                   </asp:SqlDataSource>
+                                </EditItemTemplate>--%>
+                                <ItemTemplate>
+                                   <asp:Label ID="lblEventData" runat="server" Text='<%# Bind("eventDate", "{0:f}") %>'></asp:Label>
+                                </ItemTemplate>
+                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Action">
+                               <%--<EditItemTemplate>
+                                  <div class="btn-group btn-group-sm">
+					                      <asp:LinkButton id="btnUpdate" runat="server" commandname="cancel" CssClass="btn btn-default">
+                                        <i aria-hidden="true" class="glyphicon glyphicon-ok-sign"></i> Submit
+                                     </asp:LinkButton>
+                                     <asp:LinkButton id="btnCancel" runat="server" commandname="update" CssClass="btn btn-success" CommandArgument='<%# Eval("eventID") + "," + ((GridViewRow)Container).RowIndex  %>'>
+                                        <i aria-hidden="true" class="glyphicon glyphicon-trash"></i> Cancel
+                                     </asp:LinkButton>    
+                                  </div>
+				                   </EditItemTemplate>--%>
+			                      <itemtemplate>
+                                   <%--<div class="btn-group btn-group-sm">--%>
+					                       <asp:LinkButton id="btnSignUp" runat="server" commandname="delete" CssClass="btn btn-danger" CommandArgument='<%# Eval("eventID")  %>'>
+                                         <i aria-hidden="true" class="glyphicon glyphicon-trash"></i> Unsign Up
+                                      </asp:LinkButton>
+<%--                                      <asp:LinkButton id="btnEdit" runat="server" commandname="edit" CssClass="btn btn-default" CommandArgument='<%# ((GridViewRow)Container).RowIndex  %>'>
+                                         <i aria-hidden="true" class="glyphicon glyphicon-trash"></i> Change Time
+                                      </asp:LinkButton>    
+                                   </div>--%>
+				                  </itemtemplate>
+                            </asp:TemplateField>
                          </Columns>
                          <RowStyle CssClass="rowStyle" />
                          <HeaderStyle BackColor="#428BCA" HorizontalAlign="Center" ForeColor="White" CssClass="headerStyle" />
