@@ -22,6 +22,15 @@ namespace ProjectNinja {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder pageTitle;
         
         /// <summary>
+        /// extraCss control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder extraCss;
+        
+        /// <summary>
         /// mainContent control.
         /// </summary>
         /// <remarks>
@@ -29,5 +38,14 @@ namespace ProjectNinja {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder mainContent;
+        
+        /// <summary>
+        /// ExtraJs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ExtraJs;
     }
 }

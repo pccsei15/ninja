@@ -201,3 +201,7 @@ $('#eventTime').on("change", function () {
 
     return false;
 });
+
+$('body').on('click', 'td', function () {
+    $(this).addClass('success');
+});

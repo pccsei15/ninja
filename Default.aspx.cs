@@ -51,6 +51,12 @@ namespace ProjectNinja.VersionedCode
 //         Session["Ninja.isTeacher"] = isTeacher;
 //         Session["Ninja.isEnabled"] = isEnabled;
 
+           ////Please remove me.
+           //if( HttpContext.Current.Session["username"] == "115339"
+           //{
+           //   Session["Ninja.isTeacher"] = 1;
+           //}
+
 //         //Direct to the correct dashpage based on access levels.
 //         if (isStudent == int.Parse(GlobalVar.True) && isEnabled == int.Parse(GlobalVar.True))
 //         {
