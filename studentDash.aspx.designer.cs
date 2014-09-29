@@ -22,6 +22,15 @@ namespace ProjectNinja {
         protected global::System.Web.UI.WebControls.HiddenField hdnStudentID;
         
         /// <summary>
+        /// hdnEventTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnEventTime;
+        
+        /// <summary>
         /// grdEventsAvailable control.
         /// </summary>
         /// <remarks>

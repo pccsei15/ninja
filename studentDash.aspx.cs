@@ -38,7 +38,8 @@ INSERT INTO [SEI_Ninja].[dbo].SCHEDULED_USERS (eventTimeID, userID)
 VALUES(@p_eventTimeID, @p_userID)",
         new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
             cmdSignUp.Parameters.AddWithValue("p_eventTimeID", ddlEventTimes.SelectedValue);
-            cmdSignUp.Parameters.AddWithValue("p_userID", hdnStudentID.Value);
+
+            cmdSignUp.Parameters.AddWithValue("p_userID", hdnStudentID.Value);//HttpContext.Current.Session["username"].ToString());
 
             //Execute the insert
             cmdSignUp.Connection.Open();
@@ -56,17 +57,19 @@ VALUES(@p_eventTimeID, @p_userID)",
          //Delete funcationality
          if (e.CommandName == "delete")
          {
+             hdnEventTime.Value = e.CommandArgument.ToString();
+             sqlEvents.Delete();
             //Prepair the DB for the Delete
-            SqlCommand cmdDrop = new SqlCommand(@"
-DELETE FROM [SEI_Ninja].[dbo].SCHEDULED_USERS
-WHERE (eventID == @p_eventID)",
-            new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
-            cmdDrop.Parameters.AddWithValue("p_eventID", e.CommandArgument.ToString());
+//            SqlCommand cmdDrop = new SqlCommand(@"
+//DELETE FROM [SEI_Ninja].[dbo].SCHEDULED_USERS
+//WHERE (userID           = @p_userID)",
+//            new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
+//            cmdDrop.Parameters.AddWithValue("p_userID", hdnStudentID.Value);//HttpContext.Current.Session["username"].ToString());
 
-            //Execute the Delete
-            cmdDrop.Connection.Open();
-            cmdDrop.ExecuteNonQuery();
-            cmdDrop.Connection.Close();
+//            //Execute the Delete
+//            cmdDrop.Connection.Open();
+//            cmdDrop.ExecuteNonQuery();
+//            cmdDrop.Connection.Close();
          }
 //         //Edit Functionality          
 //         else if (e.CommandName == "edit")
