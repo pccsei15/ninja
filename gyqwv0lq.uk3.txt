@@ -1,0 +1,28 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# Explicit paths specified without -i or -o; assuming --only paths...
+#
+# Committer: GlennHatt <112043@AC212-42.studentnet.int>
+#
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   GenerateCalendar.aspx.cs
+#	modified:   GetEventData.aspx
+#	modified:   MasterPage.Master
+#	modified:   css/app.css
+#	modified:   css/bootstrap-datepicker.min.css
+#	modified:   editeventpage.aspx
+#	modified:   editeventpage.aspx.cs
+#	modified:   editeventpage.aspx.designer.cs
+#	modified:   js/app.js
+#	modified:   js/bootstrap-datepicker.js
+#	modified:   js/calendar.js
+#	modified:   neweventpage.aspx
+#	modified:   neweventpage.aspx.cs
+#	modified:   neweventpage.aspx.designer.cs
+#	modified:   teacherCalendar.aspx
+#
+

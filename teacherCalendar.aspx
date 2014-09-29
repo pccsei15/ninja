@@ -16,53 +16,20 @@
       </div>
 
       <div class="col-md-3">   
-            <div class="form-group">
-               <label for="eventName">Event Name</label>
-               <input type="text" class="form-control" id="eventName" name="eventName" />
-            </div><!-- end form-group -->
+        <div id="eventDate">
             
-            <div class="form-group">
-               <label for="eventDate">Date</label>
-               <div class="input-group">
-                  <div class="input-group-addon">
-                     <span class="glyphicon glyphicon-calendar"></span>
-                  </div><!-- end input-group-addon -->
-                  <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable('TC');" />
-               </div><!-- end input-group -->
-            </div><!-- end form-group -->
-            
-                     
-            <div class="form-group" id="eventAttendees">
-               <label><span class="glyphicon glyphicon-user"></span> Attendees</label>
-               <span class="addAttendees" onclick="addRow(this);">
-                  <span class="glyphicon glyphicon-plus-sign addIcon"></span> (Add Class)
-               </span><!-- end addAttendees -->
-               <div class="input-group">
-                  <select class="form-control" onchange="disableSelectedAttendees();" name="eventAttendees[]">
-                     <option value="" selected></option>
-                     <option value="Class1">Class1</option>
-                     <option value="Class2">Class2</option>
-                     <option value="Class3">Class3</option>
-                     <option value="Class4">Class4</option>
-                     <option value="Class5">Class5</option>
-                  </select>
-                  <div class="input-group-addon" onclick="removeRow(this);">
-                     <span class="glyphicon glyphicon-minus-sign removeIcon"></span>
-                  </div><!-- end input-group-addon -->
-               </div><!-- end input-group -->
-            </div><!-- end form-group -->
+        </div><!-- end input-group -->
 
-
-            <div class="form-group" id="Div1">
-               <label>Export your calendar</label>
-               <!--span class="addAttendees" onclick="addRow(this);"-->
-               <!--/span><!-- end addAttendees -->
-               <div class="input-group">
-                  <asp:LinkButton ID="btnExportCalendar" runat="server" CommandArgument='<%# Eval("hdnScheduledAppointments") %>' CommandName="exportCalendar" OnClick="btnExportCalendar_Click" Text ="Export" >
+        <div class="form-group" id="Div1">
+            <label>Export your calendar</label>
+            <!--span class="addAttendees" onclick="addRow(this);"-->
+            <!--/span><!-- end addAttendees -->
+            <div class="input-group">
+                <asp:LinkButton ID="btnExportCalendar" runat="server" CommandArgument='<%# Eval("hdnScheduledAppointments") %>' CommandName="exportCalendar" OnClick="btnExportCalendar_Click" Text ="Export" >
                       
-                  </asp:LinkButton>
-               </div><!-- end input-group -->
-            </div><!-- end form-group -->
+                </asp:LinkButton>
+            </div><!-- end input-group -->
+        </div><!-- end form-group -->
       </div>
         <div class="btn-group"><input type="button" class="btn btn-primary" id="back-btn" value="Previous Week" /></div>
         <div class="btn-group"><input type="button" class="btn btn-primary" id="forward-btn" value="Next Week" /></div>

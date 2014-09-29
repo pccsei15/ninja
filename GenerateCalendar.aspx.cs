@@ -90,8 +90,6 @@ namespace ProjectNinja.VersionedCode
                 startMonth = int.Parse(dateParts[0]);
                 startYear = int.Parse(dateParts[2]);
 
-                Response.Write("INPUT DATE: " + startDay + "/" + startMonth + "/" + startYear);
-
                 startDate = new DateTime(startYear, startMonth, startDay);
 
                 if (Request.QueryString["direction"] == "forward")
@@ -110,7 +108,7 @@ namespace ProjectNinja.VersionedCode
             }
 
             TimeSpan STARTTIME = new TimeSpan(8, 0, 0);
-            TimeSpan ENDTIME   = new TimeSpan(17, 0, 0);
+            TimeSpan ENDTIME   = new TimeSpan(17, 0, 0); // Originally 17
             TimeSpan outputTime = STARTTIME; // This is used in a for loop to draw the times on the side. Start it at STARTTIME.
 
             int totalMinutesAvailable = (ENDTIME.Hours - STARTTIME.Hours) * 60;
@@ -191,15 +189,15 @@ namespace ProjectNinja.VersionedCode
 
             //startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, 8, 0, 0);
 
-            agendaTable += "<table class='table table-bordered table-responsive' style='background:#fff;' id='agendaTable'>";
+            agendaTable += "<table class='table table-bordered table-responsive table-striped table-hover' style='background:#fff;' id='agendaTable'>";
             agendaTable +=    "<thead>";
-            agendaTable +=       "<tr>";
+            agendaTable +=       "<tr style='background: #428BCA; color: white;'>";
 
-            agendaTable += "<th style='width:12.5%'>&nbsp;</th>"; // Blank heading because of the event time column being leftmost
+            agendaTable += "<th style='width:12.5%;'>&nbsp;</th>"; // Blank heading because of the event time column being leftmost
 
             for (int currentDay = 0; currentDay < 7; currentDay++)
             {
-                agendaTable += "<th id='" + dayIds[currentDay] + "' style='width:12.5%'>" + startDate.DayOfWeek + "<br />" + startDate.ToString("M/d/yyyy") + "</th>";
+                agendaTable += "<th id='" + dayIds[currentDay] + "' style='width:12.5%; text-align: center;'>" + startDate.DayOfWeek + "<br />" + startDate.ToString("M/d/yyyy") + "</th>";
                  
                 startDate = startDate.AddDays(1);
             }
@@ -226,9 +224,18 @@ namespace ProjectNinja.VersionedCode
             }
             */
 
-            for (int row = 0; row < totalSlots; row++)
+            int sundaySkipAmount = 0,
+                mondaySkipAmount = 0,
+                tuesdaySkipAmount = 0,
+                wednesdaySkipAmount = 0,
+                thursdaySkipAmount = 0,
+                fridaySkipAmount = 0,
+                saturdaySkipAmount = 0;
+
+            for (int row = 0; row <= totalSlots; row++)
             {
                 agendaTable += "<tr><td>" + DateTime.ParseExact(outputTime.ToString("hh\\:mm"), "HH:mm", null).ToString("h:mm tt") + "</td>";
+
 
                 // If condition to check if the event exists
                 startDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, outputTime.Hours, outputTime.Minutes, outputTime.Seconds);
@@ -237,6 +244,42 @@ namespace ProjectNinja.VersionedCode
                 // Creat the tds for the rest of the row
                 for(int dayOffSet = 0; dayOffSet < 7; dayOffSet++)
                 {
+                    if (dayOffSet == 0 && sundaySkipAmount > 0) // Sunday
+                    {
+                        sundaySkipAmount--;
+                        continue;
+                    }
+                    if (dayOffSet == 1 && mondaySkipAmount > 0) // Monday
+                    {
+                        mondaySkipAmount--;
+                        continue;
+                    }
+                    if (dayOffSet == 2 && tuesdaySkipAmount > 0) // Tuesday
+                    {
+                        tuesdaySkipAmount--;
+                        continue;
+                    }
+                    if (dayOffSet == 3 && wednesdaySkipAmount > 0) // Wednesday
+                    {
+                        wednesdaySkipAmount--;
+                        continue;
+                    }
+                    if (dayOffSet == 4 && thursdaySkipAmount > 0) // Thursday
+                    {
+                        thursdaySkipAmount--;
+                        continue;
+                    }
+                    if (dayOffSet == 5 && fridaySkipAmount > 0) // Friday
+                    {
+                        fridaySkipAmount--;
+                        continue;
+                    }
+                    if (dayOffSet == 6 && saturdaySkipAmount > 0) // Saturday
+                    {
+                        saturdaySkipAmount--;
+                        continue;
+                    }
+
                     // Add any attributes to the td
                     agendaTable += "<td";
 
@@ -255,12 +298,60 @@ namespace ProjectNinja.VersionedCode
                         if (duration < events[eventIndex].eventStep)
                         {
                             agendaTable += (" rowspan='" + (events[eventIndex].eventStep / duration) + "'");
+
+                            switch (dayOffSet)
+                            {
+                                case 0: // Sunday
+                                    if ((events[eventIndex].eventStep / duration) > 0)
+                                    {
+                                        sundaySkipAmount = (events[eventIndex].eventStep / duration) - 1;
+                                    }
+                                    break;
+                                case 1: // Monday
+                                    if ((events[eventIndex].eventStep / duration) > 0)
+                                    {
+                                        mondaySkipAmount = (events[eventIndex].eventStep / duration) - 1;
+                                    }
+                                    break;
+                                case 2: // Tuesday
+                                    if ((events[eventIndex].eventStep / duration) > 0)
+                                    {
+                                        tuesdaySkipAmount = (events[eventIndex].eventStep / duration) - 1;
+                                    }
+                                    break;
+                                case 3: // Wednesday
+                                    if ((events[eventIndex].eventStep / duration) > 0)
+                                    {
+                                        wednesdaySkipAmount = (events[eventIndex].eventStep / duration) - 1;
+                                    }
+                                    break;
+                                case 4: // Thursday
+                                    if ((events[eventIndex].eventStep / duration) > 0)
+                                    {
+                                        thursdaySkipAmount = (events[eventIndex].eventStep / duration) - 1;
+                                    }
+                                    break;
+                                case 5: // Friday
+                                    if ((events[eventIndex].eventStep / duration) > 0)
+                                    {
+                                        fridaySkipAmount = (events[eventIndex].eventStep / duration) - 1;
+                                    }
+                                    break;
+                                case 6: // Saturday
+                                    if ((events[eventIndex].eventStep / duration) > 0)
+                                    {
+                                        saturdaySkipAmount = (events[eventIndex].eventStep / duration) - 1;
+                                    }
+                                    break;
+                            }
                         }
+
+                        agendaTable += " class='info' style='border: 2px solid #428BCA;'";
 
                         agendaTable += ">";
 
                         // The event is in the list
-                        agendaTable += events[eventIndex].userName + "<br />" + events[eventIndex].eventName + "<br />" + events[eventIndex].eventLocation;
+                        agendaTable += "<strong>" + events[eventIndex].userName + "</strong><br />" + events[eventIndex].eventName + "<br />At " + events[eventIndex].eventLocation;
                     }
                     else
                     {
@@ -278,7 +369,7 @@ namespace ProjectNinja.VersionedCode
 
             agendaTable += "</table>";
 
-            Response.Write("Events size: " + events.Count + "<br />" + agendaTable);
+            Response.Write(agendaTable);
         }
     }
 }

@@ -29,7 +29,7 @@
 
         <!-- App CSS -->
         <link type="text/css" rel="stylesheet" href="css/app.css" />
-
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
         <!-- Page-specific CSS -->
         <asp:ContentPlaceHolder ID="extraCss" runat="server">
 

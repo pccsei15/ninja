@@ -16,18 +16,19 @@ $(document).ready(function () {
    // var eDate = document.getElementById('eventDate').value;
     document.getElementById('eventDate').value = month + '/' + day + '/' + year;
 
+    /*
     if (document.title === "Teacher Calendar")
         generateAgendaTable("TC");
     else if (document.title === "Event Sign Up") 
         generateAgendaTable("ESU");
     else
         generateAgendaTable();
+    */
 });
 
 // Start the date picker
 $('#eventDate').datepicker({
     'format': 'm/d/yyyy',
-    'autoclose': true,
     todayBtn: "linked",
     todayHighlight: true
 });

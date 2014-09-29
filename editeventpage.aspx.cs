@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -15,98 +14,154 @@ namespace ProjectNinja.VersionedCode
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+
+            string error = "";
+            string eventLocation = "";
+            string eventName = "";
+            ArrayList eventAttendees = new ArrayList();
+            ArrayList dateTimes = new ArrayList();
+            int lastID = -1;
+            int eventDuration = -1;
+
+            // Get the event name
+            if (Request.Form.GetValues("eventName") != null)
             {
-                SqlCommand cmdLoadID = new SqlCommand(@"
-                    SELECT e.eventLocation, e.eventName, e.eventStep 
-                      FROM [SEI_Ninja].[dbo].EVENT e
-                     WHERE e.eventID = @p_eventID;",
-            new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
-                cmdLoadID.Parameters.AddWithValue("p_eventID", 5);
-
-                cmdLoadID.Connection.Open();
-                SqlDataReader drUser = cmdLoadID.ExecuteReader();
-                if (drUser.Read())
+                eventName = Request.Form["eventName"];
+                if (!Regex.IsMatch(eventName, @"^[a-zA-Z0-9 _]{1,255}$"))
                 {
-                    txteventLocation.Text = Convert.ToString(drUser["eventLocation"]);
-                    txteventName.Text = Convert.ToString(drUser["eventName"]);
-                    ddleventTime.Items.FindByText(Convert.ToString(drUser["eventStep"])).Selected = true;                    
+                    // Name does not match schema
+                    error += "<br />Event name must be 255 characters or less";
                 }
-                cmdLoadID.Connection.Close();
+            }
+            else
+            {
+                error += "<br />Event name is required";
+            }
 
-                SqlCommand cmdLoadList = new SqlCommand(@"
-                    SELECT [course_id], [course_name]
-                    FROM [SEI_TimeMachine2].[dbo].[COURSE]
-                   WHERE course_end_date >= SYSDATETIME()",
-            new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
-
-                cmdLoadList.Connection.Open();
-                SqlDataReader drUser2 = cmdLoadList.ExecuteReader();
-                while (drUser2.Read())
+            // Get all attendees
+            if (Request.Form.GetValues("eventAttendees[]") != null)
+            {
+                foreach (string value in Request.Form.GetValues("eventAttendees[]"))
                 {
-                    ListItem classList = new ListItem();
-                    classList.Text = Convert.ToString(drUser2["course_name"]);
-                    classList.Value = Convert.ToString(drUser2["course_id"]);
-                    cblAttendees.Items.Add(classList);
-                }
-
-                SqlCommand cmdLoadID2 = new SqlCommand(@"
-                          SELECT c.course_name
-                            FROM [SEI_Ninja].[dbo].EVENT_COURSES ec
-                                 JOIN [SEI_TimeMachine2].[dbo].COURSE c ON (ec.courseID = c.course_id)
-                           WHERE ec.eventID = @p_eventID;",
-            new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
-                cmdLoadID2.Parameters.AddWithValue("p_eventID", 5);//Session["Ninja.eventID"].ToString());
-
-                cmdLoadID2.Connection.Open();
-                SqlDataReader drUser3 = cmdLoadID2.ExecuteReader();
-                if (drUser3.Read())
-                {
-                    for (int i = 0; i < cblAttendees.Items.Count; i++)
+                    // Params does post and get
+                    //Response.Write(value + "<br />");
+                    if (Regex.IsMatch(value, @"^[a-zA-Z0-9 _]{1,255}$"))
                     {
-                        if (cblAttendees.Items[i].Text == Convert.ToString(drUser3["course_name"])) 
-                            cblAttendees.Items[i].Selected = true;
+                        eventAttendees.Add(value);
                     }
-                
+                    else
+                    {
+                        // Name does not match schema
+                        error += "<br />Attendees can only have letters and numbers in their name";
+                    }
                 }
-                cmdLoadID2.Connection.Close();
-
             }
-        }
-
-        protected void submit_Click (object sender, EventArgs e)
-        {
-            SqlCommand cmdLoadID1 = new SqlCommand(@"
-                UPDATE [SEI_Ninja].[dbo].EVENT 
-                   SET eventName = @p_eventName, eventLocation = @p_eventLocation, eventStep = @p_eventStep
-                 WHERE eventID = @p_eventID;",
-                 new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
-            cmdLoadID1.Parameters.AddWithValue("p_eventID", 5);
-            cmdLoadID1.Parameters.AddWithValue("p_eventName", txteventName.Text);
-            cmdLoadID1.Parameters.AddWithValue("p_eventLocation", txteventLocation.Text);
-            cmdLoadID1.Parameters.AddWithValue("p_eventStep", ddleventTime.SelectedItem.Text);
-
-            cmdLoadID1.Connection.Open();
-            cmdLoadID1.ExecuteNonQuery();
-            cmdLoadID1.Connection.Close();
-
-
-            SqlCommand cmdLoadID = new SqlCommand(@"
-                    SELECT e.eventLocation, e.eventName 
-                      FROM [SEI_Ninja].[dbo].EVENT e
-                     WHERE e.eventID = @p_eventID;",
-                     new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
-            cmdLoadID.Parameters.AddWithValue("p_eventID", 5);//Session["Ninja.eventID"].ToString());
-
-            cmdLoadID.Connection.Open();
-            SqlDataReader drUser = cmdLoadID.ExecuteReader();
-            if (drUser.Read())
+            else
             {
-                txteventLocation.Text = Convert.ToString(drUser["eventLocation"]);
-                txteventName.Text     = Convert.ToString(drUser["eventName"]);
+                error += "<br />Must have at least 1 attendee";
             }
-            cmdLoadID.Connection.Close();
 
+            // Get the event location
+            if (Request.Form.GetValues("eventLocation") != null)
+            {
+                eventLocation = Request.Form["eventLocation"];
+                if (!Regex.IsMatch(eventLocation, @"^[a-zA-Z0-9 _]{1,255}$"))
+                {
+                    // Name does not match schema
+                    error += "<br />Event location must be 255 characters or less";
+                }
+            }
+            else
+            {
+                error += "<br />Event location is required";
+            }
+
+            // Get the event duration
+            if (Request.Form.GetValues("eventTime") != null)
+            {
+                if (!int.TryParse(Request.Form["eventTime"], out eventDuration) || (eventDuration % 15) != 0)
+                {
+                    // Name does not match schema
+                    error += "<br />event duration must a multiple of 15";
+                }
+            }
+            else
+            {
+                error += "<br />Event duration is required";
+            }
+
+            // Get all the data time componations
+            if (Request.Form.GetValues("dateTimes[]") != null)
+            {
+                DateTime dateValue;
+                foreach (string value in Request.Form.GetValues("dateTimes[]"))
+                {
+                    // Params does post and get
+                    //Response.Write(value + "<br />");
+                    if (DateTime.TryParse(value, out dateValue))
+                    {
+                        dateTimes.Add(dateValue);
+                    }
+                    else
+                    {
+                        error += "<br />" + value + " is not in the correct date time format";
+                    }
+                }
+            }
+            else
+            {
+                error += "<br />You must have at least 1 date and time";
+            }
+
+            //Response.Write(error);
+
+            //sql validation
+            //http://msdn.microsoft.com/en-us/library/ff648339.aspx
+
+            /*
+            // General loop though all post variables
+            foreach(string key in Request.Form.Keys)
+            {
+                // Params does post and get
+                Response.Write(key + ": " + Request.Params[key] + "<br />");
+            }
+            */
+
+            if (error.Length == 0)
+            {
+                // Insert data into the database
+                using (System.Data.SqlClient.SqlConnection thisConnection = new System.Data.SqlClient.SqlConnection("Server=172.16.212.212;Database=SEI_Ninja;User ID=sei_timemachine;Password=z5t9l3x0;"))
+                {
+                    thisConnection.Open();
+
+                    using (System.Data.SqlClient.SqlCommand thisCommand = thisConnection.CreateCommand())
+                    {
+                        // Insert an event into the event table
+                        thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT] (eventLocation, eventOwner, eventStep, eventName) OUTPUT INSERTED.eventID VALUES('" + eventLocation + "', '" + HttpContext.Current.Session["username"] + "', '" + eventDuration + "', '" + eventName + "')";
+                        // Add and get the id of the event that is being added
+                        lastID = (Int32)thisCommand.ExecuteScalar();
+                        //Response.Write("<br />The last key was:" + lastId);
+
+                        // Add the classes for this event to the EVENT_COURSES table
+                        foreach (object attendee in eventAttendees)
+                        {
+                            thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT_COURSES] (courseID, eventID) VALUES('" + attendee.ToString() + "', '" + lastID + "')";
+                            thisCommand.ExecuteNonQuery();
+                        }
+
+                        // Add the times for this event into EVENT_TIMES table
+                        foreach (DateTime dateTime in dateTimes)
+                        {
+                            thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT_TIMES] (eventID,  eventDate) VALUES('" + lastID + "', '" + dateTime.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                            thisCommand.ExecuteNonQuery();
+                            //Response.Write("<br />" + dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                        }
+
+                        // Ridirect when done
+                        Response.Redirect("TeacherDash.aspx");
+                    }
+                }
+            } // End checking for if the error is set
 
         }
     }

@@ -1,3 +1,10 @@
+// Start the date picker
+$('#eventDate').datepicker({
+    'format': 'm/d/yyyy',
+    todayBtn: "linked",
+    todayHighlight: true
+});
+
 $("#mainContent_grdEventsTable").dataTable({
     "paging": true,
     "columns": [
@@ -55,9 +62,8 @@ function fixGridView(tableEl) {
 //----------------------------------------------------------------
 // AJAX handler for changing the week of the calendar
 //----------------------------------------------------------------
+
 function getDate() {
-
-
     var dateObj = new Date(),
         day = dateObj.getDate(),
         month = dateObj.getMonth() + 1,
@@ -83,13 +89,17 @@ $(function () {
     $(this).attr('rowspan');
 });
 
+$(function () {
+    $('#eventDate').datepicker('update', getDate());
+});
+
 function getParameters() {
     var parameters = "";
 
     if (document.title === "Teacher Calendar")
         parameters = "?haveInfo=";
     else if (document.title === "Add Event")
-        parameters = "?selectable=";
+        parameters = "?selectable=yes";
     else if (document.title === "Edit Event")
         parameters = "?haveInfo=&selectable=";
 
@@ -117,7 +127,11 @@ $('body').on('click', '#forward-btn', function () {
     $.ajax({
         url: 'GenerateCalendar.aspx' + getParameters() + '&direction=' + 'forward&startDate=' + dateParam
     }).done(function (responseText) {
+        var dateString = $('#eventDate').data('date');
+        var oldDate = new Date(dateString);
 
+        oldDate.setDate(oldDate.getDate() + 7);
+        $('#eventDate').datepicker('update', (oldDate.getMonth() + 1) + '/' + oldDate.getDate() + '/' + oldDate.getFullYear());
         $('#agendaTableHolder').html(responseText);
         console.log('Forward button changed the week');
     });
@@ -135,7 +149,11 @@ $('body').on('click', '#back-btn', function () {
     $.ajax({
         url: 'GenerateCalendar.aspx' + getParameters() + '&direction=back&startDate=' + dateParam
     }).done(function (responseText) {
-        console.log(responseText);
+        var dateString = $('#eventDate').data('date');
+        var oldDate = new Date(dateString);
+
+        oldDate.setDate(oldDate.getDate() - 7);
+        $('#eventDate').datepicker('update', (oldDate.getMonth() + 1) + '/' + oldDate.getDate() + '/' + oldDate.getFullYear());
         $('#agendaTableHolder').html(responseText);
         console.log('Backward button changed the week');
     });
@@ -143,13 +161,41 @@ $('body').on('click', '#back-btn', function () {
     return false;
 });
 
-$('.datepicker').datepicker().on("changeDate", function () {
-    var dateParam = $('.datepicker').datepicker().getDate();
+$('#eventDate').datepicker().on("changeDate", function () {
+    /*var dateParam = $('.datepicker').datepicker().getDate();
 
     $.ajax({
         url: 'GenerateCalendar.aspx' + getParameters() + '&startDate=' + dateParam
     }).done(function (responseText) {
         console.log('Datepicker changed the week');
+        $('#agendaTableHolder').html(responseText);
+    });
+
+    return false;*/
+
+    var currentDate = getDate(),
+    dateParam = $('#eventDate').data('date');
+
+    console.log(dateParam);
+    console.log(getParameters());
+
+    $.ajax({
+        url: 'GenerateCalendar.aspx' + getParameters() + '&startDate=' + dateParam
+    }).done(function (responseText) {
+        
+        $('#agendaTableHolder').html(responseText);
+        console.log('Datepicker changed the week');
+    });
+
+    return false;
+});
+
+// Update the calendar when the duration changes
+$('#eventTime').on("change", function () {
+    $.ajax({
+        url: 'GenerateCalendar.aspx' + getParameters() + '&startDate=' + $('#eventDate').data('date') + "&step=" + document.getElementById('eventTime').value
+    }).done(function (responseText) {
+
         $('#agendaTableHolder').html(responseText);
     });
 

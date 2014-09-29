@@ -9,7 +9,7 @@
 </asp:content>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
-    <form runat="server">
+    <form runat="server" method="post" action="NewEventPage.aspx">
         <div class="row">
           <div class="col-sm-12 col-md-12 main">
              <div class="col-md-6">
@@ -22,30 +22,27 @@
         </div>
         <div class="row" style="margin-top: 20px;">
           <div class="col-md-3">
-             <form role="form" action="SubmitNewEvent.aspx" method="post">        
+             <form role="form" action="SubmitNewEvent.aspx" method="get">        
                 <div class="form-group">
                    <label for="eventName">Event Name</label>
                    <input type="text" class="form-control" id="eventName" name="eventName" />
                 </div><!-- end form-group -->
             
                 <div class="form-group">
-                   <label for="eventDate">Date</label>
+                   <label for="eventDate"><span class="glyphicon glyphicon-calendar"></span> Date</label>
                    <div class="input-group">
-                      <div class="input-group-addon">
-                         <span class="glyphicon glyphicon-calendar"></span>
-                      </div><!-- end input-group-addon -->
-                      <input type="text" class="form-control" id="eventDate" name="eventDate" onchange="generateAgendaTable();" />
+                      <div id="eventDate"></div>
                    </div><!-- end input-group -->
                 </div><!-- end form-group -->
             
                 <div class="form-group">
-                   <label for="eventTime">Time Step</label>
+                   <label for="eventTime">Duration</label>
                    <div class="input-group">
                       <div class="input-group-addon">
                          <span class="glyphicon glyphicon-dashboard"></span>
                       </div><!-- end input-group-addon -->
                       <!-- <input type="text" class="form-control" id="eventTime" name="eventTime" /> -->
-                      <select class="form-control" id="eventTime" name="eventTime" onchange="generateAgendaTable();">
+                      <select class="form-control" id="eventTime" name="eventTime">
                          <option>15</option>
                          <option>30</option>
                          <option selected="selected">60</option>
@@ -56,17 +53,23 @@
                 <div class="form-group" id="eventAttendees">
                    <label><span class="glyphicon glyphicon-user"></span> Attendees</label>
                    <div class="input-group">
-                       <asp:CheckBoxList ID="cblAttendeesList" runat="server" DataSourceID="sqlCourses" DataTextField="course_name" DataValueField="course_id"></asp:CheckBoxList>
-
-                       <asp:SqlDataSource 
-                            ID="sqlCourses" 
-                            runat="server" 
-                            SelectCommand="SELECT c.course_id, c.course_name
+                       <%
+                           System.Data.SqlClient.SqlCommand cmdLoadID = new System.Data.SqlClient.SqlCommand(@"
+                                            SELECT c.course_id, c.course_name
                                              FROM [SEI_TimeMachine2].[dbo].[COURSE] c
-                                            WHERE c.course_end_date &gt;= SYSDATETIME()" 
-                            ConnectionString="Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0" 
-                            ProviderName="System.Data.SqlClient">
-                       </asp:SqlDataSource>
+                                            WHERE c.course_end_date >= SYSDATETIME()",
+                            new System.Data.SqlClient.SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
+
+                           cmdLoadID.Connection.Open();
+                           System.Data.SqlClient.SqlDataReader drUser = cmdLoadID.ExecuteReader();
+
+                           while (drUser.Read())
+                           {
+                               Response.Write("<label><input type=\"checkbox\" value=\"" + drUser["course_id"].ToString() + "\" name=\"eventAttendees[]\">" + drUser["course_name"].ToString() + "</label>");
+                           }
+                            
+                           cmdLoadID.Connection.Close();
+                            %>
                    </div><!-- end input-group -->
                 </div><!-- end form-group -->
             
