@@ -3,9 +3,15 @@
 <asp:Content ID="PageTitle" ContentPlaceHolderID="pageTitle" runat="server">
     <title>Edit Event</title>
 </asp:Content>
+
+<asp:Content ID="TeacherCalendar" ContentPlaceHolderID="teacherCal" runat="server">
+    <li><a href="TeacherCalendar.aspx">Full Calendar</a></li>
+</asp:Content>
+
 <asp:Content ID="BreadCrumb" ContentPlaceHolderID="breadCrumb" runat="server">
     <li class="active">Edit Event</li>
 </asp:content>
+
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
     <%
         if (!IsPostBack)
@@ -20,7 +26,7 @@
                     thisCommand.CommandText = @"
                     SELECT e.eventLocation, e.eventName, e.eventStep 
                       FROM [SEI_Ninja].[dbo].EVENT e
-                     WHERE e.eventID = " + Request.QueryString["eventID"] + ";";
+                     WHERE e.eventID = " + Session["Ninja.eventID"] + ";";
                     System.Data.SqlClient.SqlDataReader drUser = thisCommand.ExecuteReader();
                     if (drUser.Read())
                     {
@@ -33,7 +39,7 @@
             }
         }
     %>
-    <form runat="server" method="post" action="NewEventPage.aspx">
+    <form runat="server" action='EditEventPage.aspx' method="post">
         <div class="row">
           <div class="col-sm-12 col-md-12 main">
              <div class="col-md-6">
@@ -46,7 +52,8 @@
         </div>
         <div class="row" style="margin-top: 20px;">
           <div class="col-md-3">
-             <form role="form" action="SubmitNewEvent.aspx" method="get">        
+             <form role="form" action="EditEventPage.aspx" method="get">  
+                 <input type="hidden" id="hdnEventID" name="eventID" runat="server"/>      
                 <div class="form-group">
                    <label for="eventName">Event Name</label>
                    <input type="text" class="form-control" id="eventName" name="eventName" runat="server" />
@@ -86,7 +93,7 @@
                                             SELECT c.course_name
                             FROM [SEI_Ninja].[dbo].EVENT_COURSES ec
                                  JOIN [SEI_TimeMachine2].[dbo].COURSE c ON (ec.courseID = c.course_id)
-                           WHERE ec.eventID = " + Request.QueryString["eventID"] + ";",
+                           WHERE ec.eventID = " + Session["Ninja.eventID"] + ";",
                             new System.Data.SqlClient.SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"));
                            cmdLoadID.Connection.Open();
                             System.Data.SqlClient.SqlDataReader drUser = cmdLoadID.ExecuteReader();

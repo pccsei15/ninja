@@ -22,6 +22,12 @@ namespace ProjectNinja.VersionedCode
             ArrayList dateTimes = new ArrayList();
             int lastID = -1;
             int eventDuration = -1;
+            //hdnEventID.Value = Request.QueryString["eventID"];
+            //Session["Ninja.eventID"] = Request.QueryString["eventID"];
+            String eventID = Session["Ninja.eventID"].ToString();
+            
+
+
 
             // Get the event name
             if (Request.Form.GetValues("eventName") != null)
@@ -129,6 +135,7 @@ namespace ProjectNinja.VersionedCode
 
             if (error.Length == 0)
             {
+                Response.Write(eventID);
                 // Insert data into the database
                 using (System.Data.SqlClient.SqlConnection thisConnection = new System.Data.SqlClient.SqlConnection("Server=172.16.212.212;Database=SEI_Ninja;User ID=sei_timemachine;Password=z5t9l3x0;"))
                 {
@@ -137,13 +144,13 @@ namespace ProjectNinja.VersionedCode
                     using (System.Data.SqlClient.SqlCommand thisCommand = thisConnection.CreateCommand())
                     {
                         // Insert an event into the event table
-                        thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT] (eventLocation, eventOwner, eventStep, eventName) OUTPUT INSERTED.eventID VALUES('" + eventLocation + "', '" + HttpContext.Current.Session["username"] + "', '" + eventDuration + "', '" + eventName + "')";
+                        thisCommand.CommandText = "UPDATE [SEI_Ninja].[dbo].[EVENT] SET eventLocation ='" + eventLocation + "', eventOwner = 'mgeary', eventName = '" + eventName + "', eventStep = " + eventDuration + " WHERE eventID = " + eventID;
                         // Add and get the id of the event that is being added
-                        lastID = (Int32)thisCommand.ExecuteScalar();
+                        thisCommand.ExecuteNonQuery();
                         //Response.Write("<br />The last key was:" + lastId);
 
                         // Add the classes for this event to the EVENT_COURSES table
-                        foreach (object attendee in eventAttendees)
+                        /*foreach (object attendee in eventAttendees)
                         {
                             thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT_COURSES] (courseID, eventID) VALUES('" + attendee.ToString() + "', '" + lastID + "')";
                             thisCommand.ExecuteNonQuery();
@@ -155,7 +162,7 @@ namespace ProjectNinja.VersionedCode
                             thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT_TIMES] (eventID,  eventDate) VALUES('" + lastID + "', '" + dateTime.ToString("yyyy-MM-dd HH:mm:ss") + "')";
                             thisCommand.ExecuteNonQuery();
                             //Response.Write("<br />" + dateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                        }
+                        }*/
 
                         // Ridirect when done
                         Response.Redirect("TeacherDash.aspx");

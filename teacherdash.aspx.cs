@@ -53,7 +53,8 @@ namespace ProjectNinja
          else if (e.CommandName == "EditEvent")
          {
             Session["Ninja.eventID"] = e.CommandArgument.ToString();
-            Response.Redirect("eventpage.aspx");
+
+            Response.Redirect("EditEventPage.aspx?eventID=" + e.CommandArgument.ToString());
          }
 
       }

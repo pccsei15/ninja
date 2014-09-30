@@ -26,13 +26,6 @@ $(document).ready(function () {
     */
 });
 
-// Start the date picker
-$('#eventDate').datepicker({
-    'format': 'm/d/yyyy',
-    todayBtn: "linked",
-    todayHighlight: true
-});
-
 $("#eventDatePicker").datepicker({
     onSelect: function (dateText, inst) {
         var dateAsString = dateText; //the first parameter of this function
@@ -276,12 +269,24 @@ function toggleSelectedDateTime(object) {
     // Attribute name of the data to be added or removed from the array
     var dataAttributeName = "data-dateTime";
 
+    if ($(object).hasClass("info")) {
+        $(object).removeClass("info");
+        $(object).css('border', '1px solid #ddd;!important');
+        $(object).html("");
+    }
+
     if ($(object).hasClass(selectedClassName)) {
         // Has the class so remove the class and the associated value from the array
         $(object).removeClass(selectedClassName);
         dateTimes = $.grep(dateTimes, function (value) {
             return value != $(object).attr(dataAttributeName);
         });
+
+        if ($(object).hasClass("info")) {
+            $(object).removeClass("info");
+            $(object).css('border', '1px solid #ddd;!important');
+            $(object).html("");
+        }
     }
     else {
         // Does not have the class so add it and the associated value

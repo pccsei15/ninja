@@ -8,19 +8,32 @@
     <li class="active">Add Event</li>
 </asp:content>
 
+<asp:Content ID="TeacherCalendar" ContentPlaceHolderID="teacherCal" runat="server">
+    <li><a href="TeacherCalendar.aspx">Full Calendar</a></li>
+</asp:Content>
+
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
     <form runat="server" method="post" action="NewEventPage.aspx">
         <div class="row">
           <div class="col-sm-12 col-md-12 main">
-             <div class="col-md-6">
-                <h1>Add Event</h1>
+              <div class="col-md-3">
+                <h2>Add Event</h2>
              </div>
-             <div class="col-md-6">
-                <a href="javascript:getAllSelectedDateTimes();" class="btn btn-primary pull-right" style="margin-top:28px;">Create Event</a>
+             <div class="col-md-9"  style="margin-top:20px; margin-bottom: 20px;">
+                <a href="#" class="btn btn-primary" id="btn-today">Today</a>
+                  <div class="btn-group" style="margin-left:15px;">
+                      <button type="button" class="btn btn-default" id="back-btn">
+                          <span class="glyphicon glyphicon-arrow-left"></span> Prev Week
+                      </button>
+                      <button type="button" class="btn btn-default" id="forward-btn">
+                          Next Week <span class="glyphicon glyphicon-arrow-right"></span>
+                      </button>
+                 </div>
+                 <a href="javascript:getAllSelectedDateTimes();" class="btn btn-success pull-right">Create Event</a>
              </div>
           </div>
         </div>
-        <div class="row" style="margin-top: 20px;">
+        <div class="row">
           <div class="col-md-3">
              <form role="form" action="SubmitNewEvent.aspx" method="get">        
                 <div class="form-group">

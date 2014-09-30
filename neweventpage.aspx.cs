@@ -135,7 +135,7 @@ namespace ProjectNinja
                   using (System.Data.SqlClient.SqlCommand thisCommand = thisConnection.CreateCommand())
                   {
                       // Insert an event into the event table
-                      thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT] (eventLocation, eventOwner, eventStep, eventName) OUTPUT INSERTED.eventID VALUES('" + eventLocation + "', '" + HttpContext.Current.Session["username"] + "', '" + eventDuration + "', '" + eventName + "')";
+                      thisCommand.CommandText = "INSERT INTO [SEI_Ninja].[dbo].[EVENT] (eventLocation, eventOwner, eventStep, eventName) OUTPUT INSERTED.eventID VALUES('" + eventLocation + "', 'mgeary', '" + eventDuration + "', '" + eventName + "')";
                       // Add and get the id of the event that is being added
                       lastID = (Int32)thisCommand.ExecuteScalar();
                       //Response.Write("<br />The last key was:" + lastId);

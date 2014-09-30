@@ -3,7 +3,6 @@ var todayColumn;
 // Start the date picker
 $('#eventDate').datepicker({
     'format': 'm/d/yyyy',
-    todayBtn: "linked",
     todayHighlight: true
 });
 
@@ -84,11 +83,10 @@ $(function () {
             colCount++;
         }
     });
-});
 
-$(function () {
     $('#eventDate').datepicker('update', getDate());
     $('#eventTime').val('15');
+    $('#btn-today').attr('disabled', 'disabled');
 });
 
 var QueryString = function () {
@@ -127,6 +125,11 @@ function getParameters() {
     }
 
     return parameters;
+}
+
+function getToday() {
+    var today = new Date();
+    return ((today.getUTCMonth() + 1) + '/' + today.getUTCDate() + '/' + today.getFullYear());
 }
 
 $(function () {
@@ -198,6 +201,13 @@ $('#eventDate').datepicker().on("changeDate", function () {
         
         $('#agendaTableHolder').html(responseText);
         console.log('Datepicker changed the week');
+
+        if (dateParam == getToday()) {
+            $('#btn-today').attr('disabled', 'enabled');
+        } else {
+
+            $('#btn-today').removeAttr('disabled');
+        }
     });
 
     return false;
@@ -221,4 +231,9 @@ $('#eventTime').on("change", function () {
     });
 
     return false;
+});
+
+$('#btn-today').on('click', function () {
+    $('#eventDate').datepicker('update', getToday());
+    $('#btn-today').attr('disabled', 'disabled');
 });

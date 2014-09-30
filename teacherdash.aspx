@@ -4,6 +4,10 @@
     <!-- Glenn and Dory's Page -->
 </asp:Content>
 
+<asp:Content ID="TeacherCalendar" ContentPlaceHolderID="teacherCal" runat="server">
+    <li><a href="TeacherCalendar.aspx">Full Calendar</a></li>
+</asp:Content>
+
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
    <form runat="server">
       <asp:HiddenField ID="hdnRowID" runat="server" />
@@ -33,7 +37,7 @@
                      <asp:TemplateField HeaderText="Action">
 		                <itemtemplate>
                            <div class="btn-group btn-group-sm">
-                              <asp:LinkButton ID="btnEdit" runat="server" CommandName="EditEvent" CssClass="btn btn-default" CommandArgument='<%# Eval("eventID") %>' >
+                              <asp:LinkButton ID="btnEdit" runat="server" CommandName="EditEvent" CssClass="btn btn-default" CommandArgument='<%# Eval("eventID") %>'>
                                  <i aria-hidden="true" class="glyphicon glyphicon-pencil"></i>
                               </asp:LinkButton>
 			                  <asp:LinkButton id="btnDelete" runat="server" commandname="DeleteEvent" CssClass="btn btn-default btn-danger" CommandArgument='<%# Eval("eventID") %>'>

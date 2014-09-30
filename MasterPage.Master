@@ -38,32 +38,33 @@
     </head>
 
     <body>
-            <!-- Site Container -->
-            <div class="container-fluid">
-                <!-- Menu Bar -->
-                <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			        <div class="navbar-header">
-			            <a class="navbar-brand" href="teacherDash.aspx">Project Ninja</a>
-			        </div>
-                    <div class="nav navbar-nav navbar-right">
-                        <asp:ContentPlaceHolder ID="teacherCal" runat="server">
-
-                        </asp:ContentPlaceHolder>
+        <!-- Site Container -->
+        <div class="container-fluid">
+            <!-- Menu Bar -->
+            <div class="nav navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="teacherDash.aspx">Project Ninja</a>
                     </div>
-		        </div>
-                <!-- Page breadcrumb -->
-                <div class="row">
-                    <ol class="breadcrumb" style="margin-bottom: 0;">
-                        <li><a href="teacherDash.aspx">Dashboard</a></li>
-                        <asp:ContentPlaceHolder ID="breadCrumb" runat="server">
-                        </asp:ContentPlaceHolder>
-                    </ol>
+                    <ul class="nav navbar-nav navbar-right">
+                        <asp:ContentPlaceHolder ID="teacherCal" runat="server"></asp:ContentPlaceHolder>
+                    </ul>
                 </div>
-                <!-- Page content -->
-                <asp:ContentPlaceHolder ID="mainContent" runat="server">
-                    
-                </asp:ContentPlaceHolder>
             </div>
+			            
+            <!-- Page breadcrumb -->
+            <div class="row">
+                <ol class="breadcrumb" style="margin-bottom: 0;">
+                    <li><a href="teacherDash.aspx">Dashboard</a></li>
+                    <asp:ContentPlaceHolder ID="breadCrumb" runat="server">
+                    </asp:ContentPlaceHolder>
+                </ol>
+            </div>
+            <!-- Page content -->
+            <asp:ContentPlaceHolder ID="mainContent" runat="server">
+                    
+            </asp:ContentPlaceHolder>
+        </div>
 
         <!-- jQuery -->
         <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>

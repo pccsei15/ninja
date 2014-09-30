@@ -84,8 +84,6 @@ namespace ProjectNinja.VersionedCode
             {
                 string[] dateParts = Request.QueryString["startDate"].Split('/'); // Input is month[0], day[1], year[2]
 
-
-
                 startDay = int.Parse(dateParts[1]);
                 startMonth = int.Parse(dateParts[0]);
                 startYear = int.Parse(dateParts[2]);
@@ -124,11 +122,11 @@ namespace ProjectNinja.VersionedCode
                     {
                         // MAINTENANCE: Fix this to prevent SQL injection - Thanks!
                         thisCommand.CommandText = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, e.eventStep, e.eventOwner, u.user_first_name + ' ' + u.user_last_name AS name
-                             FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
-                                  JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
-                                  JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
+                             FROM [SEI_Ninja].[dbo].EVENT_TIMES et
+                                  LEFT OUTER JOIN [SEI_Ninja].[dbo].SCHEDULED_USERS su ON (et.eventTimeID = su.eventTimeID)
+                                  LEFT OUTER JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
                                   JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
-                            WHERE e.eventOwner = 'mgeary' AND e.eventId = " + Request.QueryString["eventId"] + " AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "', '', '') AS DATETIME)) AND et.eventDate >= '" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "' ORDER BY e.eventID";
+                            WHERE e.eventOwner = 'mgeary' AND e.eventId= " + Request.QueryString["eventId"] + " AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "', '', '') AS DATETIME)) AND et.eventDate >= '" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "' ORDER BY e.eventID";
                         //thisCommand.CommandText = "SELECT e.eventID, e.eventOwner, e.eventName, e.eventLocation, et.eventDate, e.eventStep, u.user_first_name + ' ' + u.user_last_name AS name FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID) JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id) JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID) WHERE e.eventOwner  = 'mgeary' AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('20140926', '', '') AS DATETIME)) AND et.eventDate >= '20140926' AND e.eventID = " + Request.QueryString["eventId"].ToString() + " ORDER BY e.eventID;";
 
                         using (SqlDataReader thisReader = thisCommand.ExecuteReader())
@@ -175,12 +173,19 @@ namespace ProjectNinja.VersionedCode
 
                     using (SqlCommand thisCommand = thisConnection.CreateCommand())
                     {
-                        thisCommand.CommandText = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, e.eventStep, e.eventOwner, u.user_first_name + ' ' + u.user_last_name AS name
+                        /*thisCommand.CommandText = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, e.eventStep, e.eventOwner, u.user_first_name + ' ' + u.user_last_name AS name
                              FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
                                   JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
                                   JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
                                   JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
-                            WHERE e.eventOwner = 'mgeary' AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "', '', '') AS DATETIME)) AND et.eventDate >= '" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "' ORDER BY e.eventID";
+                            WHERE e.eventOwner = 'mgeary' AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "', '', '') AS DATETIME)) AND et.eventDate >= '" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "' ORDER BY e.eventID";*/
+
+                        thisCommand.CommandText = @"SELECT e.eventID, e.eventName, e.eventLocation, et.eventDate, e.eventStep, e.eventOwner, u.user_first_name + ' ' + u.user_last_name AS name
+                             FROM [SEI_Ninja].[dbo].EVENT_TIMES et
+                                  LEFT OUTER JOIN [SEI_Ninja].[dbo].SCHEDULED_USERS su ON (et.eventTimeID = su.eventTimeID)
+                                  LEFT OUTER JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
+                                  JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
+                            WHERE e.eventOwner = 'mgeary'AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "', '', '') AS DATETIME)) AND et.eventDate >= '" + startYear.ToString("D" + 4) + "" + startMonth.ToString("D" + 2) + "" + startDay.ToString("D" + 2) + "' ORDER BY e.eventID";
                         //thisCommand.CommandText = "SELECT e.eventID, e.eventOwner, e.eventName, e.eventLocation, et.eventDate, e.eventStep, u.user_first_name + ' ' + u.user_last_name AS name FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID) JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id) JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID) WHERE e.eventOwner  = 'mgeary' AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('20140926', '', '') AS DATETIME)) AND et.eventDate >= '20140926' AND e.eventID = " + Request.QueryString["eventId"].ToString() + " ORDER BY e.eventID;";
 
                         using (SqlDataReader thisReader = thisCommand.ExecuteReader())

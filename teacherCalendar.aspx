@@ -6,8 +6,12 @@
 </asp:Content>
 
 <asp:Content ID="TeacherCalendar" ContentPlaceHolderID="teacherCal" runat="server">
-    <h4>Test</h4>
+    <li><a href="TeacherCalendar.aspx">Full Calendar</a></li>
 </asp:Content>
+
+<asp:Content ID="BreadCrumb" ContentPlaceHolderID="breadCrumb" runat="server">
+    <li class="active">Teacher Calendar</li>
+</asp:content>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="mainContent" runat="server">
     <form runat="server">
@@ -15,30 +19,43 @@
     <asp:HiddenField ID="hdnScheduledAppointments" runat="server" Value="shouldn't be here" />
 
       <div class="col-sm-12 col-md-12 main">
-         <div class="col-md-6">
-            <h2 class="form-signin-heading">Filter Events</h2>
-         </div>
-      </div>
-
-      <div class="col-md-3">   
-        <div id="eventDate">
+          <div class="row">
+              <div class="col-md-3">
+                 <h2 class="form-signin-heading">Filter Events</h2>
+              </div>
+              <div class="col-md-9" style="margin-top: 20px; margin-bottom: 20px;">
+                  <a href="#" class="btn btn-primary" id="btn-today">Today</a>
+                  <div class="btn-group" style="margin-left:15px;">
+                      <button type="button" class="btn btn-default" id="back-btn">
+                          <span class="glyphicon glyphicon-arrow-left"></span> Prev Week
+                      </button>
+                      <button type="button" class="btn btn-default" id="forward-btn">
+                          Next Week <span class="glyphicon glyphicon-arrow-right"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3">   
+                <div id="eventDate">
             
-        </div><!-- end input-group -->
+                </div><!-- end input-group -->
 
-        <div class="form-group" id="Div1">
-            <label>Export your calendar</label>
-            <!--span class="addAttendees" onclick="addRow(this);"-->
-            <!--/span><!-- end addAttendees -->
-            <div class="input-group">
-                <asp:LinkButton ID="btnExportCalendar" runat="server" CommandArgument='<%# Eval("hdnScheduledAppointments") %>' CommandName="exportCalendar" OnClick="btnExportCalendar_Click" Text ="Export" >
+                <div class="form-group" id="Div1">
+                    <label>Export your calendar</label>
+                    <!--span class="addAttendees" onclick="addRow(this);"-->
+                    <!--/span><!-- end addAttendees -->
+                    <div class="input-group">
+                        <asp:LinkButton ID="btnExportCalendar" runat="server" CommandArgument='<%# Eval("hdnScheduledAppointments") %>' CommandName="exportCalendar" OnClick="btnExportCalendar_Click" Text ="Export" >
                       
-                </asp:LinkButton>
-            </div><!-- end input-group -->
-        </div><!-- end form-group -->
+                        </asp:LinkButton>
+                    </div><!-- end input-group -->
+                </div><!-- end form-group -->
+              </div>
+              <div class="col-md-9" id="agendaTableHolder">
+              </div><!-- end agendaTableHolder --> 
+          </div>
+          
       </div>
-        <div class="btn-group"><input type="button" class="btn btn-primary" id="back-btn" value="Previous Week" /></div>
-        <div class="btn-group"><input type="button" class="btn btn-primary" id="forward-btn" value="Next Week" /></div>
-      <div class="col-md-9" id="agendaTableHolder">
-      </div><!-- end agendaTableHolder -->  
     </form>
 </asp:Content>
