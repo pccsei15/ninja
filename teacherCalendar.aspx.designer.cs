@@ -22,12 +22,12 @@ namespace ProjectNinja {
         protected global::System.Web.UI.WebControls.HiddenField hdnScheduledAppointments;
         
         /// <summary>
-        /// btnExportCalendar control.
+        /// ddlEventList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnExportCalendar;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEventList;
     }
 }

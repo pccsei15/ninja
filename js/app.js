@@ -237,3 +237,18 @@ $('#btn-today').on('click', function () {
     $('#eventDate').datepicker('update', getToday());
     $('#btn-today').attr('disabled', 'disabled');
 });
+
+$('body').on('click', '#btnExportCalendar', function () {
+    var event = $('#ddlEventList option:selected').val();
+
+    console.log("Exported Calendar");
+    console.log(event);
+
+    $.ajax({
+        url: 'ExportCalendar.aspx?event=' + event
+    }).done(function (responseText) {
+
+    });
+
+    return false;
+});

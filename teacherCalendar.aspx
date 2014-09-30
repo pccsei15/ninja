@@ -41,14 +41,16 @@
             
                 </div><!-- end input-group -->
 
-                <div class="form-group" id="Div1">
+                <div class="form-group" id="exportCalendarOptions">
                     <label>Export your calendar</label>
-                    <!--span class="addAttendees" onclick="addRow(this);"-->
-                    <!--/span><!-- end addAttendees -->
                     <div class="input-group">
-                        <asp:LinkButton ID="btnExportCalendar" runat="server" CommandArgument='<%# Eval("hdnScheduledAppointments") %>' CommandName="exportCalendar" OnClick="btnExportCalendar_Click" Text ="Export" >
-                      
-                        </asp:LinkButton>
+                        <label>Event:</label>&nbsp;
+                        <asp:DropDownList runat="server" ID="ddlEventList" ClientIDMode="Static">
+                            <asp:ListItem Text="All Events" Value="All"></asp:ListItem>
+                        </asp:DropDownList>
+                        <br />
+                        <br />
+                        <button type="button" class="btn btn-default" id="btnExportCalendar"><span>Export Calendar</span></button>
                     </div><!-- end input-group -->
                 </div><!-- end form-group -->
               </div>
