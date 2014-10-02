@@ -46,7 +46,7 @@
                     <div class="input-group">
                         <label>Event:</label>&nbsp;
                         <asp:DropDownList runat="server" ID="ddlEventList" ClientIDMode="Static">
-                            <asp:ListItem Text="All Events" Value="All"></asp:ListItem>
+                            <asp:ListItem Text="All Events" Value="all"></asp:ListItem>
                         </asp:DropDownList>
                         <br />
                         <br />

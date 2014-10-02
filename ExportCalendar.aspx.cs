@@ -13,13 +13,14 @@ namespace ProjectNinja.VersionedCode
     {
         private static List<ScheduledAppointment> teacherAppointments = null;
 
-        protected void Page_Load(object sender, EventArgs e)
+        public static void generateExportedCalendar(String filterEventIn)
         {
-            
-        }
+            string filterByEvent = "";
+            if (filterEventIn.CompareTo("all") == 0)
+                filterByEvent = "";
+            else
+                filterByEvent = "AND e.eventID = " + filterEventIn;
 
-        public static void generateExportedCalendar()
-        {
             // Get the duration of each event from the database so that we can draw the calendar correctly
             using (SqlConnection thisConnection = new SqlConnection("Data Source=CSDB;Initial Catalog=SEI_Ninja;Persist Security Info=True;UID=sei_timemachine;PWD=z5t9l3x0"))
             {
@@ -28,16 +29,26 @@ namespace ProjectNinja.VersionedCode
                 using (SqlCommand thisCommand = thisConnection.CreateCommand())
                 {
                     // MAINTENANCE: Fix this to prevent SQL injection - Thanks!
-                    thisCommand.CommandText = @"SELECT ";
-                    //thisCommand.CommandText = "SELECT e.eventID, e.eventOwner, e.eventName, e.eventLocation, et.eventDate, e.eventStep, u.user_first_name + ' ' + u.user_last_name AS name FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID) JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id) JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID) WHERE e.eventOwner  = 'mgeary' AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('20140926', '', '') AS DATETIME)) AND et.eventDate >= '20140926' AND e.eventID = " + Request.QueryString["eventId"].ToString() + " ORDER BY e.eventID;";
+                    thisCommand.CommandText = @"SELECT e.eventID, e.eventOwner, e.eventName, e.eventLocation, et.eventDate, e.eventStep, u.user_first_name + ' ' + u.user_last_name AS name
+                                                  FROM [SEI_Ninja].[dbo].SCHEDULED_USERS su
+                                                       JOIN [SEI_Ninja].[dbo].EVENT_TIMES et ON (su.eventTimeID = et.eventTimeID)
+                                                       JOIN [SEI_TimeMachine2].[dbo].[USER] u ON (su.userID = u.user_id)
+                                                       JOIN [SEI_Ninja].[dbo].EVENT e ON (et.eventID = e.eventID)
+                                                 WHERE e.eventOwner  = 'mgeary'";
+                    //                                                   AND et.eventDate <= DATEADD(DAY, 7, CAST(REPLACE('20140926', '', '') AS DATETIME))
+                    //                                                   AND et.eventDate >= '20140926'" + filterByEvent + "ORDER BY e.eventID;";                   
 
                     using (SqlDataReader thisReader = thisCommand.ExecuteReader())
                     {
                         while (thisReader.Read())
                         {
                             // Create a list of all of the events that are going to be in the table
-                            teacherAppointments.Add(new ScheduledAppointment(int.Parse(thisReader["eventID"].ToString()), thisReader["eventName"].ToString(), thisReader["eventLocation"].ToString(),
-                                                    DateTime.Parse(thisReader["eventDate"].ToString()), int.Parse(thisReader["eventStep"].ToString()), thisReader["name"].ToString()));
+                            //teacherAppointments.Add(new ScheduledAppointment(int.Parse(thisReader["eventID"].ToString()),
+                            //                                                           thisReader["eventName"].ToString(),
+                            //                                                           thisReader["eventLocation"].ToString(),
+                            //                                            DateTime.Parse(thisReader["eventDate"].ToString()),
+                            //                                                 int.Parse(thisReader["eventStep"].ToString()),
+                            //                                                           thisReader["name"].ToString()));
                         }
                     }
                 }
@@ -66,13 +77,6 @@ namespace ProjectNinja.VersionedCode
 
         public class ScheduledAppointment
         {
-            private string p1;
-            private string p2;
-            private string p3;
-            private string p4;
-            private string p5;
-            private object p6;
-
             public int eventID { get; set; }
             public string eventName { get; set; }
             public string eventLocation { get; set; }
@@ -90,6 +94,11 @@ namespace ProjectNinja.VersionedCode
                 eventUserName = eventUserNameIn;
             }
 
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            generateExportedCalendar(Request.QueryString["event"].ToString());
         }
     }
 }
